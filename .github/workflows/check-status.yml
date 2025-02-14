@@ -12,7 +12,7 @@ jobs:
       - name: "Verificar status dos serviços"
         env:
           # URL do seu projeto Supabase (ex: https://abc123.supabase.co)
-          SUPABASE_URL: "https://SEU_SUPABASE_ID.supabase.co"
+          SUPABASE_URL: "https://zyscwlksespdrpnrifzm.supabase.co"
           # A chave de serviço, armazenada como secret no GitHub
           SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: |
