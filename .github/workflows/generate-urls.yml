@@ -28,7 +28,7 @@ import os
 from supabase import create_client, Client
 
 SUPABASE_URL = 'https://zyscwlksespdrpnrifzm.supabase.co'
-SUPABASE_KEY = os.environ['eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5c2N3bGtzZXNwZHJwbnJpZnptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1NDE4OTUsImV4cCI6MjA1NTExNzg5NX0.qTTXzeuNdLvBbk9riuWM1pw1v3PkNu1vsyjnaHQmDN4']
+SUPABASE_KEY = os.environ['eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5c2N3bGtzZXNwZHJwbnJpZnptIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczOTU0MTg5NSwiZXhwIjoyMDU1MTE3ODk1fQ.0iNohKohK1XK_JvBg4b8N3ZBnCLndUlExaH_QUlnNbs']
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 servicos = ['WhatsApp', 'iFood', 'Nubank', 'Mercado Livre', 'Instagram', 'Telegram']
