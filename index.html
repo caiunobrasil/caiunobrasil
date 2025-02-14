@@ -1,25 +1,28 @@
 <!-- Carrega a biblioteca do Supabase PRIMEIRO -->
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>  
 <script>
-    // Cole suas credenciais AQUI (obtenha do Supabase > Settings > API)
-    const SUPABASE_URL = 'https://zyscwlksespdrpnrifzm.supabase.co';
+// Código corrigido ↓
+
+// 1. Configure as credenciais (SUBSTITUA COM AS SUAS!)
+ const SUPABASE_URL = 'https://zyscwlksespdrpnrifzm.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5c2N3bGtzZXNwZHJwbnJpZnptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1NDE4OTUsImV4cCI6MjA1NTExNzg5NX0.qTTXzeuNdLvBbk9riuWM1pw1v3PkNu1vsyjnaHQmDN4';
     
-    // Cria o cliente CORRETAMENTE ↓
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// 2. Crie o cliente do Supabase
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY); 
 
-    async function fetchStatus() {
-        const { data, error } = await supabase
-            .from('status_apps')
-            .select('*');
-        
-        const container = document.getElementById('status-container');
-        container.innerHTML = data.map(app => `
-            <div class="status">
-                <h2>${app.nome}: ${app.status ? '🟢 ONLINE' : '🔴 OFFLINE'}</h2>
-                <p>Últ. verificação: ${new Date(app.ultima_verificacao).toLocaleString('pt-BR')}</p>
-            </div>
-        `).join('');
-    }
-    fetchStatus();
+// 3. Busque os dados
+async function fetchStatus() {
+  const { data, error } = await supabase
+    .from('status_apps')
+    .select('*');
+  
+  const container = document.getElementById('status-container');
+  container.innerHTML = data.map(app => `
+    <div class="status">
+      <h2>${app.nome}: ${app.status ? '🟢 ONLINE' : '🔴 OFFLINE'}</h2>
+      <p>Atualizado em: ${new Date(app.ultima_verificacao).toLocaleString('pt-BR')}</p>
+    </div>
+  `).join('');
+}
+fetchStatus();
 </script>
