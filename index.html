@@ -3,24 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caiu no Brasil | Status em Tempo Real</title>
-    <!-- 1º: Carregue a biblioteca do Supabase -->
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <title>Caiu no Brasil? | Status de Serviços Online</title>
+    
+    <!-- Fontes e Ícones -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Estilos CSS Modernos -->
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            color: #1a1a1a;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #2d3436;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .status-card {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .status-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .online {
+            color: #2ecc71;
+            font-weight: 600;
+        }
+
+        .offline {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+
+        .last-check {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem 0;
+            color: #7f8c8d;
+        }
+
+        .social-links {
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: #7f8c8d;
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #2d3436;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>🔴🟢 Caiu no Brasil</h1>
-    <div id="status-container"></div>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-signal"></i> Status de Serviços</h1>
+            <p>Verifique em tempo real o status dos principais serviços online</p>
+        </header>
 
-    <!-- 2º: Seu script DEPOIS do carregamento -->
+        <div class="status-grid" id="status-container">
+            <!-- Os cards serão inseridos aqui via JavaScript -->
+        </div>
+
+        <footer>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>© 2024 Caiu no Brasil? - Todos os direitos reservados</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script>
-        // Configure CREDENCIAIS (SUBSTITUA COM AS SUAS!)
+        // Configuração do Supabase (substitua com suas credenciais)
         const SUPABASE_URL = 'https://zyscwlksespdrpnrifzm.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5c2N3bGtzZXNwZHJwbnJpZnptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1NDE4OTUsImV4cCI6MjA1NTExNzg5NX0.qTTXzeuNdLvBbk9riuWM1pw1v3PkNu1vsyjnaHQmDN4';
-
-        // Inicialize o Supabase
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5c2N3bGtzZXNwZHJwbnJpZnptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1NDE4OTUsImV4cCI6MjA1NTExNzg5NX0.qTTXzeuNdLvBbk9riuWM1pw1v3PkNu1vsyjnaHQmDN4';
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // Função para buscar dados
+        // Função para carregar e exibir status
         async function fetchStatus() {
             try {
                 const { data, error } = await supabase
@@ -31,19 +155,26 @@
 
                 const container = document.getElementById('status-container');
                 container.innerHTML = data.map(app => `
-                    <div class="status">
-                        <h2>${app.nome}: ${app.status ? '🟢 ONLINE' : '🔴 OFFLINE'}</h2>
-                        <p>Última verificação: ${new Date(app.ultima_verificacao).toLocaleString('pt-BR')}</p>
+                    <div class="status-card">
+                        <h2>${app.nome}</h2>
+                        <p class="${app.status ? 'online' : 'offline'}">
+                            ${app.status ? '🟢 OPERACIONAL' : '🔴 FORA DO AR'}
+                        </p>
+                        <p class="last-check">
+                            Última verificação: ${new Date(app.ultima_verificacao).toLocaleString('pt-BR')}
+                        </p>
                     </div>
                 `).join('');
             } catch (err) {
-                console.error("Erro crítico:", err);
-                document.getElementById('status-container').innerHTML = 
-                    `<p>⚠️ O serviço está temporariamente indisponível. Tente recarregar.</p>`;
+                console.error("Erro ao carregar status:", err);
+                document.getElementById('status-container').innerHTML = `
+                    <div class="status-card">
+                        <p class="offline">⚠️ Não foi possível carregar os status</p>
+                    </div>
+                `;
             }
         }
 
-        // Inicie a busca
         fetchStatus();
     </script>
 </body>
