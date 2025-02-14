@@ -1,37 +1,25 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caiu no Brasil? | Status de Apps em Tempo Real</title>
-    <meta name="description" content="Verifique se WhatsApp, iFood, Nubank e outros serviços estão online agora">
-    <!-- Google AdSense (coloque após aprovação) -->
-    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-SEU_ID"></script> -->
-</head>
-<body>
-    <h1>🟢🔴 Caiu no Brasil?</h1>
-    <div id="status-container"></div>
-
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<!-- Carrega a biblioteca do Supabase PRIMEIRO -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>  
 <script>
-    const SUPABASE_URL = 'https://zyscwlksespdrpnrifzm.supabase.co';  
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5c2N3bGtzZXNwZHJwbnJpZnptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1NDE4OTUsImV4cCI6MjA1NTExNzg5NX0.qTTXzeuNdLvBbk9riuWM1pw1v3PkNu1vsyjnaHQmDN4';  
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    // Cole suas credenciais AQUI (obtenha do Supabase > Settings > API)
+    const SUPABASE_URL = 'https://SEU_ID.supabase.co';
+    const SUPABASE_KEY = 'sua-chave-publica-ANON';
+    
+    // Cria o cliente CORRETAMENTE ↓
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     async function fetchStatus() {
         const { data, error } = await supabase
             .from('status_apps')
             .select('*');
-        data.forEach(app => {
-                document.getElementById('status-container').innerHTML += `
-                    <div class="status-item">
-                        <h2>${app.nome}: ${app.status ? '🟢 ONLINE' : '🔴 OFFLINE'}</h2>
-                        <p>Última verificação: ${new Date(app.ultima_verificacao).toLocaleString()}</p>
-                    </div>
-                `;
-            });
-        }
-        fetchStatus();
-    </script>
-</body>
-</html>
+        
+        const container = document.getElementById('status-container');
+        container.innerHTML = data.map(app => `
+            <div class="status">
+                <h2>${app.nome}: ${app.status ? '🟢 ONLINE' : '🔴 OFFLINE'}</h2>
+                <p>Últ. verificação: ${new Date(app.ultima_verificacao).toLocaleString('pt-BR')}</p>
+            </div>
+        `).join('');
+    }
+    fetchStatus();
+</script>
