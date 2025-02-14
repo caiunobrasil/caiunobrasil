@@ -1,0 +1,46 @@
+name: Gerar URLs de Queda
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Executa todo dia à meia-noite
+  workflow_dispatch:  # Permite execução manual
+
+jobs:
+  generate-urls:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: Instalar dependências
+        run: |
+          python -m pip install supabase httpx
+          
+      - name: Gerar URLs
+        env:
+          SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}  
+        run: python -c "
+import os
+from supabase import create_client, Client
+
+SUPABASE_URL = 'https://zyscwlksespdrpnrifzm.supabase.co'
+SUPABASE_KEY = os.environ['eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5c2N3bGtzZXNwZHJwbnJpZnptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1NDE4OTUsImV4cCI6MjA1NTExNzg5NX0.qTTXzeuNdLvBbk9riuWM1pw1v3PkNu1vsyjnaHQmDN4']
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+servicos = ['WhatsApp', 'iFood', 'Nubank', 'Mercado Livre', 'Instagram', 'Telegram']
+anos = [2024, 2025, 2026]
+
+for servico, ano in [(s, a) for s in servicos for a in anos]:
+    slug = f'{servico.lower().replace(" ", "-")}-caiu-{ano}'
+    try:
+        supabase.table('urls').insert({
+            'slug': slug,
+            'servico': servico
+        }).execute()
+    except Exception as e:
+        pass  # URL já existe
+"
