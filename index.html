@@ -13,16 +13,16 @@
     <div id="status-container"></div>
 
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    <script>
-        const SUPABASE_URL = 'https://zyscwlksespdrpnrifzm.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5c2N3bGtzZXNwZHJwbnJpZnptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1NDE4OTUsImV4cCI6MjA1NTExNzg5NX0.qTTXzeuNdLvBbk9riuWM1pw1v3PkNu1vsyjnaHQmDN4';
-        const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+<script>
+    const SUPABASE_URL = 'https://zyscwlksespdrpnrifzm.supabase.co';  
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5c2N3bGtzZXNwZHJwbnJpZnptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1NDE4OTUsImV4cCI6MjA1NTExNzg5NX0.qTTXzeuNdLvBbk9riuWM1pw1v3PkNu1vsyjnaHQmDN4';  
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        async function fetchStatus() {
-            const { data, error } = await supabase
-                .from('status_apps')
-                .select('*');
-            data.forEach(app => {
+    async function fetchStatus() {
+        const { data, error } = await supabase
+            .from('status_apps')
+            .select('*');
+        data.forEach(app => {
                 document.getElementById('status-container').innerHTML += `
                     <div class="status-item">
                         <h2>${app.nome}: ${app.status ? '🟢 ONLINE' : '🔴 OFFLINE'}</h2>
