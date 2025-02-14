@@ -1,0 +1,22 @@
+name: Verificar Status Apps BR
+on:
+  schedule:
+    - cron: '*/3 * * * *' # A cada 3 minutos
+  workflow_dispatch:
+
+jobs:
+  check-services:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check WhatsApp
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://web.whatsapp.com)
+          if [ "$STATUS" -eq 200 ]; then
+            STATUS_SUPABASE=true
+          else
+            STATUS_SUPABASE=false
+          fi
+          curl -X PATCH "https://zyscwlksespdrpnrifzm.supabase.co/rest/v1/status_apps?nome=eq.WhatsApp" \
+            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5c2N3bGtzZXNwZHJwbnJpZnptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1NDE4OTUsImV4cCI6MjA1NTExNzg5NX0.qTTXzeuNdLvBbk9riuWM1pw1v3PkNu1vsyjnaHQmDN4" \
+            -H "Content-Type: application/json" \
+            -d '{"status": '$STATUS_SUPABASE'}'
