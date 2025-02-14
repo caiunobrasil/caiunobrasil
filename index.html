@@ -3,36 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caiu no Brasil | Status de Apps em Tempo Real</title>
+    <title>Caiu no Brasil | Status em Tempo Real</title>
+    <!-- 1º: Carregue a biblioteca do Supabase -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body>
-<!-- Carrega a biblioteca do Supabase PRIMEIRO -->
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>  
-<script>
-// Código ↓
+    <h1>🔴🟢 Caiu no Brasil</h1>
+    <div id="status-container"></div>
 
-// 1. Configure as credenciais (SUBSTITUA COM AS SUAS!)
- const SUPABASE_URL = 'https://zyscwlksespdrpnrifzm.supabase.co';
+    <!-- 2º: Seu script DEPOIS do carregamento -->
+    <script>
+        // Configure CREDENCIAIS (SUBSTITUA COM AS SUAS!)
+        const SUPABASE_URL = 'https://zyscwlksespdrpnrifzm.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5c2N3bGtzZXNwZHJwbnJpZnptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1NDE4OTUsImV4cCI6MjA1NTExNzg5NX0.qTTXzeuNdLvBbk9riuWM1pw1v3PkNu1vsyjnaHQmDN4';
-    
-// 2. Crie o cliente do Supabase
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY); 
 
-// 3. Busque os dados
-async function fetchStatus() {
-  const { data, error } = await supabase
-    .from('status_apps')
-    .select('*');
-  
-  const container = document.getElementById('status-container');
-  container.innerHTML = data.map(app => `
-    <div class="status">
-      <h2>${app.nome}: ${app.status ? '🟢 ONLINE' : '🔴 OFFLINE'}</h2>
-      <p>Atualizado em: ${new Date(app.ultima_verificacao).toLocaleString('pt-BR')}</p>
-    </div>
-  `).join('');
-}
-fetchStatus();
-</script>
+        // Inicialize o Supabase
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // Função para buscar dados
+        async function fetchStatus() {
+            try {
+                const { data, error } = await supabase
+                    .from('status_apps')
+                    .select('*');
+
+                if (error) throw error;
+
+                const container = document.getElementById('status-container');
+                container.innerHTML = data.map(app => `
+                    <div class="status">
+                        <h2>${app.nome}: ${app.status ? '🟢 ONLINE' : '🔴 OFFLINE'}</h2>
+                        <p>Última verificação: ${new Date(app.ultima_verificacao).toLocaleString('pt-BR')}</p>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error("Erro crítico:", err);
+                document.getElementById('status-container').innerHTML = 
+                    `<p>⚠️ O serviço está temporariamente indisponível. Tente recarregar.</p>`;
+            }
+        }
+
+        // Inicie a busca
+        fetchStatus();
+    </script>
 </body>
 </html>
