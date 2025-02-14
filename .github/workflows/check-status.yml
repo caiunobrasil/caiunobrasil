@@ -1,57 +1,62 @@
-name: Monitorar Status dos Serviços BR
+name: Pull Uptime Robot Status and Update Supabase
 
 on:
   schedule:
-    - cron: '*/5 * * * *'   # Executa a cada 5 minutos
-  workflow_dispatch:         # Permite execução manual
+    - cron: '*/5 * * * *'  # Executa a cada 5 minutos
+  workflow_dispatch:
 
 jobs:
   check-status:
     runs-on: ubuntu-latest
     steps:
-      - name: "Verificar status dos serviços"
+      - name: Obter status via Uptime Robot e atualizar Supabase
         env:
-          # URL do seu projeto Supabase (ex: https://abc123.supabase.co)
-          SUPABASE_URL: "https://zyscwlksespdrpnrifzm.supabase.co"
-          # A chave de serviço, armazenada como secret no GitHub
-          SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          UPTIMEROBOT_API_KEY: ${{ secrets.UPTIMEROBOT_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: |
-          # Defina a lista de serviços (ajuste conforme necessário)
-          declare -a SERVICES=("whatsapp" "ifood" "nubank" "instagram" "mercadolivre")
-          
-          for SERVICE in "${SERVICES[@]}"; do
-            # Defina o endpoint correto para cada serviço
-            if [ "$SERVICE" = "whatsapp" ]; then
-              URL="https://web.whatsapp.com"
-            elif [ "$SERVICE" = "ifood" ]; then
-              URL="https://www.ifood.com.br"
-            elif [ "$SERVICE" = "nubank" ]; then
-              URL="https://nubank.com.br"
-            elif [ "$SERVICE" = "instagram" ]; then
-              URL="https://www.instagram.com"
-            elif [ "$SERVICE" = "mercadolivre" ]; then
-              URL="https://www.mercadolivre.com.br"
+          # Instala 'jq' para parse de JSON
+          sudo apt-get update && sudo apt-get install -y jq
+
+          # 1) Chama a API do Uptime Robot (getMonitors)
+          RESPONSE=$(curl -s -X POST "https://api.uptimerobot.com/v2/getMonitors" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"api_key\": \"${UPTIMEROBOT_API_KEY}\",
+              \"format\": \"json\"
+            }")
+
+          # 2) Extrai a lista de monitores do JSON
+          #    Estrutura: { "stat":"ok", "monitors":[ {...}, {...} ] }
+          MONITORS=$(echo "$RESPONSE" | jq -c '.monitors[]')
+
+          # 3) Loop nos monitores
+          for MONITOR in $MONITORS; do
+            FRIENDLY_NAME=$(echo "$MONITOR" | jq -r '.friendly_name')
+            STATUS_CODE=$(echo "$MONITOR" | jq -r '.status')
+
+            # No Uptime Robot:
+            #   2 = Up
+            #   8 = Seems Down
+            #   9 = Down
+            #   0 = Paused
+            #   ...
+            if [ "$STATUS_CODE" -eq 2 ]; then
+              NEW_STATUS=true
             else
-              URL="https://www.$SERVICE.com.br"
+              NEW_STATUS=false
             fi
 
-            # Obtenha o código de status HTTP
-            STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$URL")
-            if [ "$STATUS_CODE" -eq 200 ]; then
-              STATUS="true"
-            else
-              STATUS="false"
-            fi
+            # 4) Atualiza Supabase
+            # Usa a service_role key para poder dar UPDATE
+            # Observação: nome=eq.[FRIENDLY_NAME] deve bater com o 'nome' da tabela
+            # Substituir espaços por %20
+            PATCH_URL="${SUPABASE_URL}/rest/v1/status_apps?nome=eq.${FRIENDLY_NAME// /%20}"
 
-            # Capitalize a primeira letra do nome do serviço para combinar com o valor na tabela (ex: WhatsApp, Ifood, Nubank)
-            SERVICE_CAP="$(tr '[:lower:]' '[:upper:]' <<< ${SERVICE:0:1})${SERVICE:1}"
-
-            # Atualize o registro no Supabase via PATCH
-            curl -X PATCH "$SUPABASE_URL/rest/v1/status_apps?nome=eq.${SERVICE_CAP}" \
-              -H "apikey: $SUPABASE_KEY" \
+            curl -s -X PATCH "$PATCH_URL" \
+              -H "apikey: $SUPABASE_SERVICE_KEY" \
               -H "Content-Type: application/json" \
-              -d "{\"status\": $STATUS}" \
-              --silent --show-error
-            echo "Atualizado ${SERVICE_CAP}: $STATUS (HTTP code: $STATUS_CODE)"
-          done
+              -d "{\"status\": $NEW_STATUS, \"ultima_verificacao\": \"$(date -u +%FT%TZ)\"}"
 
+            echo "Atualizado: $FRIENDLY_NAME => $NEW_STATUS (status code: $STATUS_CODE)"
+          done
