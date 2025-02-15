@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Caiu no Brasil? Status de Serviços - MD3</title>
+  <title>Caiu no Brasil? Status de Serviços</title>
 
-  <!-- Exemplo de fonte do Google (Roboto/Material Symbols), você pode ajustar -->
+  <!-- Fonte Roboto (MD3) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -14,27 +14,27 @@
   />
 
   <style>
-    /*
-      Paleta simplificada inspirada no Material 3:
-      - Background (Surface): #FFFBFE
-      - Surface Container (Cards): #FFFFFF
-      - On Surface (Texto): #1C1B1F
-      - Cores de status (verde, amarelo, vermelho) adaptadas do seu exemplo
+    /* 
+      Paleta simplificada inspirada no Material 3
+      e layout do card com heading, subheading e "botão" de status 
+      no canto inferior direito.
     */
 
     :root {
       --md-sys-color-background: #FFFBFE;
       --md-sys-color-surface: #FFFFFF;
       --md-sys-color-on-surface: #1C1B1F;
-      --md-sys-color-status-normal: #4caf50;    /* verde */
-      --md-sys-color-status-lentidao: #ff9800; /* amarelo */
-      --md-sys-color-status-caiu: #f44336;     /* vermelho */
 
-      /* Espaçamentos e arredondamentos (valores aproximados do MD3) */
+      /* Status Colors */
+      --md-status-normal: #4caf50;    /* verde */
+      --md-status-lentidao: #ff9800; /* amarelo */
+      --md-status-caiu: #f44336;     /* vermelho */
+
+      /* Espaçamentos e bordas */
       --md-shape-corner: 12px;
       --md-spacing: 20px;
 
-      /* Tipografia base (usando Roboto como exemplo) */
+      /* Tipografia */
       --md-typescale-body: 1rem;      /* ~16px */
       --md-typescale-title: 1.375rem; /* ~22px */
       --md-typescale-headline: 2rem;  /* ~32px */
@@ -60,65 +60,72 @@
     .header-card {
       background: var(--md-sys-color-surface);
       border-radius: var(--md-shape-corner);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Elevation level */
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
       padding: var(--md-spacing);
       text-align: center;
       margin-bottom: var(--md-spacing);
     }
-
     .header-card h1 {
       margin: 0;
       font-size: var(--md-typescale-headline);
       line-height: 1.2;
     }
 
-    /* Grid de Cards dos Serviços */
+    /* Grid de Cards */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: var(--md-spacing);
     }
 
-    /* Cards MD3 (Elevated) */
+    /* Card no estilo do Material Design 3, com “botão” no canto inferior direito */
     .card {
+      position: relative;
       background: var(--md-sys-color-surface);
       border-radius: var(--md-shape-corner);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Elevation level */
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
       padding: var(--md-spacing);
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 150px;
     }
-
     .card h2 {
-      margin: 10px 0;
+      margin: 0;
       font-size: var(--md-typescale-title);
       font-weight: 500;
     }
-
-    .card p {
-      margin: 5px 0;
+    .card .subheading {
       font-size: var(--md-typescale-body);
+      color: #555;
+      margin-bottom: 20px;
     }
 
-    /* Indicador de status (bolinha) */
-    .status-indicator {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      margin-bottom: 10px;
-      display: inline-block;
+    /* Botão de status */
+    .status-button {
+      position: absolute;
+      bottom: var(--md-spacing);
+      right: var(--md-spacing);
+      padding: 8px 16px;
+      border: none;
+      border-radius: var(--md-shape-corner);
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: default;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+    .btn-normal {
+      background-color: var(--md-status-normal);
+    }
+    .btn-lentidao {
+      background-color: var(--md-status-lentidao);
+    }
+    .btn-caiu {
+      background-color: var(--md-status-caiu);
     }
 
-    .normal {
-      background-color: var(--md-sys-color-status-normal);
-    }
-    .lentidao {
-      background-color: var(--md-sys-color-status-lentidao);
-    }
-    .caiu {
-      background-color: var(--md-sys-color-status-caiu);
-    }
-
-    /* Conteúdo adicional para SEO (opcional) */
+    /* Conteúdo adicional (SEO) */
     .content {
       max-width: 800px;
       margin: 40px auto;
@@ -139,17 +146,15 @@
   <header>
     <!-- Card de Título -->
     <div class="header-card">
-      <h1>Caiu no Brasil?<br />Status de Serviços</h1>
+      <h1>Caiu no Brasil?<br>Status de Serviços</h1>
     </div>
   </header>
 
   <main>
     <!-- Grid de Cards dos Serviços -->
-    <div class="card-grid" id="cardGrid">
-      <!-- Os cards serão gerados aqui -->
-    </div>
+    <div class="card-grid" id="cardGrid"></div>
 
-    <!-- Conteúdo adicional para SEO -->
+    <!-- Conteúdo adicional -->
     <div class="content">
       <p>
         Bem-vindo ao "Caiu no Brasil? Status de Serviços" – sua ferramenta de
@@ -186,63 +191,59 @@
     function getStatusOrder(site) {
       if (!site.status) return 5;
       switch (site.status) {
-        case "Caiu!":
-          return 1;
-        case "Lentidão":
-          return 2;
-        case "Normal":
-          return 3;
-        default:
-          return 5;
+        case "Caiu!": return 1;
+        case "Lentidão": return 2;
+        case "Normal": return 3;
+        default: return 5;
       }
     }
 
-    // Lista dos 40 domínios conforme sua tabela
-    const sites = [
-      { name: "WhatsApp", url: "https://www.whatsapp.com" },
-      { name: "Instagram", url: "https://www.instagram.com" },
-      { name: "Facebook", url: "https://www.facebook.com" },
-      { name: "X/Twitter", url: "https://twitter.com" },
-      { name: "Telegram", url: "https://telegram.org" },
-      { name: "TikTok", url: "https://www.tiktok.com" },
-      { name: "Nubank", url: "https://nubank.com.br" },
-      { name: "Mercado Pago", url: "https://www.mercadopago.com.br" },
-      { name: "PicPay", url: "https://www.picpay.com" },
-      { name: "Banco do Brasil", url: "https://www.bb.com.br" },
-      { name: "Itaú", url: "https://www.itau.com.br" },
-      { name: "Bradesco", url: "https://www.bradesco.com.br" },
-      { name: "Caixa", url: "https://www.caixa.gov.br" },
-      { name: "Inter", url: "https://www.bancointer.com.br" },
-      { name: "C6 Bank", url: "https://www.c6bank.com.br" },
-      { name: "iFood", url: "https://www.ifood.com.br" },
-      { name: "Mercado Livre", url: "https://www.mercadolivre.com.br" },
-      { name: "Amazon", url: "https://www.amazon.com.br" },
-      { name: "Rappi", url: "https://www.rappi.com.br" },
-      { name: "Uber", url: "https://www.uber.com/br/en/" },
-      { name: "99", url: "https://99app.com" },
-      { name: "Netflix", url: "https://www.netflix.com" },
-      { name: "Spotify", url: "https://www.spotify.com" },
-      { name: "Globoplay", url: "https://globoplay.globo.com" },
-      { name: "YouTube", url: "https://www.youtube.com" },
-      { name: "Claro", url: "https://www.claro.com.br" },
-      { name: "Vivo", url: "https://www.vivo.com.br" },
-      { name: "TIM", url: "https://www.tim.com.br" },
-      { name: "Oi", url: "https://www.oi.com.br" },
-      { name: "Steam", url: "https://store.steampowered.com" },
-      { name: "Fortnite", url: "https://www.epicgames.com/fortnite" },
-      { name: "Roblox", url: "https://www.roblox.com" },
-      { name: "Discord", url: "https://discord.com" },
-      { name: "Zoom", url: "https://zoom.us" },
-      { name: "Teams", url: "https://teams.microsoft.com" },
-      { name: "Slack", url: "https://slack.com" },
-      { name: "Google", url: "https://www.google.com" },
-      { name: "Outlook", url: "https://outlook.live.com" },
-      { name: "ChatGPT", url: "https://chat.openai.com" },
-      { name: "LinkedIn", url: "https://www.linkedin.com" }
-    ];
-
     // Lista de domínios especiais para tratar erro como Lentidão
     const specialDomains = ["itau.com.br", "caixa.gov.br", "vivo.com.br"];
+
+    // Lista dos 40 domínios
+    const sites = [
+      { name: "WhatsApp",         url: "https://www.whatsapp.com" },
+      { name: "Instagram",        url: "https://www.instagram.com" },
+      { name: "Facebook",         url: "https://www.facebook.com" },
+      { name: "X/Twitter",        url: "https://twitter.com" },
+      { name: "Telegram",         url: "https://telegram.org" },
+      { name: "TikTok",           url: "https://www.tiktok.com" },
+      { name: "Nubank",           url: "https://nubank.com.br" },
+      { name: "Mercado Pago",     url: "https://www.mercadopago.com.br" },
+      { name: "PicPay",           url: "https://www.picpay.com" },
+      { name: "Banco do Brasil",  url: "https://www.bb.com.br" },
+      { name: "Itaú",             url: "https://www.itau.com.br" },
+      { name: "Bradesco",         url: "https://www.bradesco.com.br" },
+      { name: "Caixa",            url: "https://www.caixa.gov.br" },
+      { name: "Inter",            url: "https://www.bancointer.com.br" },
+      { name: "C6 Bank",          url: "https://www.c6bank.com.br" },
+      { name: "iFood",            url: "https://www.ifood.com.br" },
+      { name: "Mercado Livre",    url: "https://www.mercadolivre.com.br" },
+      { name: "Amazon",           url: "https://www.amazon.com.br" },
+      { name: "Rappi",            url: "https://www.rappi.com.br" },
+      { name: "Uber",             url: "https://www.uber.com/br/en/" },
+      { name: "99",               url: "https://99app.com" },
+      { name: "Netflix",          url: "https://www.netflix.com" },
+      { name: "Spotify",          url: "https://www.spotify.com" },
+      { name: "Globoplay",        url: "https://globoplay.globo.com" },
+      { name: "YouTube",          url: "https://www.youtube.com" },
+      { name: "Claro",            url: "https://www.claro.com.br" },
+      { name: "Vivo",             url: "https://www.vivo.com.br" },
+      { name: "TIM",              url: "https://www.tim.com.br" },
+      { name: "Oi",               url: "https://www.oi.com.br" },
+      { name: "Steam",            url: "https://store.steampowered.com" },
+      { name: "Fortnite",         url: "https://www.epicgames.com/fortnite" },
+      { name: "Roblox",           url: "https://www.roblox.com" },
+      { name: "Discord",          url: "https://discord.com" },
+      { name: "Zoom",             url: "https://zoom.us" },
+      { name: "Teams",            url: "https://teams.microsoft.com" },
+      { name: "Slack",            url: "https://slack.com" },
+      { name: "Google",           url: "https://www.google.com" },
+      { name: "Outlook",          url: "https://outlook.live.com" },
+      { name: "ChatGPT",          url: "https://chat.openai.com" },
+      { name: "LinkedIn",         url: "https://www.linkedin.com" }
+    ];
 
     // Função para gerar os cards na página
     function updateCards() {
@@ -257,45 +258,45 @@
 
       const grid = document.getElementById("cardGrid");
       grid.innerHTML = "";
-      sites.forEach((site) => {
+      sites.forEach(site => {
+        // Cria o card
         const card = document.createElement("div");
         card.classList.add("card");
 
-        // Indicador de status (bolinha)
-        const indicator = document.createElement("span");
-        indicator.classList.add("status-indicator");
-        if (site.status === "Normal") {
-          indicator.classList.add("normal");
-        } else if (site.status === "Lentidão") {
-          indicator.classList.add("lentidao");
-        } else if (site.status === "Caiu!") {
-          indicator.classList.add("caiu");
-        } else {
-          indicator.style.backgroundColor = "#ccc";
+        // Título (nome do site)
+        const titleElem = document.createElement("h2");
+        titleElem.textContent = site.name;
+        card.appendChild(titleElem);
+
+        // Subheading (URL)
+        const subheadingElem = document.createElement("p");
+        subheadingElem.classList.add("subheading");
+        subheadingElem.textContent = site.url;
+        card.appendChild(subheadingElem);
+
+        // "Botão" de status no canto inferior direito
+        const statusButton = document.createElement("button");
+        statusButton.classList.add("status-button");
+        // Definimos a cor de fundo e o texto conforme o status
+        switch (site.status) {
+          case "Normal":
+            statusButton.classList.add("btn-normal");
+            statusButton.textContent = "Normal";
+            break;
+          case "Lentidão":
+            statusButton.classList.add("btn-lentidao");
+            statusButton.textContent = "Lentidão";
+            break;
+          case "Caiu!":
+            statusButton.classList.add("btn-caiu");
+            statusButton.textContent = "Caiu!";
+            break;
+          default:
+            statusButton.style.backgroundColor = "#ccc";
+            statusButton.textContent = "Verificando...";
+            break;
         }
-        card.appendChild(indicator);
-
-        // Nome do site
-        const nameElem = document.createElement("h2");
-        nameElem.textContent = site.name;
-        card.appendChild(nameElem);
-
-        // URL do site
-        const urlElem = document.createElement("p");
-        urlElem.textContent = site.url;
-        card.appendChild(urlElem);
-
-        // Status textual
-        const statusElem = document.createElement("p");
-        statusElem.textContent = site.status ? site.status : "Verificando...";
-        if (site.status === "Normal") {
-          statusElem.style.color = "#4caf50";
-        } else if (site.status === "Lentidão") {
-          statusElem.style.color = "#ff9800";
-        } else if (site.status === "Caiu!") {
-          statusElem.style.color = "#f44336";
-        }
-        card.appendChild(statusElem);
+        card.appendChild(statusButton);
 
         grid.appendChild(card);
       });
@@ -323,10 +324,48 @@
         });
     }
 
-    // Função para verificar todos os sites
+    // Função fetch com timeout
+    function fetchWithTimeout(url, options = {}, timeout = 30000) {
+      return Promise.race([
+        fetch(url, options),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error("timeout")), timeout)
+        )
+      ]);
+    }
+
+    // Função que inicia a verificação de todos os sites
     function checkAllSites() {
       sites.forEach(site => checkSite(site));
     }
+
+    // CSS para os "botões" de status
+    const style = document.createElement("style");
+    style.textContent = `
+      .status-button {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        padding: 8px 16px;
+        border: none;
+        border-radius: var(--md-shape-corner);
+        color: #fff;
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: default;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+      .btn-normal {
+        background-color: var(--md-status-normal);
+      }
+      .btn-lentidao {
+        background-color: var(--md-status-lentidao);
+      }
+      .btn-caiu {
+        background-color: var(--md-status-caiu);
+      }
+    `;
+    document.head.appendChild(style);
 
     // Inicializa os cards e inicia as verificações
     updateCards();
