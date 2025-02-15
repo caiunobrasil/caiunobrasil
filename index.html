@@ -3,43 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Meta tags SEO -->
+  <meta name="description" content="Caiu no Brasil? Status de Serviços – Confira em tempo real se os principais serviços e sites estão funcionando ou estão fora do ar. Monitore serviços como WhatsApp, Instagram, Facebook, Itaú, Caixa, Netflix, Google, entre outros.">
+  <meta name="keywords" content="status, serviços, monitoramento, Caiu no Brasil, WhatsApp, Instagram, Facebook, Twitter, Itaú, Caixa, Netflix, Google, tráfego orgânico">
+  <meta name="author" content="Caiu no Brasil">
+  <!-- Open Graph (para compartilhamento em redes sociais) -->
+  <meta property="og:title" content="Caiu no Brasil? Status de Serviços">
+  <meta property="og:description" content="Confira em tempo real o status dos principais serviços e sites. Descubra se estão funcionando, com lentidão ou se caíram!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://caiunobrasil.com.br">
+  <meta property="og:image" content="https://caiunobrasil.com.br/imagem-og.jpg">
   <title>Caiu no Brasil? Status de Serviços</title>
   <style>
-    /* Estilos gerais */
+    /* Estilos gerais e responsivos */
     body {
       font-family: "Roboto", Arial, sans-serif;
       background-color: #fdfdfd; /* off-white */
       color: #333; /* cinza escura */
       margin: 0;
       padding: 20px;
+      line-height: 1.6;
     }
-    /* Container do grid */
+    header, main, footer {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 20px;
+    }
+    /* Card do título */
+    .header-card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .header-card h1 {
+      margin: 0;
+      font-size: 2em;
+      line-height: 1.2;
+    }
+    /* Grid de cards */
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
     }
-    /* Estilo dos cards */
+    /* Estilo dos cards dos serviços */
     .card {
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       text-align: center;
     }
-    /* Card do título com margem inferior para separação */
-    .header-card {
-      margin-bottom: 20px;
+    .card h2 {
+      font-size: 1.2em;
+      margin: 10px 0;
     }
-    .header-card h1 {
-      margin: 0;
-      font-size: 1.8em;
-      line-height: 1.2;
+    .card p {
+      margin: 5px 0;
     }
     /* Indicador de status */
     .status-indicator {
@@ -60,18 +85,35 @@
       font-size: 0.9em;
       color: #777;
     }
+    /* Conteúdo adicional para SEO */
+    .content {
+      max-width: 800px;
+      margin: 40px auto;
+      font-size: 1em;
+      text-align: justify;
+    }
   </style>
 </head>
 <body>
-  <!-- Card de Título -->
-  <div class="card header-card">
-    <h1>Caiu no Brasil?<br>Status de Serviços</h1>
-  </div>
+  <header>
+    <!-- Card de Título -->
+    <div class="header-card">
+      <h1>Caiu no Brasil?<br>Status de Serviços</h1>
+    </div>
+  </header>
 
-  <!-- Grid de cards dos serviços -->
-  <div class="card-grid" id="cardGrid">
-    <!-- Os cards serão gerados aqui -->
-  </div>
+  <main>
+    <!-- Grid de cards dos serviços -->
+    <div class="card-grid" id="cardGrid">
+      <!-- Os cards serão gerados aqui -->
+    </div>
+    <!-- Conteúdo adicional para melhorar SEO -->
+    <div class="content">
+      <p>Bem-vindo ao Caiu no Brasil? Status de Serviços – sua ferramenta de monitoramento em tempo real para os principais serviços e sites que você utiliza diariamente. Aqui, você pode verificar instantaneamente se plataformas como WhatsApp, Instagram, Facebook, Itaú, Caixa, Netflix, Google e muitos outros estão funcionando, com lentidão ou se, de fato, estão indisponíveis.</p>
+      <p>Este serviço foi desenvolvido para ajudar usuários a entenderem o desempenho e a disponibilidade dos serviços que fazem parte do nosso cotidiano, contribuindo para decisões informadas e melhor experiência online. Se um site estiver com lentidão ou fora do ar, você saberá imediatamente e poderá se programar de acordo.</p>
+      <p>Confira a lista completa e atualizada de status dos serviços e fique por dentro das condições dos sites que você mais utiliza!</p>
+    </div>
+  </main>
 
   <footer>
     Copyright 2025 Caiu no Brasil.
@@ -90,12 +132,11 @@
 
     // Função que define a ordem de exibição com base no status
     function getStatusOrder(site) {
-      // Se não tiver status definido, coloque no final (maior valor)
       if (!site.status) return 5;
       switch (site.status) {
         case "Caiu!": return 1;
-        case "Lentidão": return 2;
-        case "Muito lento": return 3;
+        case "Muito lento": return 2;
+        case "Lentidão": return 3;
         case "Funcionando": return 4;
         default: return 5;
       }
@@ -147,7 +188,7 @@
 
     // Função para gerar os cards na página
     function updateCards() {
-      // Ordena os sites conforme o status (Caiu! no topo, depois Lentidão/Muito lento, depois Funcionando)
+      // Ordena os sites com base no status
       sites.sort((a, b) => getStatusOrder(a) - getStatusOrder(b));
       
       const grid = document.getElementById("cardGrid");
@@ -206,9 +247,9 @@
       fetchWithTimeout(site.url, { mode: 'no-cors' }, 30000)
         .then(() => {
           const elapsed = Date.now() - startTime;
-          if (elapsed <= 5000) {
+          if (elapsed <= 7000) {
             site.status = "Funcionando";
-          } else if (elapsed <= 10000) {
+          } else if (elapsed <= 15000) {
             site.status = "Lentidão";
           } else if (elapsed <= 30000) {
             site.status = "Muito lento";
@@ -218,30 +259,4 @@
           site.status = "Caiu!";
         })
         .finally(() => {
-          updateCards();
-        });
-    }
-
-    // Função fetch com timeout
-    function fetchWithTimeout(url, options = {}, timeout = 30000) {
-      return Promise.race([
-        fetch(url, options),
-        new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('timeout')), timeout)
-        )
-      ]);
-    }
-
-    // Função para verificar todos os sites
-    function checkAllSites() {
-      sites.forEach(site => {
-        checkSite(site);
-      });
-    }
-
-    // Inicializa os cards e inicia as verificações
-    updateCards();
-    checkAllSites();
-  </script>
-</body>
-</html>
+          update
