@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: "Verificar status dos serviços"
         env:
-          SUPABASE_URL: "https://SEU_ID.supabase.co"
+          SUPABASE_URL: "https://zyscwlksespdrpnrifzm.supabase.co"
           SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: |
           # Lista de serviços em letras minúsculas
