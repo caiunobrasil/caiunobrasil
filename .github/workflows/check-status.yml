@@ -238,12 +238,15 @@ jobs:
             fi
 
             # Atualize o registro no Supabase via PATCH (substituir espaços por %20 no nome)
-            SERVICE_URL=$(echo "$SERVICE_CAP" | sed 's/ /%20/g')
+            SERVICE_URL=$( "$SERVICE_CAP" | sed 's/ /%20/g')
             
             curl -s -X PATCH "$SUPABASE_URL/rest/v1/status_apps?nome=eq.$SERVICE_URL" \
               -H "apikey: $SUPABASE_KEY" \
               -H "Content-Type: application/json" \
               -d "{\"status\": $STATUS, \"ultima_verificacao\": \"$(date -u +%FT%TZ)\"}" > /dev/null
 
-            echo "Atualizado ${SERVICE_CAP}: $STATUS (HTTP code: $STATUS_CODE)"
+             "Atualizado ${SERVICE_CAP}: $STATUS (HTTP code: $STATUS_CODE)"
+
+             echo "SUPABASE_URL: $SUPABASE_URL"
+
           done
