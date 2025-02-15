@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Caiu no Brasil? Status de Serviços</title>
   <style>
-    /* Cores e fontes */
+    /* Estilos gerais */
     body {
       font-family: "Roboto", Arial, sans-serif;
       background-color: #fdfdfd; /* off-white */
@@ -21,7 +21,7 @@
       max-width: 1200px;
       margin: 0 auto;
     }
-    /* Card padrão */
+    /* Estilo dos cards */
     .card {
       background: #fff;
       border-radius: 8px;
@@ -32,21 +32,11 @@
       align-items: center;
       text-align: center;
     }
-    /* Card especial do título */
-    .header-card {
-      background: #333;
-      color: #fff;
+    .card h1, .card h2 {
+      margin: 0 0 10px;
     }
-    /* Faz com que o card de cabeçalho ocupe 4 colunas em telas maiores */
-    @media (min-width: 768px) {
-      .header-card {
-        grid-column: span 4;
-      }
-    }
-    .header-card h1 {
-      margin: 0;
-      font-size: 1.8em;
-      line-height: 1.2;
+    .card p {
+      margin: 5px 0;
     }
     /* Indicador de status */
     .status-indicator {
@@ -57,6 +47,8 @@
       display: inline-block;
     }
     .funcionando { background-color: #4caf50; } /* verde */
+    .lentidao { background-color: #ff9800; } /* amarelo */
+    .muito-lento { background-color: #ff5722; } /* laranja/vermelho */
     .caiu { background-color: #f44336; } /* vermelho */
     /* Rodapé */
     footer {
@@ -68,8 +60,8 @@
   </style>
 </head>
 <body>
-  <!-- Card do título -->
-  <div class="card header-card">
+  <!-- Card de Título (igual aos demais cards) -->
+  <div class="card">
     <h1>Caiu no Brasil?<br>Status de Serviços</h1>
   </div>
 
@@ -83,8 +75,8 @@
   </footer>
 
   <script>
-    // Função fetch com timeout para reduzir falsos positivos/negativos
-    function fetchWithTimeout(url, options = {}, timeout = 5000) {
+    // Função fetch com timeout (valor máximo: 30 segundos)
+    function fetchWithTimeout(url, options = {}, timeout = 30000) {
       return Promise.race([
         fetch(url, options),
         new Promise((_, reject) =>
@@ -95,10 +87,10 @@
 
     // Lista dos 40 domínios conforme sua tabela
     const sites = [
-      { name: "WhatsApp",         url: "https://web.whatsapp.com" },
+      { name: "WhatsApp",         url: "https://www.whatsapp.com" },
       { name: "Instagram",         url: "https://www.instagram.com" },
       { name: "Facebook",          url: "https://www.facebook.com" },
-      { name: "X/Twitter",         url: "https://x.com" },
+      { name: "X/Twitter",         url: "https://twitter.com" },
       { name: "Telegram",          url: "https://telegram.org" },
       { name: "TikTok",            url: "https://www.tiktok.com" },
       { name: "Nubank",            url: "https://nubank.com.br" },
@@ -150,6 +142,10 @@
         indicator.classList.add("status-indicator");
         if (site.status === "Funcionando") {
           indicator.classList.add("funcionando");
+        } else if (site.status === "Lentidão") {
+          indicator.classList.add("lentidao");
+        } else if (site.status === "Muito lento") {
+          indicator.classList.add("muito-lento");
         } else if (site.status === "Caiu!") {
           indicator.classList.add("caiu");
         } else {
@@ -172,6 +168,10 @@
         statusElem.textContent = site.status ? site.status : "Verificando...";
         if (site.status === "Funcionando") {
           statusElem.style.color = "#4caf50";
+        } else if (site.status === "Lentidão") {
+          statusElem.style.color = "#ff9800";
+        } else if (site.status === "Muito lento") {
+          statusElem.style.color = "#ff5722";
         } else if (site.status === "Caiu!") {
           statusElem.style.color = "#f44336";
         }
@@ -181,11 +181,20 @@
       });
     }
 
-    // Função para verificar o status de um site com timeout
+    // Função para verificar o status de um site, medindo o tempo de resposta
     function checkSite(site) {
-      fetchWithTimeout(site.url, { mode: 'no-cors' }, 5000)
+      const startTime = Date.now();
+      // Usamos fetchWithTimeout com timeout total de 30 segundos
+      fetchWithTimeout(site.url, { mode: 'no-cors' }, 30000)
         .then(() => {
-          site.status = "Funcionando";
+          const elapsed = Date.now() - startTime;
+          if (elapsed <= 5000) {
+            site.status = "Funcionando";
+          } else if (elapsed <= 10000) {
+            site.status = "Lentidão";
+          } else {
+            site.status = "Muito lento";
+          }
         })
         .catch(() => {
           site.status = "Caiu!";
@@ -196,7 +205,7 @@
     }
 
     // Função fetch com timeout
-    function fetchWithTimeout(url, options = {}, timeout = 5000) {
+    function fetchWithTimeout(url, options = {}, timeout = 30000) {
       return Promise.race([
         fetch(url, options),
         new Promise((_, reject) =>
@@ -205,14 +214,14 @@
       ]);
     }
 
-    // Verifica todos os sites
+    // Função para verificar todos os sites
     function checkAllSites() {
       sites.forEach(site => {
         checkSite(site);
       });
     }
 
-    // Inicializa os cards e inicia a verificação
+    // Inicializa os cards e inicia as verificações
     updateCards();
     checkAllSites();
   </script>
