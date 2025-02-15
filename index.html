@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background: #f5f5f5;
+            background: #fbfbf8;
             margin: 0;
             padding: 20px;
         }
@@ -75,13 +75,20 @@
         <!-- Os cards serão gerados aqui via JavaScript -->
     </div>
     <script>
-        const SUPABASE_URL = 'https://zyscwlksespdrpnrifzm.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5c2N3bGtzZXNwZHJwbnJpZnptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1NjY4NzQsImV4cCI6MjA1NTE0Mjg3NH0.6_oROXE_6Zve-HfQBiHbFpAVJKZNM_JCAl4Uqow9fXo';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        async function fetchCredentials() {
+            const response = await fetch('/.netlify/functions/fetchSupabaseCredentials');
+            const credentials = await response.json();
+            return credentials;
+        }
 
         async function fetchStatus() {
             try {
+                const { SUPABASE_URL, SUPABASE_ANON_KEY } = await fetchCredentials();
+                const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
                 const { data, error } = await supabase.from('status_apps').select('*');
+                console.log('Data:', data);
+                console.log('Error:', error);
+
                 if (error) {
                     console.error(error);
                     return;
