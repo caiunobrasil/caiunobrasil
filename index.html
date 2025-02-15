@@ -4,8 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Caiu no Brasil? Status de Serviços</title>
-
-    <!-- Fonte Roboto recomendada pelo MD3 -->
+    <!-- Para aproximar a tipografia do MD3, usamos Roboto como fallback -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -14,60 +13,55 @@
     />
 
     <style>
-      /* Variáveis inspiradas no Material Design 3 */
+      /* Variáveis inspiradas nos tokens do MD3 (simplificados) */
       :root {
-        --md-sys-color-background: #FFFBFE;
-        --md-sys-color-surface: #FFFFFF;
-        --md-sys-color-primary: #6750A4;
-        --md-sys-color-secondary: #625B71;
-        --md-sys-color-on-primary: #FFFFFF;
-        --md-sys-color-on-surface: #1C1B1F;
+        --md-background: #FFFBFE;
+        --md-surface: #FFFFFF;
+        --md-primary: #6750A4;
+        --md-secondary: #625B71;
+        --md-on-primary: #FFFFFF;
+        --md-on-surface: #1C1B1F;
 
-        /* Status Colors */
+        /* Status */
         --md-status-normal: #4caf50;
         --md-status-lentidao: #ff9800;
         --md-status-caiu: #f44336;
 
-        /* Espaçamentos e cantos – valores inspirados em MD3 */
+        /* Espaçamentos e dimensões */
         --md-spacing: 20px;
-        --md-shape-corner: 28px;
+        --md-border-radius: 16px; /* Aproximando um valor típico (pode variar) */
+        --md-card-min-height: 220px;
 
-        /* Tipografia */
-        --md-typescale-headline: 2.5rem;  /* Aproximadamente 40px */
-        --md-typescale-title: 1.375rem;   /* Aproximadamente 22px */
-        --md-typescale-body: 1rem;        /* Aproximadamente 16px */
+        /* Tipografia MD3 – usamos Roboto como exemplo */
+        --md-headline-size: 2.5rem; /* ~40px */
+        --md-title-size: 1.375rem;  /* ~22px */
+        --md-body-size: 1rem;       /* ~16px */
       }
 
-      /* Reset básico e configuração de corpo */
+      /* Configurações básicas */
       body {
         margin: 0;
         padding: var(--md-spacing);
-        background-color: var(--md-sys-color-background);
-        color: var(--md-sys-color-on-surface);
+        background-color: var(--md-background);
+        color: var(--md-on-surface);
         font-family: "Roboto", sans-serif;
         line-height: 1.5;
       }
-      header,
-      main,
-      footer {
+      header, main, footer {
         max-width: 1200px;
         margin: 0 auto;
       }
 
-      /* Card do topo – mesmo tamanho dos cards de serviço */
+      /* Card do Topo – design MD3 com gradiente e dimensões iguais aos demais cards */
       .top-card {
         position: relative;
-        background: linear-gradient(
-          135deg,
-          var(--md-sys-color-primary),
-          var(--md-sys-color-secondary)
-        );
-        border-radius: var(--md-shape-corner);
+        background: linear-gradient(135deg, var(--md-primary), var(--md-secondary));
+        border-radius: var(--md-border-radius);
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         padding: var(--md-spacing);
-        color: var(--md-sys-color-on-primary);
+        color: var(--md-on-primary);
         margin-bottom: var(--md-spacing);
-        min-height: 220px;
+        min-height: var(--md-card-min-height);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -76,32 +70,32 @@
       }
       .top-card h1 {
         margin: 0;
-        font-size: var(--md-typescale-headline);
+        font-size: var(--md-headline-size);
         font-weight: 700;
         line-height: 1.2;
       }
       .top-card h2 {
         margin: 8px 0 0;
-        font-size: var(--md-typescale-title);
+        font-size: var(--md-title-size);
         font-weight: 500;
         opacity: 0.9;
       }
 
-      /* Grid de cards para serviços */
+      /* Grid de Cards para os serviços */
       .card-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: var(--md-spacing);
       }
 
-      /* Cards de serviço – estilo Elevated Card do MD3 */
+      /* Cards de Serviço – Elevated Card MD3 */
       .card {
         position: relative;
-        background: var(--md-sys-color-surface);
-        border-radius: var(--md-shape-corner);
+        background: var(--md-surface);
+        border-radius: var(--md-border-radius);
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         padding: var(--md-spacing);
-        min-height: 220px;
+        min-height: var(--md-card-min-height);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -109,23 +103,23 @@
       }
       .card h2 {
         margin: 0;
-        font-size: var(--md-typescale-title);
+        font-size: var(--md-title-size);
         font-weight: 500;
       }
       .card .subheading {
-        font-size: var(--md-typescale-body);
+        font-size: var(--md-body-size);
         color: #555;
         margin: 5px 0 30px;
       }
 
-      /* Botão de status (estilo "chip" ou botão no canto) */
+      /* Botão de status (estilo chip) posicionado no canto inferior direito */
       .status-button {
         position: absolute;
         bottom: var(--md-spacing);
         right: var(--md-spacing);
         padding: 8px 16px;
         border: none;
-        border-radius: var(--md-shape-corner);
+        border-radius: var(--md-border-radius);
         color: #fff;
         font-size: 0.875rem;
         font-weight: 500;
@@ -153,7 +147,7 @@
   </head>
   <body>
     <header>
-      <!-- Card do topo colorido, seguindo MD3 -->
+      <!-- Card do Topo com design MD3 -->
       <div class="top-card">
         <h1>Caiu no Brasil?</h1>
         <h2>Status de Serviços</h2>
@@ -170,7 +164,7 @@
     </footer>
 
     <script>
-      // Função fetch com timeout (valor máximo: 30 segundos)
+      // Função fetch com timeout (máximo de 30 segundos)
       function fetchWithTimeout(url, options = {}, timeout = 30000) {
         return Promise.race([
           fetch(url, options),
@@ -180,7 +174,7 @@
         ]);
       }
 
-      // Define a ordem de exibição: Caiu! > Lentidão > Normal (se igual, ordem alfabética)
+      // Função para determinar a ordem: "Caiu!" > "Lentidão" > "Normal". Se igual, ordem alfabética.
       function getStatusOrder(site) {
         if (!site.status) return 5;
         switch (site.status) {
@@ -195,7 +189,7 @@
         }
       }
 
-      // Lista de domínios especiais para tratar erro como Lentidão
+      // Domínios especiais: se ocorrer erro, assume lentidão
       const specialDomains = ["itau.com.br", "caixa.gov.br", "vivo.com.br"];
 
       // Lista dos 40 domínios
@@ -242,21 +236,17 @@
         { name: "LinkedIn",         url: "https://www.linkedin.com" }
       ];
 
-      // Gera e atualiza os cards de serviço
+      // Função para gerar os cards dos serviços
       function updateCards() {
-        // Ordena os sites: "Caiu!" primeiro, depois "Lentidão", por último "Normal". Se igual, ordem alfabética.
+        // Ordena os sites: Caiu! primeiro, depois Lentidão, depois Normal; se igual, ordem alfabética.
         sites.sort((a, b) => {
-          const orderDiff = getStatusOrder(a) - getStatusOrder(b);
-          if (orderDiff === 0) {
-            return a.name.localeCompare(b.name);
-          }
-          return orderDiff;
+          const diff = getStatusOrder(a) - getStatusOrder(b);
+          return diff === 0 ? a.name.localeCompare(b.name) : diff;
         });
 
         const grid = document.getElementById("cardGrid");
         grid.innerHTML = "";
         sites.forEach(site => {
-          // Cria o card
           const card = document.createElement("div");
           card.classList.add("card");
 
@@ -271,10 +261,9 @@
           subheadingElem.textContent = site.url;
           card.appendChild(subheadingElem);
 
-          // Botão de status
+          // Botão de status (estilo chip)
           const statusButton = document.createElement("button");
           statusButton.classList.add("status-button");
-
           switch (site.status) {
             case "Normal":
               statusButton.classList.add("btn-normal");
@@ -293,13 +282,12 @@
               statusButton.textContent = "Verificando...";
               break;
           }
-
           card.appendChild(statusButton);
           grid.appendChild(card);
         });
       }
 
-      // Verifica o status de cada site, medindo o tempo de resposta
+      // Função para verificar o status de cada site
       function checkSite(site) {
         const startTime = Date.now();
         fetchWithTimeout(site.url, { mode: "no-cors" }, 30000)
@@ -312,10 +300,7 @@
             }
           })
           .catch(() => {
-            // Se ocorrer erro, e o domínio for especial, tratamos como Lentidão
-            const isSpecial = specialDomains.some((domain) =>
-              site.url.includes(domain)
-            );
+            const isSpecial = specialDomains.some(domain => site.url.includes(domain));
             site.status = isSpecial ? "Lentidão" : "Caiu!";
           })
           .finally(() => {
@@ -335,7 +320,7 @@
 
       // Inicia a verificação de todos os sites
       function checkAllSites() {
-        sites.forEach((site) => checkSite(site));
+        sites.forEach(site => checkSite(site));
       }
 
       updateCards();
@@ -343,3 +328,4 @@
     </script>
   </body>
 </html>
+
