@@ -25,7 +25,8 @@ jobs:
               \"api_key\": \"${UPTIMEROBOT_API_KEY}\",
               \"format\": \"json\"
             }")
-
+          echo "Resposta da API: $RESPONSE"
+          echo "$RESPONSE" | jq .
           # 2) Extrai a lista de monitores do JSON
           #    Estrutura: { "stat":"ok", "monitors":[ {...}, {...} ] }
           MONITORS=$(echo "$RESPONSE" | jq -c '.monitors[]')
