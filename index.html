@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Caiu no Brasil? <p></p>Status de Serviços</title>
+  <title>Caiu no Brasil? Status de Serviços</title>
   <style>
-    /* Estilos gerais */
+    /* Cores e fontes */
     body {
       font-family: "Roboto", Arial, sans-serif;
       background-color: #fdfdfd; /* off-white */
@@ -13,11 +13,7 @@
       margin: 0;
       padding: 20px;
     }
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    /* Grid de cards */
+    /* Container do grid */
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -25,7 +21,7 @@
       max-width: 1200px;
       margin: 0 auto;
     }
-    /* Estilo dos cards */
+    /* Card padrão */
     .card {
       background: #fff;
       border-radius: 8px;
@@ -36,13 +32,21 @@
       align-items: center;
       text-align: center;
     }
-    .card h2 {
-      font-size: 1.2em;
-      margin: 10px 0;
+    /* Card especial do título */
+    .header-card {
+      background: #333;
+      color: #fff;
     }
-    .card p {
-      font-size: 0.95em;
-      margin: 10px 0;
+    /* Faz com que o card de cabeçalho ocupe 4 colunas em telas maiores */
+    @media (min-width: 768px) {
+      .header-card {
+        grid-column: span 4;
+      }
+    }
+    .header-card h1 {
+      margin: 0;
+      font-size: 1.8em;
+      line-height: 1.2;
     }
     /* Indicador de status */
     .status-indicator {
@@ -64,8 +68,12 @@
   </style>
 </head>
 <body>
-  <h1>Caiu no Brasil? Status de Serviços</h1>
-  
+  <!-- Card do título -->
+  <div class="card header-card">
+    <h1>Caiu no Brasil?<br>Status de Serviços</h1>
+  </div>
+
+  <!-- Grid de cards dos serviços -->
   <div class="card-grid" id="cardGrid">
     <!-- Os cards serão gerados aqui -->
   </div>
@@ -75,12 +83,22 @@
   </footer>
 
   <script>
+    // Função fetch com timeout para reduzir falsos positivos/negativos
+    function fetchWithTimeout(url, options = {}, timeout = 5000) {
+      return Promise.race([
+        fetch(url, options),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('timeout')), timeout)
+        )
+      ]);
+    }
+
     // Lista dos 40 domínios conforme sua tabela
     const sites = [
       { name: "WhatsApp",         url: "https://web.whatsapp.com" },
       { name: "Instagram",         url: "https://www.instagram.com" },
       { name: "Facebook",          url: "https://www.facebook.com" },
-      { name: "X/Twitter",         url: "https://twitter.com" },
+      { name: "X/Twitter",         url: "https://x.com" },
       { name: "Telegram",          url: "https://telegram.org" },
       { name: "TikTok",            url: "https://www.tiktok.com" },
       { name: "Nubank",            url: "https://nubank.com.br" },
@@ -135,7 +153,6 @@
         } else if (site.status === "Caiu!") {
           indicator.classList.add("caiu");
         } else {
-          // Enquanto verifica, cor neutra
           indicator.style.backgroundColor = "#ccc";
         }
         card.appendChild(indicator);
@@ -164,11 +181,9 @@
       });
     }
 
-    // Função para verificar o status de um site
+    // Função para verificar o status de um site com timeout
     function checkSite(site) {
-      // Utilizamos fetch com 'no-cors' para contornar restrições de CORS.
-      // OBS.: fetch com 'no-cors' pode não ser 100% confiável, pois não permite acesso à resposta.
-      fetch(site.url, { mode: 'no-cors' })
+      fetchWithTimeout(site.url, { mode: 'no-cors' }, 5000)
         .then(() => {
           site.status = "Funcionando";
         })
@@ -180,9 +195,21 @@
         });
     }
 
-    // Função para verificar todos os sites
+    // Função fetch com timeout
+    function fetchWithTimeout(url, options = {}, timeout = 5000) {
+      return Promise.race([
+        fetch(url, options),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('timeout')), timeout)
+        )
+      ]);
+    }
+
+    // Verifica todos os sites
     function checkAllSites() {
-      sites.forEach(site => checkSite(site));
+      sites.forEach(site => {
+        checkSite(site);
+      });
     }
 
     // Inicializa os cards e inicia a verificação
