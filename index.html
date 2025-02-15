@@ -81,6 +81,14 @@
       background-color: var(--md-color-background);
       color: var(--md-color-on-surface);
       line-height: 1.5;
+    }
+    
+    /*==========================
+      Contêiner Principal
+    ==========================*/
+    .site-container {
+      max-width: 1200px;      /* Limita a largura de todo o site */
+      margin: 0 auto;         /* Centraliza horizontalmente */
       padding: var(--md-spacing);
     }
     
@@ -89,7 +97,6 @@
     ==========================*/
     .md3-hero {
       width: 100%;
-      min-height: 320px;
       position: relative;
       overflow: hidden;
       color: #fff;
@@ -98,8 +105,9 @@
       justify-content: center;
       text-align: center;
       border-radius: var(--md-border-radius);
+      min-height: 320px;
       margin-bottom: var(--md-spacing);
-    
+      
       /* Exemplo de gradiente de fundo */
       background: linear-gradient(100deg, #6750a4 0%, #9e6fd7 50%, #b48ae2 100%);
     }
@@ -107,14 +115,14 @@
     /* Conteúdo principal do Hero */
     .md3-hero-content {
       z-index: 1; /* Para ficar acima dos shapes */
-      max-width: 1200px;
+      width: 100%;
       padding: var(--md-spacing);
     }
     
     /* Título principal (Hero) */
     .md3-hero-content h1 {
       font-size: var(--md-headline-size);
-      font-weight: 700;
+      font-weight: 400;
       margin-bottom: 16px;
       line-height: 1.2;
     }
@@ -153,17 +161,12 @@
     }
     
     /*==========================
-      Conteúdo Principal
+      Área Principal e Grid de Cards
     ==========================*/
     .md3-main-content {
-      max-width: 1200px;
-      margin: 0 auto;
       padding-top: var(--md-spacing);
     }
     
-    /*==========================
-      Grade de Cards
-    ==========================*/
     .md3-card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -255,24 +258,27 @@
   </style>
 </head>
 <body>
-  <header class="md3-hero">
-    <div class="md3-hero-content">
-      <h1>Caiu no Brasil?</h1>
-      <p>Status de Serviços</p>
-    </div>
-  </header>
+  <div class="site-container">
+    <!-- Header (Hero) -->
+    <header class="md3-hero">
+      <div class="md3-hero-content">
+        <h1>Caiu no Brasil?</h1>
+        <p>Status de Serviços</p>
+      </div>
+    </header>
 
-  <!-- Área principal -->
-  <main class="md3-main-content">
-    <div class="md3-card-grid" id="cardGrid">
-      <!-- Os cards serão inseridos via JavaScript -->
-    </div>
-  </main>
+    <!-- Área Principal (Cards) -->
+    <main class="md3-main-content">
+      <div class="md3-card-grid" id="cardGrid">
+        <!-- Os cards serão inseridos via JavaScript -->
+      </div>
+    </main>
 
-  <!-- Rodapé -->
-  <footer class="md3-footer">
-    <p>&copy; 2025 Caiu no Brasil.</p>
-  </footer>
+    <!-- Rodapé -->
+    <footer class="md3-footer">
+      <p>&copy; 2025 Caiu no Brasil.</p>
+    </footer>
+  </div>
 
   <!-- Script principal -->
   <script>
