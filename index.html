@@ -5,44 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Caiu no Brasil? Status de Serviços</title>
 
-  <!-- Fonte Roboto (MD3) -->
+  <!-- Fonte Roboto recomendada pelo MD3 -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
 
   <style>
-    /*
-      Paleta simplificada inspirada no Material 3
-      e layout de cards com "botão" no canto inferior direito para status.
-    */
-
+    /* Variáveis inspiradas no Material Design 3 */
     :root {
+      /* Cores do sistema */
       --md-sys-color-background: #FFFBFE;
       --md-sys-color-surface: #FFFFFF;
+      --md-sys-color-primary: #6750A4;
+      --md-sys-color-on-primary: #FFFFFF;
+      --md-sys-color-secondary: #625B71;
       --md-sys-color-on-surface: #1C1B1F;
-
-      /* Gradiente de exemplo para o topo */
-      --md-top-card-gradient-start: #6750A4;
-      --md-top-card-gradient-end: #D0BCFF;
 
       /* Cores de status */
       --md-status-normal: #4caf50;    /* verde */
-      --md-status-lentidao: #ff9800; /* amarelo */
-      --md-status-caiu: #f44336;     /* vermelho */
+      --md-status-lentidao: #ff9800;    /* amarelo */
+      --md-status-caiu: #f44336;        /* vermelho */
 
-      /* Espaçamentos e cantos arredondados */
-      --md-shape-corner: 12px;
+      /* Espaçamentos, fontes e cantos */
       --md-spacing: 20px;
-
-      /* Tipografia */
-      --md-typescale-body: 1rem;      /* ~16px */
-      --md-typescale-title: 1.375rem; /* ~22px */
-      --md-typescale-headline: 2rem;  /* ~32px */
+      --md-shape-corner: 28px;
+      --md-typescale-body: 1rem;        /* 16px */
+      --md-typescale-title: 1.375rem;   /* 22px */
+      --md-typescale-headline: 2.5rem;  /* 40px */
     }
 
+    /* Estilos básicos */
     body {
       margin: 0;
       padding: var(--md-spacing);
@@ -51,61 +43,59 @@
       font-family: "Roboto", sans-serif;
       line-height: 1.5;
     }
-
-    header,
-    main,
-    footer {
+    header, main, footer {
       max-width: 1200px;
       margin: 0 auto;
     }
 
-    /* Card do topo, mesmo tamanho aproximado dos demais */
+    /* Card superior (top card) com design MD3 */
     .top-card {
-      background: linear-gradient(
-        45deg,
-        var(--md-top-card-gradient-start),
-        var(--md-top-card-gradient-end)
-      );
+      position: relative;
+      background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-secondary));
       border-radius: var(--md-shape-corner);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
       padding: var(--md-spacing);
-      color: #fff;
+      color: var(--md-sys-color-on-primary);
       margin-bottom: var(--md-spacing);
-      min-height: 180px; /* Ajuste para ficar semelhante aos cards de serviço */
+      min-height: 220px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
+      text-align: center;
     }
     .top-card h1 {
       margin: 0;
-      font-size: var(--md-typescale-title);
+      font-size: var(--md-typescale-headline);
       font-weight: 700;
+      line-height: 1.2;
     }
     .top-card h2 {
-      margin: 5px 0 0;
-      font-size: var(--md-typescale-body);
-      font-weight: 400;
+      margin: 8px 0 0;
+      font-size: var(--md-typescale-title);
+      font-weight: 500;
       opacity: 0.9;
     }
 
-    /* Grid de Cards */
+    /* Grid de cards para serviços */
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: var(--md-spacing);
     }
 
-    /* Card do serviço */
+    /* Card de serviço (elevated card MD3) */
     .card {
       position: relative;
       background: var(--md-sys-color-surface);
       border-radius: var(--md-shape-corner);
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
       padding: var(--md-spacing);
-      min-height: 180px; /* mesmo valor do top-card */
+      min-height: 220px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      overflow: hidden;
     }
     .card h2 {
       margin: 0;
@@ -118,11 +108,11 @@
       margin: 5px 0 30px;
     }
 
-    /* Botão de status */
+    /* Botão de status posicionado no canto inferior direito */
     .status-button {
       position: absolute;
-      bottom: 20px;
-      right: 20px;
+      bottom: var(--md-spacing);
+      right: var(--md-spacing);
       padding: 8px 16px;
       border: none;
       border-radius: var(--md-shape-corner);
@@ -132,20 +122,14 @@
       cursor: default;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
-    .btn-normal {
-      background-color: var(--md-status-normal);
-    }
-    .btn-lentidao {
-      background-color: var(--md-status-lentidao);
-    }
-    .btn-caiu {
-      background-color: var(--md-status-caiu);
-    }
+    .btn-normal { background-color: var(--md-status-normal); }
+    .btn-lentidao { background-color: var(--md-status-lentidao); }
+    .btn-caiu { background-color: var(--md-status-caiu); }
 
     /* Rodapé */
     footer {
       text-align: center;
-      margin-top: 40px;
+      margin-top: var(--md-spacing);
       font-size: 0.9rem;
       color: #777;
     }
@@ -153,7 +137,7 @@
 </head>
 <body>
   <header>
-    <!-- Card do topo colorido (mesmo tamanho aproximado dos outros) -->
+    <!-- Card do topo seguindo Material Design 3 -->
     <div class="top-card">
       <h1>Caiu no Brasil?</h1>
       <h2>Status de Serviços</h2>
@@ -180,25 +164,21 @@
       ]);
     }
 
-    // Função que define a ordem de exibição com base no status e, se igual, por ordem alfabética
+    // Função que define a ordem de exibição com base no status (Caiu! > Lentidão > Normal) e, se igual, por ordem alfabética
     function getStatusOrder(site) {
       if (!site.status) return 5;
       switch (site.status) {
-        case "Caiu!":
-          return 1;
-        case "Lentidão":
-          return 2;
-        case "Normal":
-          return 3;
-        default:
-          return 5;
+        case "Caiu!": return 1;
+        case "Lentidão": return 2;
+        case "Normal": return 3;
+        default: return 5;
       }
     }
 
     // Lista de domínios especiais para tratar erro como Lentidão
     const specialDomains = ["itau.com.br", "caixa.gov.br", "vivo.com.br"];
 
-    // Lista dos 40 domínios
+    // Lista dos 40 domínios conforme sua tabela
     const sites = [
       { name: "WhatsApp",         url: "https://www.whatsapp.com" },
       { name: "Instagram",        url: "https://www.instagram.com" },
@@ -242,8 +222,9 @@
       { name: "LinkedIn",         url: "https://www.linkedin.com" }
     ];
 
+    // Função para gerar os cards na página
     function updateCards() {
-      // Ordena os sites: primeiro por status e, se igual, por ordem alfabética
+      // Ordena os sites: primeiro por status (Caiu! > Lentidão > Normal) e, se igual, por ordem alfabética
       sites.sort((a, b) => {
         const orderDiff = getStatusOrder(a) - getStatusOrder(b);
         if (orderDiff === 0) {
@@ -270,7 +251,7 @@
         subheadingElem.textContent = site.url;
         card.appendChild(subheadingElem);
 
-        // "Botão" de status
+        // Botão de status (no canto inferior direito)
         const statusButton = document.createElement("button");
         statusButton.classList.add("status-button");
 
@@ -298,7 +279,7 @@
       });
     }
 
-    // Função para verificar o status de um site
+    // Função para verificar o status de um site, medindo o tempo de resposta
     function checkSite(site) {
       const startTime = Date.now();
       fetchWithTimeout(site.url, { mode: "no-cors" }, 30000)
@@ -320,6 +301,7 @@
         });
     }
 
+    // Função fetch com timeout
     function fetchWithTimeout(url, options = {}, timeout = 30000) {
       return Promise.race([
         fetch(url, options),
@@ -329,51 +311,10 @@
       ]);
     }
 
-    function getStatusOrder(site) {
-      if (!site.status) return 5;
-      switch (site.status) {
-        case "Caiu!":
-          return 1;
-        case "Lentidão":
-          return 2;
-        case "Normal":
-          return 3;
-        default:
-          return 5;
-      }
-    }
-
+    // Inicia a verificação de todos os sites
     function checkAllSites() {
       sites.forEach(site => checkSite(site));
     }
-
-    // CSS adicional para o "botão" de status
-    const style = document.createElement("style");
-    style.textContent = `
-      .status-button {
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        padding: 8px 16px;
-        border: none;
-        border-radius: var(--md-shape-corner);
-        color: #fff;
-        font-size: 0.875rem;
-        font-weight: 500;
-        cursor: default;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-      }
-      .btn-normal {
-        background-color: var(--md-status-normal);
-      }
-      .btn-lentidao {
-        background-color: var(--md-status-lentidao);
-      }
-      .btn-caiu {
-        background-color: var(--md-status-caiu);
-      }
-    `;
-    document.head.appendChild(style);
 
     // Inicializa os cards e inicia as verificações
     updateCards();
