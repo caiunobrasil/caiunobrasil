@@ -1,5 +1,3 @@
-/* styles.css - Exemplo Material 3 + Hero com shapes */
-
 /*==========================
   Variáveis (MD3 + Custom)
 ==========================*/
@@ -8,35 +6,35 @@
   --md-color-background: #f2f2f2; /* Fundo geral cinza claro */
   --md-color-surface: #ffffff;
   --md-color-on-surface: #1c1b1f;
-
+  
   --md-color-primary: #6750a4;
   --md-color-secondary: #03dac5;
   --md-color-on-primary: #ffffff;
-
+  
   /* Shapes do Hero */
   --md-shape-1: #ffb300; /* Amarelo vivo (exemplo) */
   --md-shape-2: #03dac5; /* Turquesa do MD3 */
-
+  
   /* Status Colors */
   --md-status-normal: #4caf50;
   --md-status-lentidao: #ff9800;
   --md-status-caiu: #f44336;
-
+  
   /* Elevações (Sombras) */
   --md-elevation-low: 0 1px 2px rgba(0, 0, 0, 0.15);
   --md-elevation-medium: 0 4px 6px rgba(0, 0, 0, 0.15);
   --md-elevation-high: 0 8px 12px rgba(0, 0, 0, 0.2);
-
+  
   /* Espaçamento e bordas */
   --md-spacing: 16px;
   --md-border-radius: 12px;
-
+  
   /* Altura mínima de card */
   --md-card-min-height: 220px;
-
+  
   /* Tipografia */
   --md-headline-size: 3rem;   /* Título grande do hero */
-  --md-subhead-size: 1.25rem; /* Título de card e subtítulos */
+  --md-subhead-size: 1.25rem; /* Títulos e subtítulos */
   --md-body-size: 1rem;       /* Texto padrão */
 }
 
@@ -65,7 +63,8 @@ body {
 ==========================*/
 .md3-hero {
   width: 100%;
-  min-height: 320px;
+  max-width: 1200px;          /* Limita a largura máxima */
+  margin: 0 auto var(--md-spacing);  /* Centraliza e adiciona espaçamento inferior */
   position: relative;
   overflow: hidden;
   color: #fff;
@@ -74,21 +73,16 @@ body {
   justify-content: center;
   text-align: center;
   border-radius: var(--md-border-radius);
-  margin-bottom: var(--md-spacing);
+  min-height: 320px;
 
-  /* Exemplo de gradiente roxo + variações */
-  background: linear-gradient(
-    100deg,
-    #6750a4 0%,
-    #9e6fd7 50%,
-    #b48ae2 100%
-  );
+  /* Exemplo de gradiente de fundo */
+  background: linear-gradient(100deg, #6750a4 0%, #9e6fd7 50%, #b48ae2 100%);
 }
 
 /* Conteúdo principal do Hero */
 .md3-hero-content {
   z-index: 1; /* Para ficar acima dos shapes */
-  max-width: 1200px;
+  width: 100%;
   padding: var(--md-spacing);
 }
 
@@ -223,15 +217,12 @@ body {
   Responsividade (Exemplo)
 ==========================*/
 @media (max-width: 600px) {
-  /* Hero menor em telas reduzidas */
   .md3-hero {
     min-height: 260px;
   }
-
   .md3-hero-content h1 {
     font-size: 2rem;
   }
-
   .md3-hero-content p {
     font-size: 1rem;
   }
