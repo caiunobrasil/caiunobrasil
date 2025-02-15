@@ -1,26 +1,57 @@
-/* Variáveis de exemplo */
+/* styles.css - Exemplo Material 3 + Hero com shapes */
+
+/*==========================
+  Variáveis (MD3 + Custom)
+==========================*/
 :root {
-  --md-color-background: #f2f2f2; /* Novo background geral */
-  --md-color-surface: #FFFFFF;
-  --md-color-on-surface: #1C1B1F;
-  --md-color-primary: #3c3c3c; /* cinza */
-  --md-color-on-primary: #FFFFFF;
-  
+  /* Paleta de Cores */
+  --md-color-background: #f2f2f2; /* Fundo geral cinza claro */
+  --md-color-surface: #ffffff;
+  --md-color-on-surface: #1c1b1f;
+
+  --md-color-primary: #6750a4;
+  --md-color-secondary: #03dac5;
+  --md-color-on-primary: #ffffff;
+
+  /* Shapes do Hero */
+  --md-shape-1: #ffb300; /* Amarelo vivo (exemplo) */
+  --md-shape-2: #03dac5; /* Turquesa do MD3 */
+
+  /* Status Colors */
+  --md-status-normal: #4caf50;
+  --md-status-lentidao: #ff9800;
+  --md-status-caiu: #f44336;
+
+  /* Elevações (Sombras) */
   --md-elevation-low: 0 1px 2px rgba(0, 0, 0, 0.15);
   --md-elevation-medium: 0 4px 6px rgba(0, 0, 0, 0.15);
+  --md-elevation-high: 0 8px 12px rgba(0, 0, 0, 0.2);
 
+  /* Espaçamento e bordas */
   --md-spacing: 16px;
   --md-border-radius: 12px;
+
+  /* Altura mínima de card */
+  --md-card-min-height: 220px;
+
+  /* Tipografia */
+  --md-headline-size: 3rem;   /* Título grande do hero */
+  --md-subhead-size: 1.25rem; /* Título de card e subtítulos */
+  --md-body-size: 1rem;       /* Texto padrão */
 }
 
-/* Reset básico */
+/*==========================
+  Reset básico
+==========================*/
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Body com background cinza claro */
+/*==========================
+  Body
+==========================*/
 body {
   font-family: "Roboto", sans-serif;
   background-color: var(--md-color-background);
@@ -29,59 +60,100 @@ body {
   padding: var(--md-spacing);
 }
 
-/* Header (opcional) */
-.md3-header {
-  margin-bottom: var(--md-spacing);
-}
-
-/* Top Card com altura de 180px, cor magenta e texto branco */
-.md3-top-card {
-  /* Centraliza e limita a largura para não passar dos cards */
-  max-width: 1200px;
-  margin: 0 auto;
-
-  height: 180px; /* Altura fixa */
-  background-color: var(--md-color-primary);
-  color: var(--md-color-on-primary);
-
-  border-radius: var(--md-border-radius);
-  box-shadow: var(--md-elevation-medium);
+/*==========================
+  Hero (topo) com shapes
+==========================*/
+.md3-hero {
+  width: 100%;
+  min-height: 320px;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+  border-radius: var(--md-border-radius);
   margin-bottom: var(--md-spacing);
+
+  /* Exemplo de gradiente roxo + variações */
+  background: linear-gradient(
+    100deg,
+    #6750a4 0%,
+    #9e6fd7 50%,
+    #b48ae2 100%
+  );
 }
 
-/* Conteúdo do top card */
-.md3-top-card-content h1 {
-  font-size: 2rem;
+/* Conteúdo principal do Hero */
+.md3-hero-content {
+  z-index: 1; /* Para ficar acima dos shapes */
+  max-width: 1200px;
+  padding: var(--md-spacing);
+}
+
+/* Título principal (Hero) */
+.md3-hero-content h1 {
+  font-size: var(--md-headline-size);
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
   line-height: 1.2;
 }
 
-.md3-top-card-content h2 {
-  font-size: 1.25rem;
-  font-weight: 500;
+/* Subtítulo do Hero */
+.md3-hero-content p {
+  font-size: var(--md-subhead-size);
   opacity: 0.9;
 }
 
-/* Área principal */
+/* Shapes orgânicos usando pseudo-elementos */
+.md3-hero::before,
+.md3-hero::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.35;
+}
+
+/* Shape superior direito */
+.md3-hero::before {
+  top: -80px;
+  right: -80px;
+  width: 200px;
+  height: 200px;
+  background: var(--md-shape-1);
+}
+
+/* Shape inferior esquerdo */
+.md3-hero::after {
+  bottom: -100px;
+  left: -100px;
+  width: 300px;
+  height: 300px;
+  background: var(--md-shape-2);
+}
+
+/*==========================
+  Conteúdo Principal
+==========================*/
 .md3-main-content {
   max-width: 1200px;
   margin: 0 auto;
+  padding-top: var(--md-spacing);
 }
 
-/* Grade de cards */
+/*==========================
+  Grade de Cards
+==========================*/
 .md3-card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--md-spacing);
 }
 
-/* Card individual */
+/*==========================
+  Card
+==========================*/
 .md3-card {
   background-color: var(--md-color-surface);
   border-radius: var(--md-border-radius);
@@ -91,24 +163,26 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 220px; /* Ajuste conforme desejar */
+  min-height: var(--md-card-min-height);
 }
 
 /* Título do Card */
 .md3-card h2 {
-  font-size: 1.25rem;
+  font-size: var(--md-subhead-size);
   font-weight: 500;
   margin-bottom: 8px;
 }
 
 /* Subtítulo/URL do Card */
 .md3-card-subheading {
-  font-size: 1rem;
+  font-size: var(--md-body-size);
   color: #555;
   margin-bottom: 30px;
 }
 
-/* Botão de status (chip) */
+/*==========================
+  Botão de Status (Chip)
+==========================*/
 .md3-status-button {
   position: absolute;
   bottom: var(--md-spacing);
@@ -125,20 +199,40 @@ body {
 
 /* Variações de status */
 .md3-btn-normal {
-  background-color: #4caf50;
+  background-color: var(--md-status-normal);
 }
 .md3-btn-lentidao {
-  background-color: #ff9800;
+  background-color: var(--md-status-lentidao);
 }
 .md3-btn-caiu {
-  background-color: #f44336;
+  background-color: var(--md-status-caiu);
 }
 
-/* Rodapé */
+/*==========================
+  Rodapé
+==========================*/
 .md3-footer {
   text-align: center;
   margin-top: var(--md-spacing);
   font-size: 0.9rem;
   color: #777;
   padding: var(--md-spacing) 0;
+}
+
+/*==========================
+  Responsividade (Exemplo)
+==========================*/
+@media (max-width: 600px) {
+  /* Hero menor em telas reduzidas */
+  .md3-hero {
+    min-height: 260px;
+  }
+
+  .md3-hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .md3-hero-content p {
+    font-size: 1rem;
+  }
 }
