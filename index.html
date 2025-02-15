@@ -73,7 +73,7 @@
     .normal { background-color: #4caf50; } /* verde */
     .lentidao { background-color: #ff9800; } /* amarelo */
     .caiu { background-color: #f44336; } /* vermelho */
-    /* Conteúdo adicional para SEO */
+    /* Conteúdo adicional para SEO (opcional) */
     .content {
       max-width: 800px;
       margin: 40px auto;
@@ -103,9 +103,9 @@
       <!-- Os cards serão gerados aqui -->
     </div>
 
-    <!-- Conteúdo adicional para SEO (opcional) -->
+    <!-- Conteúdo adicional para SEO -->
     <div class="content">
-      <p>Bem-vindo ao "Caiu no Brasil? Status de Serviços" – sua ferramenta de monitoramento em tempo real para os principais serviços e sites utilizados diariamente. Aqui, você pode verificar se plataformas como WhatsApp, Instagram, Facebook, Itaú, Caixa, Netflix, Google, entre outros, estão funcionando normalmente, apresentando lentidão ou se estão fora do ar.</p>
+      <p>Bem-vindo ao "Caiu no Brasil? Status de Serviços" – sua ferramenta de monitoramento em tempo real para os principais serviços e sites utilizados diariamente. Aqui, você pode verificar se plataformas como WhatsApp, Instagram, Facebook, Itaú, Caixa, Netflix, Google, entre outros, estão funcionando normalmente, apresentam lentidão ou estão fora do ar.</p>
       <p>Este serviço foi desenvolvido para fornecer informações rápidas e precisas, ajudando os usuários a tomar decisões informadas. Atualizações em tempo real e um design intuitivo garantem a melhor experiência possível para monitoramento dos serviços essenciais.</p>
     </div>
   </main>
@@ -180,9 +180,12 @@
       { name: "LinkedIn",          url: "https://www.linkedin.com" }
     ];
 
+    // Lista de domínios especiais para os quais, em caso de erro, tratamos como lentidão
+    const specialDomains = ["itau.com.br", "caixa.gov.br", "vivo.com.br"];
+
     // Função para gerar os cards na página
     function updateCards() {
-      // Ordena os sites: primeiro por status e, se igual, por ordem alfabética
+      // Ordena os sites: primeiro por status, e se igual, por ordem alfabética
       sites.sort((a, b) => {
         const orderDiff = getStatusOrder(a) - getStatusOrder(b);
         if (orderDiff === 0) {
@@ -245,12 +248,14 @@
           const elapsed = Date.now() - startTime;
           if (elapsed <= 7000) {
             site.status = "Normal";
-          } else if (elapsed <= 30000) {
+          } else {
             site.status = "Lentidão";
           }
         })
         .catch(() => {
-          site.status = "Caiu!";
+          // Se ocorrer erro, se o domínio for especial, tratamos como lentidão
+          const isSpecial = specialDomains.some(domain => site.url.includes(domain));
+          site.status = isSpecial ? "Lentidão" : "Caiu!";
         })
         .finally(() => {
           updateCards();
