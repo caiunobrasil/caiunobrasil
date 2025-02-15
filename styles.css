@@ -1,7 +1,8 @@
-/* styles.css - inspirado em https://m3.material.io/styles e https://m3.material.io/components/carousel/specs */
+/* styles.css para Caiu no Brasil */
 
-/* Variáveis CSS (simplificadas) */
+/* Variáveis CSS */
 :root {
+  /* Paleta de cores */
   --md-color-background: #FFFBFE;
   --md-color-surface: #FFFFFF;
   --md-color-primary: #6750A4;
@@ -14,7 +15,12 @@
   --md-status-lentidao: #ff9800;
   --md-status-caiu: #f44336;
 
-  /* Espaçamento, cantos e dimensões */
+  /* Elevation (sombras) */
+  --md-elevation-low: 0px 1px 3px rgba(0, 0, 0, 0.2);
+  --md-elevation-medium: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  --md-elevation-high: 0px 8px 10px rgba(0, 0, 0, 0.3);
+
+  /* Espaçamento e cantos */
   --md-spacing: 20px;
   --md-border-radius: 16px;
   --md-card-min-height: 220px;
@@ -27,51 +33,50 @@
 
 /* Reset básico */
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 /* Body */
 body {
+  font-family: "Roboto", sans-serif;
   background-color: var(--md-color-background);
   color: var(--md-color-on-surface);
-  font-family: "Roboto", sans-serif;
   line-height: 1.5;
   padding: var(--md-spacing);
 }
 
-/* Cabeçalho (opcional) */
+/* Header */
 .md3-header {
   margin-bottom: var(--md-spacing);
-  /* Estilize conforme desejar: background, menu, etc. */
+  padding: var(--md-spacing);
+  box-shadow: var(--md-elevation-low);
 }
 
-/* Card do topo */
+/* Top Card */
 .md3-top-card {
   position: relative;
   background: linear-gradient(135deg, var(--md-color-primary), var(--md-color-secondary));
-  border-radius: var(--md-border-radius);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   color: var(--md-color-on-primary);
-  margin-bottom: var(--md-spacing);
+  border-radius: var(--md-border-radius);
+  box-shadow: var(--md-elevation-medium);
   min-height: var(--md-card-min-height);
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
   padding: var(--md-spacing);
+  margin-bottom: var(--md-spacing);
   text-align: center;
 }
 
 .md3-top-card-content h1 {
-  margin: 0;
   font-size: var(--md-headline-size);
   font-weight: 700;
-  line-height: 1.2;
+  margin-bottom: 8px;
 }
 
 .md3-top-card-content h2 {
-  margin-top: 8px;
   font-size: var(--md-title-size);
   font-weight: 500;
   opacity: 0.9;
@@ -79,55 +84,57 @@ body {
 
 /* Conteúdo principal */
 .md3-main-content {
-  /* Você pode definir larguras, paddings etc. */
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Grade de cards */
+/* Grade de Cards */
 .md3-card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--md-spacing);
 }
 
-/* Card (Elevated Card do MD3) */
+/* Card individual */
 .md3-card {
-  position: relative;
-  background: var(--md-color-surface);
+  background-color: var(--md-color-surface);
   border-radius: var(--md-border-radius);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--md-elevation-low);
   padding: var(--md-spacing);
   min-height: var(--md-card-min-height);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  overflow: hidden;
+  justify-content: space-between;
+  position: relative;
 }
 
+/* Título do Card */
 .md3-card h2 {
-  margin: 0;
   font-size: var(--md-title-size);
   font-weight: 500;
+  margin-bottom: 8px;
 }
 
+/* Subtítulo/URL do Card */
 .md3-card-subheading {
   font-size: var(--md-body-size);
   color: #555;
-  margin: 5px 0 30px;
+  margin-bottom: 30px;
 }
 
-/* Botão de status (estilo chip) */
+/* Botão de Status (Estilo Chip) */
 .md3-status-button {
   position: absolute;
   bottom: var(--md-spacing);
   right: var(--md-spacing);
   padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
   border: none;
   border-radius: var(--md-border-radius);
   color: #fff;
-  font-size: 0.875rem;
-  font-weight: 500;
   cursor: default;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--md-elevation-low);
 }
 
 /* Variações de status */
