@@ -1,6 +1,5 @@
 name: Pull Uptime Robot Status and Update Supabase
 
-# Define permissões mínimas para o workflow
 permissions:
   contents: read
 
@@ -31,52 +30,42 @@ jobs:
               \"api_key\": \"${UPTIMEROBOT_API_KEY}\",
               \"format\": \"json\"
             }")
-
-          # 2) Exibe o JSON retornado para debug
+          
           echo "Resposta da API: $RESPONSE"
-          echo "$RESPONSE" | jq .
+          # Comentei essa linha para evitar erro de parse caso a resposta seja vazia ou mal formatada
+          # echo "$RESPONSE" | jq .
 
-          # 3) Extrair a lista de monitores
-          #    Estrutura esperada: { "stat":"ok", "monitors":[ {...}, {...} ] }
+          # 2) Extrair a lista de monitores
           MONITORS=$(echo "$RESPONSE" | jq -c '.monitors[]')
 
-          # Se não houver monitores, encerra com erro
           if [ -z "$MONITORS" ]; then
             echo "Nenhum monitor encontrado. Verifique a API key ou a resposta da API."
             exit 1
           fi
 
-          # 4) Loop nos monitores
+          # 3) Loop nos monitores
           for MONITOR in $MONITORS; do
             FRIENDLY_NAME=$(echo "$MONITOR" | jq -r '.friendly_name')
             STATUS_CODE=$(echo "$MONITOR" | jq -r '.status')
 
-            # No Uptime Robot:
-            #   2 = Up
-            #   8 = Seems Down
-            #   9 = Down
-            #   0 = Paused
-            #   ...
+            # Uptime Robot: 2 = Up; outros valores = Down
             if [ "$STATUS_CODE" -eq 2 ]; then
               NEW_STATUS=true
             else
               NEW_STATUS=false
             fi
 
-            # Substituir espaços no nome por %20 para uso na URL
+            # Substituir espaços no nome para URL
             FRIENDLY_NAME_URL=$(echo "$FRIENDLY_NAME" | sed 's/ /%20/g')
             PATCH_URL="${SUPABASE_URL}/rest/v1/status_apps?nome=eq.${FRIENDLY_NAME_URL}"
-
-            # Gera data/hora atual no formato ISO8601 (UTC)
+  
             CURRENT_DATE=$(date -u +%FT%TZ)
-
             echo "Atualizando $FRIENDLY_NAME com status: $NEW_STATUS (status code: $STATUS_CODE) em $CURRENT_DATE"
-
-            # 5) PATCH no Supabase
+  
             curl -s -X PATCH "$PATCH_URL" \
               -H "apikey: $SUPABASE_SERVICE_KEY" \
               -H "Content-Type: application/json" \
               -d "{\"status\": $NEW_STATUS, \"ultima_verificacao\": \"$CURRENT_DATE\"}"
-
+  
             echo "Atualizado: $FRIENDLY_NAME => $NEW_STATUS"
           done
