@@ -1,68 +1,105 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Caiu no Brasil? Status de Serviços</title>
-  <!-- Meta tags para SEO e compartilhamento -->
-  <meta name="description" content="Caiu no Brasil? Status de Serviços – Confira em tempo real se os principais serviços e sites estão funcionando normalmente, com lentidão ou se estão fora do ar.">
-  <meta name="keywords" content="status, monitoramento, Caiu no Brasil, serviços, WhatsApp, Instagram, Facebook, Twitter, Itaú, Caixa, Netflix, Google">
-  <meta name="author" content="Caiu no Brasil">
-  <meta property="og:title" content="Caiu no Brasil? Status de Serviços">
-  <meta property="og:description" content="Confira em tempo real o status dos principais serviços e sites que você utiliza: Normal, Lentidão ou Caiu!">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://caiunobrasil.com.br">
-  <meta property="og:image" content="https://caiunobrasil.com.br/imagem-og.jpg">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Caiu no Brasil? Status de Serviços - MD3</title>
+
+  <!-- Exemplo de fonte do Google (Roboto/Material Symbols), você pode ajustar -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+
   <style>
-    /* Estilos gerais */
-    body {
-      font-family: "Roboto", Arial, sans-serif;
-      background-color: #d9d9d9; /* off-white */
-      color: #333; /* cinza escura */
-      margin: 0;
-      padding: 20px;
-      line-height: 1.6;
+    /*
+      Paleta simplificada inspirada no Material 3:
+      - Background (Surface): #FFFBFE
+      - Surface Container (Cards): #FFFFFF
+      - On Surface (Texto): #1C1B1F
+      - Cores de status (verde, amarelo, vermelho) adaptadas do seu exemplo
+    */
+
+    :root {
+      --md-sys-color-background: #FFFBFE;
+      --md-sys-color-surface: #FFFFFF;
+      --md-sys-color-on-surface: #1C1B1F;
+      --md-sys-color-status-normal: #4caf50;    /* verde */
+      --md-sys-color-status-lentidao: #ff9800; /* amarelo */
+      --md-sys-color-status-caiu: #f44336;     /* vermelho */
+
+      /* Espaçamentos e arredondamentos (valores aproximados do MD3) */
+      --md-shape-corner: 12px;
+      --md-spacing: 20px;
+
+      /* Tipografia base (usando Roboto como exemplo) */
+      --md-typescale-body: 1rem;      /* ~16px */
+      --md-typescale-title: 1.375rem; /* ~22px */
+      --md-typescale-headline: 2rem;  /* ~32px */
     }
-    header, main, footer {
+
+    body {
+      margin: 0;
+      padding: var(--md-spacing);
+      background-color: var(--md-sys-color-background);
+      color: var(--md-sys-color-on-surface);
+      font-family: "Roboto", sans-serif;
+      line-height: 1.5;
+    }
+
+    header,
+    main,
+    footer {
       max-width: 1200px;
       margin: 0 auto;
     }
-    /* Card de Título */
+
+    /* Card de Título (Elevated) */
     .header-card {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      padding: 20px;
+      background: var(--md-sys-color-surface);
+      border-radius: var(--md-shape-corner);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Elevation level */
+      padding: var(--md-spacing);
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: var(--md-spacing);
     }
+
     .header-card h1 {
       margin: 0;
-      font-size: 2em;
+      font-size: var(--md-typescale-headline);
       line-height: 1.2;
     }
-    /* Grid de Cards */
+
+    /* Grid de Cards dos Serviços */
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+      gap: var(--md-spacing);
     }
-    /* Estilo dos Cards dos Serviços */
+
+    /* Cards MD3 (Elevated) */
     .card {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      padding: 20px;
+      background: var(--md-sys-color-surface);
+      border-radius: var(--md-shape-corner);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Elevation level */
+      padding: var(--md-spacing);
       text-align: center;
     }
+
     .card h2 {
-      font-size: 1.2em;
       margin: 10px 0;
+      font-size: var(--md-typescale-title);
+      font-weight: 500;
     }
+
     .card p {
       margin: 5px 0;
+      font-size: var(--md-typescale-body);
     }
-    /* Indicador de Status */
+
+    /* Indicador de status (bolinha) */
     .status-indicator {
       width: 16px;
       height: 16px;
@@ -70,21 +107,30 @@
       margin-bottom: 10px;
       display: inline-block;
     }
-    .normal { background-color: #4caf50; } /* verde */
-    .lentidao { background-color: #ff9800; } /* amarelo */
-    .caiu { background-color: #f44336; } /* vermelho */
+
+    .normal {
+      background-color: var(--md-sys-color-status-normal);
+    }
+    .lentidao {
+      background-color: var(--md-sys-color-status-lentidao);
+    }
+    .caiu {
+      background-color: var(--md-sys-color-status-caiu);
+    }
+
     /* Conteúdo adicional para SEO (opcional) */
     .content {
       max-width: 800px;
       margin: 40px auto;
-      font-size: 1em;
+      font-size: var(--md-typescale-body);
       text-align: justify;
     }
+
     /* Rodapé */
     footer {
       text-align: center;
       margin-top: 40px;
-      font-size: 0.9em;
+      font-size: 0.9rem;
       color: #777;
     }
   </style>
@@ -93,7 +139,7 @@
   <header>
     <!-- Card de Título -->
     <div class="header-card">
-      <h1>Caiu no Brasil?<br>Status de Serviços</h1>
+      <h1>Caiu no Brasil?<br />Status de Serviços</h1>
     </div>
   </header>
 
@@ -105,8 +151,19 @@
 
     <!-- Conteúdo adicional para SEO -->
     <div class="content">
-      <p>Bem-vindo ao "Caiu no Brasil - Status de Serviços" – sua ferramenta de monitoramento em tempo real para os principais serviços e sites utilizados diariamente. Aqui, você pode verificar se plataformas como WhatsApp, Instagram, Facebook, Itaú, Caixa, Netflix, Google, entre outros, estão funcionando normalmente, apresentam lentidão ou estão fora do ar.</p>
-      <p>Este serviço de utilidade pública foi desenvolvido para fornecer informações rápidas e precisas, ajudando os usuários a tomar decisões informadas. Atualizações em tempo real e um design intuitivo garantem a melhor experiência possível para monitoramento dos serviços essenciais.</p>
+      <p>
+        Bem-vindo ao "Caiu no Brasil? Status de Serviços" – sua ferramenta de
+        monitoramento em tempo real para os principais serviços e sites utilizados
+        diariamente. Aqui, você pode verificar se plataformas como WhatsApp,
+        Instagram, Facebook, Itaú, Caixa, Netflix, Google, entre outros, estão
+        funcionando normalmente, apresentam lentidão ou estão fora do ar.
+      </p>
+      <p>
+        Este serviço foi desenvolvido para fornecer informações rápidas e
+        precisas, ajudando os usuários a tomar decisões informadas. Atualizações
+        em tempo real e um design intuitivo garantem a melhor experiência possível
+        para monitoramento dos serviços essenciais.
+      </p>
     </div>
   </main>
 
@@ -120,7 +177,7 @@
       return Promise.race([
         fetch(url, options),
         new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('timeout')), timeout)
+          setTimeout(() => reject(new Error("timeout")), timeout)
         )
       ]);
     }
@@ -129,63 +186,67 @@
     function getStatusOrder(site) {
       if (!site.status) return 5;
       switch (site.status) {
-        case "Caiu!": return 1;
-        case "Lentidão": return 2;
-        case "Normal": return 3;
-        default: return 5;
+        case "Caiu!":
+          return 1;
+        case "Lentidão":
+          return 2;
+        case "Normal":
+          return 3;
+        default:
+          return 5;
       }
     }
 
     // Lista dos 40 domínios conforme sua tabela
     const sites = [
-      { name: "WhatsApp",         url: "https://web.whatsapp.com" },
-      { name: "Instagram",         url: "https://www.instagram.com" },
-      { name: "Facebook",          url: "https://www.facebook.com" },
-      { name: "X/Twitter",         url: "https://x.com" },
-      { name: "Telegram",          url: "https://telegram.org" },
-      { name: "TikTok",            url: "https://www.tiktok.com" },
-      { name: "Nubank",            url: "https://nubank.com.br" },
-      { name: "Mercado Pago",      url: "https://www.mercadopago.com.br" },
-      { name: "PicPay",            url: "https://www.picpay.com" },
-      { name: "Banco do Brasil",   url: "https://www.bb.com.br" },
-      { name: "Itaú",              url: "https://www.itau.com.br" },
-      { name: "Bradesco",          url: "https://www.bradesco.com.br" },
-      { name: "Caixa",             url: "https://www.caixa.gov.br" },
-      { name: "Inter",             url: "https://www.bancointer.com.br" },
-      { name: "C6 Bank",           url: "https://www.c6bank.com.br" },
-      { name: "iFood",             url: "https://www.ifood.com.br" },
-      { name: "Mercado Livre",     url: "https://www.mercadolivre.com.br" },
-      { name: "Amazon",            url: "https://www.amazon.com.br" },
-      { name: "Rappi",             url: "https://www.rappi.com.br" },
-      { name: "Uber",              url: "https://www.uber.com/br/en/" },
-      { name: "99",                url: "https://99app.com" },
-      { name: "Netflix",           url: "https://www.netflix.com" },
-      { name: "Spotify",           url: "https://www.spotify.com" },
-      { name: "Globoplay",         url: "https://globoplay.globo.com" },
-      { name: "YouTube",           url: "https://www.youtube.com" },
-      { name: "Claro",             url: "https://www.claro.com.br" },
-      { name: "Vivo",              url: "https://www.vivo.com.br" },
-      { name: "TIM",               url: "https://www.tim.com.br" },
-      { name: "Oi",                url: "https://www.oi.com.br" },
-      { name: "Steam",             url: "https://store.steampowered.com" },
-      { name: "Fortnite",          url: "https://www.epicgames.com/fortnite" },
-      { name: "Roblox",            url: "https://www.roblox.com" },
-      { name: "Discord",           url: "https://discord.com" },
-      { name: "Zoom",              url: "https://zoom.us" },
-      { name: "Teams",             url: "https://teams.microsoft.com" },
-      { name: "Slack",             url: "https://slack.com" },
-      { name: "Google",            url: "https://www.google.com" },
-      { name: "Outlook",           url: "https://outlook.live.com" },
-      { name: "ChatGPT",           url: "https://chat.openai.com" },
-      { name: "LinkedIn",          url: "https://www.linkedin.com" }
+      { name: "WhatsApp", url: "https://www.whatsapp.com" },
+      { name: "Instagram", url: "https://www.instagram.com" },
+      { name: "Facebook", url: "https://www.facebook.com" },
+      { name: "X/Twitter", url: "https://twitter.com" },
+      { name: "Telegram", url: "https://telegram.org" },
+      { name: "TikTok", url: "https://www.tiktok.com" },
+      { name: "Nubank", url: "https://nubank.com.br" },
+      { name: "Mercado Pago", url: "https://www.mercadopago.com.br" },
+      { name: "PicPay", url: "https://www.picpay.com" },
+      { name: "Banco do Brasil", url: "https://www.bb.com.br" },
+      { name: "Itaú", url: "https://www.itau.com.br" },
+      { name: "Bradesco", url: "https://www.bradesco.com.br" },
+      { name: "Caixa", url: "https://www.caixa.gov.br" },
+      { name: "Inter", url: "https://www.bancointer.com.br" },
+      { name: "C6 Bank", url: "https://www.c6bank.com.br" },
+      { name: "iFood", url: "https://www.ifood.com.br" },
+      { name: "Mercado Livre", url: "https://www.mercadolivre.com.br" },
+      { name: "Amazon", url: "https://www.amazon.com.br" },
+      { name: "Rappi", url: "https://www.rappi.com.br" },
+      { name: "Uber", url: "https://www.uber.com/br/en/" },
+      { name: "99", url: "https://99app.com" },
+      { name: "Netflix", url: "https://www.netflix.com" },
+      { name: "Spotify", url: "https://www.spotify.com" },
+      { name: "Globoplay", url: "https://globoplay.globo.com" },
+      { name: "YouTube", url: "https://www.youtube.com" },
+      { name: "Claro", url: "https://www.claro.com.br" },
+      { name: "Vivo", url: "https://www.vivo.com.br" },
+      { name: "TIM", url: "https://www.tim.com.br" },
+      { name: "Oi", url: "https://www.oi.com.br" },
+      { name: "Steam", url: "https://store.steampowered.com" },
+      { name: "Fortnite", url: "https://www.epicgames.com/fortnite" },
+      { name: "Roblox", url: "https://www.roblox.com" },
+      { name: "Discord", url: "https://discord.com" },
+      { name: "Zoom", url: "https://zoom.us" },
+      { name: "Teams", url: "https://teams.microsoft.com" },
+      { name: "Slack", url: "https://slack.com" },
+      { name: "Google", url: "https://www.google.com" },
+      { name: "Outlook", url: "https://outlook.live.com" },
+      { name: "ChatGPT", url: "https://chat.openai.com" },
+      { name: "LinkedIn", url: "https://www.linkedin.com" }
     ];
 
-    // Lista de domínios especiais para os quais, em caso de erro, tratamos como lentidão
+    // Lista de domínios especiais para tratar erro como Lentidão
     const specialDomains = ["itau.com.br", "caixa.gov.br", "vivo.com.br"];
 
     // Função para gerar os cards na página
     function updateCards() {
-      // Ordena os sites: primeiro por status, e se igual, por ordem alfabética
+      // Ordena os sites: primeiro por status e, se igual, por ordem alfabética
       sites.sort((a, b) => {
         const orderDiff = getStatusOrder(a) - getStatusOrder(b);
         if (orderDiff === 0) {
@@ -193,7 +254,7 @@
         }
         return orderDiff;
       });
-      
+
       const grid = document.getElementById("cardGrid");
       grid.innerHTML = "";
       sites.forEach((site) => {
@@ -260,16 +321,6 @@
         .finally(() => {
           updateCards();
         });
-    }
-
-    // Função fetch com timeout
-    function fetchWithTimeout(url, options = {}, timeout = 30000) {
-      return Promise.race([
-        fetch(url, options),
-        new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('timeout')), timeout)
-        )
-      ]);
     }
 
     // Função para verificar todos os sites
