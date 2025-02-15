@@ -89,7 +89,7 @@ body {
 /* Título principal (Hero) */
 .md3-hero-content h1 {
   font-size: var(--md-headline-size);
-  font-weight: 700;
+  font-weight: 400;
   margin-bottom: 16px;
   line-height: 1.2;
 }
