@@ -32,11 +32,14 @@
       align-items: center;
       text-align: center;
     }
-    .card h1, .card h2 {
-      margin: 0 0 10px;
+    /* Card do título com margem inferior para separação */
+    .header-card {
+      margin-bottom: 20px;
     }
-    .card p {
-      margin: 5px 0;
+    .header-card h1 {
+      margin: 0;
+      font-size: 1.8em;
+      line-height: 1.2;
     }
     /* Indicador de status */
     .status-indicator {
@@ -60,8 +63,8 @@
   </style>
 </head>
 <body>
-  <!-- Card de Título (igual aos demais cards) -->
-  <div class="card">
+  <!-- Card de Título -->
+  <div class="card header-card">
     <h1>Caiu no Brasil?<br>Status de Serviços</h1>
   </div>
 
@@ -83,6 +86,19 @@
           setTimeout(() => reject(new Error('timeout')), timeout)
         )
       ]);
+    }
+
+    // Função que define a ordem de exibição com base no status
+    function getStatusOrder(site) {
+      // Se não tiver status definido, coloque no final (maior valor)
+      if (!site.status) return 5;
+      switch (site.status) {
+        case "Caiu!": return 1;
+        case "Lentidão": return 2;
+        case "Muito lento": return 3;
+        case "Funcionando": return 4;
+        default: return 5;
+      }
     }
 
     // Lista dos 40 domínios conforme sua tabela
@@ -131,6 +147,9 @@
 
     // Função para gerar os cards na página
     function updateCards() {
+      // Ordena os sites conforme o status (Caiu! no topo, depois Lentidão/Muito lento, depois Funcionando)
+      sites.sort((a, b) => getStatusOrder(a) - getStatusOrder(b));
+      
       const grid = document.getElementById("cardGrid");
       grid.innerHTML = "";
       sites.forEach((site) => {
@@ -184,7 +203,6 @@
     // Função para verificar o status de um site, medindo o tempo de resposta
     function checkSite(site) {
       const startTime = Date.now();
-      // Usamos fetchWithTimeout com timeout total de 30 segundos
       fetchWithTimeout(site.url, { mode: 'no-cors' }, 30000)
         .then(() => {
           const elapsed = Date.now() - startTime;
@@ -192,7 +210,7 @@
             site.status = "Funcionando";
           } else if (elapsed <= 10000) {
             site.status = "Lentidão";
-          } else {
+          } else if (elapsed <= 30000) {
             site.status = "Muito lento";
           }
         })
