@@ -3,59 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Caiu no Brasil? Monitoramento de Serviços</title>
+  <title>Caiu no Brasil? Status de Serviços</title>
   <style>
-    body { 
-      font-family: Roboto, sans-serif; 
-      background: #f9f9f9; 
-      padding: 20px; 
+    /* Cores e fontes */
+    body {
+      font-family: "Roboto", Arial, sans-serif;
+      background-color: #fdfdfd; /* off-white */
+      color: #333; /* cinza escura */
+      margin: 0;
+      padding: 20px;
     }
-    h1 { 
-      text-align: center; 
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
     }
-    table { 
-      width: 100%; 
-      border-collapse: collapse; 
-      margin-top: 20px; 
+    /* Grid de cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    th, td { 
-      padding: 10px; 
-      border: 1px solid #ccc; 
-      text-align: center; 
+    /* Estilo do card */
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
-    th { 
-      background: #e2e2e2; 
+    .card h2 {
+      font-size: 1.2em;
+      margin: 10px 0;
     }
-    .ok { 
-      color: green; 
-      font-weight: bold; 
+    .card p {
+      font-size: 0.95em;
+      margin: 10px 0;
     }
-    .erro { 
-      color: red; 
-      font-weight: bold; 
+    /* Status indicator */
+    .status-indicator {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+      display: inline-block;
     }
+    /* Botões ou status textual podem ser definidos via classes */
+    .funcionando { background-color: #4caf50; } /* verde */
+    .fora { background-color: #f44336; } /* vermelho */
   </style>
 </head>
 <body>
-  <h1>Caiu no Brasil? Monitoramento de Serviços</h1>
-  <table id="sitesTable">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Nome do Site</th>
-        <th>URL</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- As linhas serão geradas aqui -->
-    </tbody>
-  </table>
+  <h1>Caiu no Brasil? Status de Serviços</h1>
+  <div class="card-grid" id="cardGrid">
+    <!-- Os cards serão gerados aqui -->
+  </div>
 
   <script>
     // Lista dos 40 domínios conforme sua tabela
     const sites = [
-      { name: "WhatsApp",         url: "https://web.whatsapp.com" },
+      { name: "WhatsApp",         url: "https://www.whatsapp.com" },
       { name: "Instagram",         url: "https://www.instagram.com" },
       { name: "Facebook",          url: "https://www.facebook.com" },
       { name: "X/Twitter",         url: "https://twitter.com" },
@@ -97,45 +108,53 @@
       { name: "LinkedIn",          url: "https://www.linkedin.com" }
     ];
 
-    // Função para atualizar a tabela com os dados dos sites
-    function updateTable() {
-      const tbody = document.getElementById("sitesTable").querySelector("tbody");
-      tbody.innerHTML = ""; // Limpa a tabela
+    // Função para gerar os cards na página
+    function updateCards() {
+      const grid = document.getElementById("cardGrid");
+      grid.innerHTML = "";
       sites.forEach((site, index) => {
-        const tr = document.createElement("tr");
-        
-        // Número do site
-        const tdIndex = document.createElement("td");
-        tdIndex.textContent = index + 1;
-        tr.appendChild(tdIndex);
-        
-        // Nome do site
-        const tdName = document.createElement("td");
-        tdName.textContent = site.name;
-        tr.appendChild(tdName);
-        
-        // URL do site
-        const tdUrl = document.createElement("td");
-        tdUrl.textContent = site.url;
-        tr.appendChild(tdUrl);
-        
-        // Status do site
-        const tdStatus = document.createElement("td");
-        tdStatus.textContent = site.status || "Verificando...";
+        const card = document.createElement("div");
+        card.classList.add("card");
+
+        // Indicador de status (bolinha)
+        const indicator = document.createElement("span");
+        indicator.classList.add("status-indicator");
         if (site.status === "Funcionando") {
-          tdStatus.classList.add("ok");
+          indicator.classList.add("funcionando");
         } else if (site.status === "Fora do ar") {
-          tdStatus.classList.add("erro");
+          indicator.classList.add("fora");
+        } else {
+          // Se ainda estiver verificando, deixamos uma cor neutra (cinza claro)
+          indicator.style.backgroundColor = "#ccc";
         }
-        tr.appendChild(tdStatus);
-        
-        tbody.appendChild(tr);
+        card.appendChild(indicator);
+
+        // Nome do site
+        const nameElem = document.createElement("h2");
+        nameElem.textContent = site.name;
+        card.appendChild(nameElem);
+
+        // URL do site
+        const urlElem = document.createElement("p");
+        urlElem.textContent = site.url;
+        card.appendChild(urlElem);
+
+        // Status textual
+        const statusElem = document.createElement("p");
+        statusElem.textContent = site.status ? site.status : "Verificando...";
+        if (site.status === "Funcionando") {
+          statusElem.style.color = "#4caf50";
+        } else if (site.status === "Fora do ar") {
+          statusElem.style.color = "#f44336";
+        }
+        card.appendChild(statusElem);
+
+        grid.appendChild(card);
       });
     }
 
-    // Função para verificar o status de um site usando fetch com 'no-cors'
+    // Função para verificar o status de um site
     function checkSite(site) {
-      // Utilizamos 'no-cors' para contornar restrições (não traz o conteúdo, mas indica se houve resposta)
       fetch(site.url, { mode: 'no-cors' })
         .then(() => {
           site.status = "Funcionando";
@@ -144,19 +163,19 @@
           site.status = "Fora do ar";
         })
         .finally(() => {
-          updateTable();
+          updateCards();
         });
     }
 
-    // Função para verificar todos os sites
+    // Verifica todos os sites
     function checkAllSites() {
       sites.forEach(site => {
         checkSite(site);
       });
     }
 
-    // Inicializa a tabela e inicia a verificação
-    updateTable();
+    // Inicializa os cards e inicia as verificações
+    updateCards();
     checkAllSites();
   </script>
 </body>
