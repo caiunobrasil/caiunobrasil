@@ -92,73 +92,48 @@
       padding: var(--md-spacing);
     }
     
-    /*==========================
-      Hero (topo) com shapes
-    ==========================*/
-    .md3-hero {
-      width: 100%;
-      position: relative;
-      overflow: hidden;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      border-radius: var(--md-border-radius);
-      min-height: 320px;
-      margin-bottom: var(--md-spacing);
-      
-      /* Exemplo de gradiente de fundo */
-      background: linear-gradient(100deg, #6750a4 0%, #9e6fd7 50%, #b48ae2 100%);
-    }
-    
-    /* Conteúdo principal do Hero */
-    .md3-hero-content {
-      z-index: 1; /* Para ficar acima dos shapes */
-      width: 100%;
-      padding: var(--md-spacing);
-    }
-    
-    /* Título principal (Hero) */
-    .md3-hero-content h1 {
-      font-size: var(--md-headline-size);
-      font-weight: 400;
-      margin-bottom: 16px;
-      line-height: 1.2;
-    }
-    
-    /* Subtítulo do Hero */
-    .md3-hero-content p {
-      font-size: var(--md-subhead-size);
-      opacity: 0.9;
-    }
-    
-    /* Shapes orgânicos usando pseudo-elementos */
-    .md3-hero::before,
-    .md3-hero::after {
-      content: "";
-      position: absolute;
-      border-radius: 50%;
-      opacity: 0.35;
-    }
-    
-    /* Shape superior direito */
-    .md3-hero::before {
-      top: -80px;
-      right: -80px;
-      width: 200px;
-      height: 200px;
-      background: var(--md-shape-1);
-    }
-    
-    /* Shape inferior esquerdo */
-    .md3-hero::after {
-      bottom: -100px;
-      left: -100px;
-      width: 300px;
-      height: 300px;
-      background: var(--md-shape-2);
-    }
+    /* ==========================
+   Novo estilo do topo (Hero)
+   ========================== */
+
+/* Remova ou comente as regras antigas de .md3-hero e .md3-hero-content
+   incluindo .md3-hero::before / ::after, se você não quiser shapes. */
+
+/* Hero (sem shapes) */
+.md3-hero {
+  background-color: #FAF7FB; /* Tom claro próximo ao que se vê na imagem */
+  border-radius: 16px;       /* Cantos suaves */
+  padding: 32px;             /* Espaço interno mais generoso */
+  color: #000;               /* Texto escuro para bom contraste */
+  text-align: center;        /* Centraliza título e subtítulo */
+  margin-bottom: var(--md-spacing);
+  /* Remova quaisquer 'background: linear-gradient(...)' ou pseudo-elementos. */
+}
+
+/* Conteúdo principal do Hero */
+.md3-hero-content {
+  max-width: 700px;  /* Limita a largura do texto para não ficar muito extenso */
+  margin: 0 auto;    /* Centraliza horizontalmente */
+}
+
+/* Título principal (Hero) */
+.md3-hero-content h1 {
+  /* Se quiser outra fonte só aqui, adicione font-family abaixo */
+  font-size: 6rem;       /* Aumenta bastante o título */
+  font-weight: 700;      /* Negrito forte */
+  margin-bottom: 16px;
+  line-height: 1.2;
+  color: #000;           /* Cor sólida para destaque */
+}
+
+/* Subtítulo do Hero */
+.md3-hero-content p {
+  font-size: 1.125rem;   /* Um pouco maior que o body normal */
+  line-height: 1.5;
+  color: #444;           /* Cinza escuro para boa legibilidade */
+  /* Se quiser outra fonte só aqui, adicione font-family */
+}
+
     
     /*==========================
       Área Principal e Grid de Cards
