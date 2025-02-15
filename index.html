@@ -4,13 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Caiu no Brasil? Status de Serviços</title>
-  <!-- Meta tags SEO -->
-  <meta name="description" content="Caiu no Brasil? Status de Serviços – Confira em tempo real se os principais serviços e sites estão funcionando ou estão fora do ar.">
+  <!-- Meta tags para SEO e compartilhamento -->
+  <meta name="description" content="Caiu no Brasil? Status de Serviços – Confira em tempo real se os principais serviços e sites estão funcionando normalmente, com lentidão ou se estão fora do ar.">
   <meta name="keywords" content="status, monitoramento, Caiu no Brasil, serviços, WhatsApp, Instagram, Facebook, Twitter, Itaú, Caixa, Netflix, Google">
   <meta name="author" content="Caiu no Brasil">
-  <!-- Open Graph -->
   <meta property="og:title" content="Caiu no Brasil? Status de Serviços">
-  <meta property="og:description" content="Confira em tempo real o status dos principais serviços e sites que você utiliza.">
+  <meta property="og:description" content="Confira em tempo real o status dos principais serviços e sites que você utiliza: Normal, Lentidão ou Caiu!">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://caiunobrasil.com.br">
   <meta property="og:image" content="https://caiunobrasil.com.br/imagem-og.jpg">
@@ -32,7 +31,7 @@
     .header-card {
       background: #fff;
       border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       padding: 20px;
       text-align: center;
       margin-bottom: 20px;
@@ -52,7 +51,7 @@
     .card {
       background: #fff;
       border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       padding: 20px;
       text-align: center;
     }
@@ -71,11 +70,10 @@
       margin-bottom: 10px;
       display: inline-block;
     }
-    .funcionando { background-color: #4caf50; } /* verde */
+    .normal { background-color: #4caf50; } /* verde */
     .lentidao { background-color: #ff9800; } /* amarelo */
-    .muito-lento { background-color: #ff5722; } /* laranja/vermelho */
     .caiu { background-color: #f44336; } /* vermelho */
-    /* Conteúdo adicional */
+    /* Conteúdo adicional para SEO */
     .content {
       max-width: 800px;
       margin: 40px auto;
@@ -105,11 +103,10 @@
       <!-- Os cards serão gerados aqui -->
     </div>
 
-    <!-- Conteúdo adicional para SEO -->
+    <!-- Conteúdo adicional para SEO (opcional) -->
     <div class="content">
-      <p>Bem-vindo ao "Caiu no Brasil? Status de Serviços" – sua ferramenta de monitoramento em tempo real para os principais serviços e sites utilizados diariamente. Aqui, você pode verificar instantaneamente se plataformas como WhatsApp, Instagram, Facebook, Itaú, Caixa, Netflix, Google, entre outros, estão funcionando, apresentando lentidão ou, se necessário, se estão inativas.</p>
-      <p>Esta página foi criada para ajudar você a tomar decisões informadas, oferecendo um panorama atualizado do status dos serviços que fazem parte do seu cotidiano. Conteúdo de qualidade, informações em tempo real e design moderno se unem para proporcionar a melhor experiência possível.</p>
-      <p>Explore a lista completa e mantenha-se atualizado sobre a disponibilidade dos serviços essenciais.</p>
+      <p>Bem-vindo ao "Caiu no Brasil? Status de Serviços" – sua ferramenta de monitoramento em tempo real para os principais serviços e sites utilizados diariamente. Aqui, você pode verificar se plataformas como WhatsApp, Instagram, Facebook, Itaú, Caixa, Netflix, Google, entre outros, estão funcionando normalmente, apresentando lentidão ou se estão fora do ar.</p>
+      <p>Este serviço foi desenvolvido para fornecer informações rápidas e precisas, ajudando os usuários a tomar decisões informadas. Atualizações em tempo real e um design intuitivo garantem a melhor experiência possível para monitoramento dos serviços essenciais.</p>
     </div>
   </main>
 
@@ -128,14 +125,13 @@
       ]);
     }
 
-    // Função que define a ordem de exibição com base no status
+    // Função que define a ordem de exibição com base no status e, se igual, por ordem alfabética
     function getStatusOrder(site) {
       if (!site.status) return 5;
       switch (site.status) {
         case "Caiu!": return 1;
-        case "Muito lento": return 2;
-        case "Lentidão": return 3;
-        case "Funcionando": return 4;
+        case "Lentidão": return 2;
+        case "Normal": return 3;
         default: return 5;
       }
     }
@@ -186,8 +182,14 @@
 
     // Função para gerar os cards na página
     function updateCards() {
-      // Ordena os sites com base no status (Caiu! primeiro, depois Muito lento, Lentidão, e Funcionando por último)
-      sites.sort((a, b) => getStatusOrder(a) - getStatusOrder(b));
+      // Ordena os sites: primeiro por status e, se igual, por ordem alfabética
+      sites.sort((a, b) => {
+        const orderDiff = getStatusOrder(a) - getStatusOrder(b);
+        if (orderDiff === 0) {
+          return a.name.localeCompare(b.name);
+        }
+        return orderDiff;
+      });
       
       const grid = document.getElementById("cardGrid");
       grid.innerHTML = "";
@@ -198,12 +200,10 @@
         // Indicador de status (bolinha)
         const indicator = document.createElement("span");
         indicator.classList.add("status-indicator");
-        if (site.status === "Funcionando") {
-          indicator.classList.add("funcionando");
+        if (site.status === "Normal") {
+          indicator.classList.add("normal");
         } else if (site.status === "Lentidão") {
           indicator.classList.add("lentidao");
-        } else if (site.status === "Muito lento") {
-          indicator.classList.add("muito-lento");
         } else if (site.status === "Caiu!") {
           indicator.classList.add("caiu");
         } else {
@@ -224,12 +224,10 @@
         // Status textual
         const statusElem = document.createElement("p");
         statusElem.textContent = site.status ? site.status : "Verificando...";
-        if (site.status === "Funcionando") {
+        if (site.status === "Normal") {
           statusElem.style.color = "#4caf50";
         } else if (site.status === "Lentidão") {
           statusElem.style.color = "#ff9800";
-        } else if (site.status === "Muito lento") {
-          statusElem.style.color = "#ff5722";
         } else if (site.status === "Caiu!") {
           statusElem.style.color = "#f44336";
         }
@@ -246,11 +244,9 @@
         .then(() => {
           const elapsed = Date.now() - startTime;
           if (elapsed <= 7000) {
-            site.status = "Funcionando";
-          } else if (elapsed <= 15000) {
-            site.status = "Lentidão";
+            site.status = "Normal";
           } else if (elapsed <= 30000) {
-            site.status = "Muito lento";
+            site.status = "Lentidão";
           }
         })
         .catch(() => {
