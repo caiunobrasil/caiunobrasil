@@ -1,56 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Service Status</title>
+  <title>Caiu no Brasil? | Status de Serviços</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    h1 {
-      text-align: center;
-    }
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    li {
-      margin: 10px 0;
-    }
-    .up {
-      color: green;
-      font-weight: bold;
-    }
-    .down {
-      color: red;
-      font-weight: bold;
-    }
+    body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
+    h1 { text-align: center; }
+    .status-card { background: #fff; padding: 15px; margin: 10px auto; max-width: 500px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .online { color: green; font-weight: bold; }
+    .offline { color: red; font-weight: bold; }
+    .last-check { font-size: 0.9em; color: #666; }
   </style>
+  <!-- Carrega a biblioteca do Supabase -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body>
-  <h1>Status dos Serviços</h1>
-  <ul id="status-list">
-    <li>Carregando...</li>
-  </ul>
-
+  <h1>Caiu no Brasil? | Status de Serviços</h1>
+  <div id="status-container"></div>
   <script>
-      // Loop through each monitor and display its status
-      monitors.forEach(monitor => {
-        const li = document.createElement('li');
-        li.textContent = `${monitor.friendly_name}: `;
-        const status = document.createElement('span');
-        status.textContent = monitor.status === 2 ? 'Online' : 'Offline';
-        status.className = monitor.status === 2 ? 'up' : 'down';
-        li.appendChild(status);
-        statusList.appendChild(li);
-      });
-    })
-    .catch(error => {
-      console.error('Erro ao buscar dados:', error);
-      document.getElementById('status-list').innerHTML = '<li>Erro ao carregar status.</li>';
-    });
+    // Substitua pelos seus valores reais do Supabase:
+    const SUPABASE_URL = 'https://zyscwlksespdrpnrifzm.supabase.co';     
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5c2N3bGtzZXNwZHJwbnJpZnptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1NjY4NzQsImV4cCI6MjA1NTE0Mjg3NH0.6_oROXE_6Zve-HfQBiHbFpAVJKZNM_JCAl4Uqow9fXo';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function fetchStatus() {
+      try {
+        const { data, error } = await supabase
+          .from('status_apps')
+          .select('*')
+          .order('nome', { ascending: true });
+        if (error) throw error;
+        
+        const container = document.getElementById('status-container');
+        container.innerHTML = data.map(app => `
+          <div class="status-card">
+            <h2>${app.nome}</h2>
+            <p class="${app.status ? 'online' : 'offline'}">
+              ${app.status ? 'OPERACIONAL' : 'FORA DO AR'}
+            </p>
+            <p class="last-check">
+              Última verificação: ${new Date(app.ultima_verificacao).toLocaleString('pt-BR')}
+            </p>
+          </div>
+        `).join('');
+      } catch (err) {
+        console.error('Erro ao buscar status:', err);
+        document.getElementById('status-container').innerHTML = '<p>Erro ao carregar status. Tente recarregar a página.</p>';
+      }
+    }
+    
+    // Busca os dados assim que a página carrega
+    fetchStatus();
+    // Atualiza a cada 60 segundos
+    setInterval(fetchStatus, 60000);
   </script>
 </body>
 </html>
+
