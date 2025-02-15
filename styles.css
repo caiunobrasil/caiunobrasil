@@ -1,4 +1,4 @@
-/* styles.css - Inspirado no Material Design 3 */
+/* styles.css - inspirado em https://m3.material.io/styles e https://m3.material.io/components/carousel/specs */
 
 /* Variáveis CSS (simplificadas) */
 :root {
@@ -44,7 +44,7 @@ body {
 /* Cabeçalho (opcional) */
 .md3-header {
   margin-bottom: var(--md-spacing);
-  /* Customize se quiser um menu fixo ou algo similar */
+  /* Estilize conforme desejar: background, menu, etc. */
 }
 
 /* Card do topo */
@@ -79,7 +79,7 @@ body {
 
 /* Conteúdo principal */
 .md3-main-content {
-  /* Ajuste se quiser algum layout adicional */
+  /* Você pode definir larguras, paddings etc. */
 }
 
 /* Grade de cards */
@@ -89,7 +89,7 @@ body {
   gap: var(--md-spacing);
 }
 
-/* Card de serviço (Elevated Card do MD3) */
+/* Card (Elevated Card do MD3) */
 .md3-card {
   position: relative;
   background: var(--md-color-surface);
