@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Caiu no Brasil? Status de Serviços</title>
   <style>
-    /* Cores e fontes */
+    /* Estilos gerais */
     body {
       font-family: "Roboto", Arial, sans-serif;
       background-color: #fdfdfd; /* off-white */
@@ -25,11 +25,11 @@
       max-width: 1200px;
       margin: 0 auto;
     }
-    /* Estilo do card */
+    /* Estilo dos cards */
     .card {
       background: #fff;
       border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       padding: 20px;
       display: flex;
       flex-direction: column;
@@ -44,7 +44,7 @@
       font-size: 0.95em;
       margin: 10px 0;
     }
-    /* Status indicator */
+    /* Indicador de status */
     .status-indicator {
       width: 16px;
       height: 16px;
@@ -52,16 +52,27 @@
       margin-bottom: 10px;
       display: inline-block;
     }
-    /* Botões ou status textual podem ser definidos via classes */
     .funcionando { background-color: #4caf50; } /* verde */
-    .fora { background-color: #f44336; } /* vermelho */
+    .caiu { background-color: #f44336; } /* vermelho */
+    /* Rodapé */
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #777;
+    }
   </style>
 </head>
 <body>
   <h1>Caiu no Brasil? Status de Serviços</h1>
+  
   <div class="card-grid" id="cardGrid">
     <!-- Os cards serão gerados aqui -->
   </div>
+
+  <footer>
+    Copyright 2025 Caiu no Brasil.
+  </footer>
 
   <script>
     // Lista dos 40 domínios conforme sua tabela
@@ -112,7 +123,7 @@
     function updateCards() {
       const grid = document.getElementById("cardGrid");
       grid.innerHTML = "";
-      sites.forEach((site, index) => {
+      sites.forEach((site) => {
         const card = document.createElement("div");
         card.classList.add("card");
 
@@ -121,10 +132,10 @@
         indicator.classList.add("status-indicator");
         if (site.status === "Funcionando") {
           indicator.classList.add("funcionando");
-        } else if (site.status === "Fora do ar") {
-          indicator.classList.add("fora");
+        } else if (site.status === "Caiu!") {
+          indicator.classList.add("caiu");
         } else {
-          // Se ainda estiver verificando, deixamos uma cor neutra (cinza claro)
+          // Enquanto verifica, cor neutra
           indicator.style.backgroundColor = "#ccc";
         }
         card.appendChild(indicator);
@@ -144,7 +155,7 @@
         statusElem.textContent = site.status ? site.status : "Verificando...";
         if (site.status === "Funcionando") {
           statusElem.style.color = "#4caf50";
-        } else if (site.status === "Fora do ar") {
+        } else if (site.status === "Caiu!") {
           statusElem.style.color = "#f44336";
         }
         card.appendChild(statusElem);
@@ -155,26 +166,26 @@
 
     // Função para verificar o status de um site
     function checkSite(site) {
+      // Utilizamos fetch com 'no-cors' para contornar restrições de CORS.
+      // OBS.: fetch com 'no-cors' pode não ser 100% confiável, pois não permite acesso à resposta.
       fetch(site.url, { mode: 'no-cors' })
         .then(() => {
           site.status = "Funcionando";
         })
         .catch(() => {
-          site.status = "Fora do ar";
+          site.status = "Caiu!";
         })
         .finally(() => {
           updateCards();
         });
     }
 
-    // Verifica todos os sites
+    // Função para verificar todos os sites
     function checkAllSites() {
-      sites.forEach(site => {
-        checkSite(site);
-      });
+      sites.forEach(site => checkSite(site));
     }
 
-    // Inicializa os cards e inicia as verificações
+    // Inicializa os cards e inicia a verificação
     updateCards();
     checkAllSites();
   </script>
