@@ -36,21 +36,6 @@
   </ul>
 
   <script>
-    // Replace this with your UptimeRobot Read-Only API Key
-    const apiKey = 'ur2834344-ce16c866901feb1cb9d6203b';
-    const apiUrl = `https://api.uptimerobot.com/v2/getMonitors?api_key=${apiKey}&format=json&logs=1`;
-
-    // Fetch data from UptimeRobot API
-    fetch(apiUrl, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    })
-    .then(response => response.json())
-    .then(data => {
-      const monitors = data.monitors;
-      const statusList = document.getElementById('status-list');
-      statusList.innerHTML = ''; // Clear "Carregando..." message
-
       // Loop through each monitor and display its status
       monitors.forEach(monitor => {
         const li = document.createElement('li');
