@@ -1,34 +1,16 @@
-/* CSS para Caiu no Brasil */
-
-/* Variáveis CSS */
+/* Variáveis de exemplo */
 :root {
-  /* Paleta de cores */
-  --md-color-background: #FFFBFE;
+  --md-color-background: #f2f2f2; /* Novo background geral */
   --md-color-surface: #FFFFFF;
-  --md-color-primary: #6750A4;
-  --md-color-secondary: #625B71;
-  --md-color-on-primary: #FFFFFF;
   --md-color-on-surface: #1C1B1F;
-
-  /* Status Colors */
-  --md-status-normal: #4caf50;
-  --md-status-lentidao: #ff9800;
-  --md-status-caiu: #f44336;
-
-  /* Elevações (Sombras) */
+  --md-color-primary: magenta; /* Para simplificar, use 'magenta' puro ou outro tom */
+  --md-color-on-primary: #FFFFFF;
+  
   --md-elevation-low: 0 1px 2px rgba(0, 0, 0, 0.15);
   --md-elevation-medium: 0 4px 6px rgba(0, 0, 0, 0.15);
-  --md-elevation-high: 0 8px 12px rgba(0, 0, 0, 0.2);
 
-  /* Espaçamento e cantos */
   --md-spacing: 16px;
   --md-border-radius: 12px;
-  --md-card-min-height: 220px;
-
-  /* Tipografia */
-  --md-headline-size: 2rem;
-  --md-title-size: 1.25rem;
-  --md-body-size: 1rem;
 }
 
 /* Reset básico */
@@ -38,7 +20,7 @@
   box-sizing: border-box;
 }
 
-/* Body */
+/* Body com background cinza claro */
 body {
   font-family: "Roboto", sans-serif;
   background-color: var(--md-color-background);
@@ -47,56 +29,52 @@ body {
   padding: var(--md-spacing);
 }
 
-/* Header - sem sombra para evitar o efeito de barra indesejada */
+/* Header (opcional) */
 .md3-header {
-  padding: var(--md-spacing);
   margin-bottom: var(--md-spacing);
 }
 
-/* Top Card (Container do topo) */
+/* Top Card com altura de 180px, cor magenta e texto branco */
 .md3-top-card {
-  width: 100%;
-  min-height: 560px; /* Aumentado */
-  background: linear-gradient(135deg, var(--md-color-primary), var(--md-color-secondary));
+  /* Centraliza e limita a largura para não passar dos cards */
+  max-width: 1200px;
+  margin: 0 auto;
+
+  height: 180px; /* Altura fixa */
+  background-color: var(--md-color-primary);
+  color: var(--md-color-on-primary);
+
   border-radius: var(--md-border-radius);
   box-shadow: var(--md-elevation-medium);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: calc(var(--md-spacing) * 2);
-  margin-bottom: var(--md-spacing);
   text-align: center;
-  overflow: hidden;
+  margin-bottom: var(--md-spacing);
 }
 
-/* Garantir que não haja pseudo-elementos extras com sombras */
-.md3-top-card::before,
-.md3-top-card::after {
-  content: "";
-  display: none;
-}
-
-/* Conteúdo do Top Card */
+/* Conteúdo do top card */
 .md3-top-card-content h1 {
-  font-size: var(--md-headline-size);
-  font-weight: 900;
+  font-size: 2rem;
+  font-weight: 700;
   margin-bottom: 8px;
   line-height: 1.2;
 }
 
 .md3-top-card-content h2 {
-  font-size: var(--md-title-size);
+  font-size: 1.25rem;
   font-weight: 500;
   opacity: 0.9;
 }
 
-/* Conteúdo principal centralizado */
+/* Área principal */
 .md3-main-content {
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Grade de Cards */
+/* Grade de cards */
 .md3-card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -109,28 +87,28 @@ body {
   border-radius: var(--md-border-radius);
   box-shadow: var(--md-elevation-low);
   padding: var(--md-spacing);
-  min-height: var(--md-card-min-height);
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  position: relative;
+  min-height: 220px; /* Ajuste conforme desejar */
 }
 
 /* Título do Card */
 .md3-card h2 {
-  font-size: var(--md-title-size);
+  font-size: 1.25rem;
   font-weight: 500;
   margin-bottom: 8px;
 }
 
 /* Subtítulo/URL do Card */
 .md3-card-subheading {
-  font-size: var(--md-body-size);
+  font-size: 1rem;
   color: #555;
   margin-bottom: 30px;
 }
 
-/* Botão de Status (Estilo Chip) */
+/* Botão de status (chip) */
 .md3-status-button {
   position: absolute;
   bottom: var(--md-spacing);
@@ -147,13 +125,13 @@ body {
 
 /* Variações de status */
 .md3-btn-normal {
-  background-color: var(--md-status-normal);
+  background-color: #4caf50;
 }
 .md3-btn-lentidao {
-  background-color: var(--md-status-lentidao);
+  background-color: #ff9800;
 }
 .md3-btn-caiu {
-  background-color: var(--md-status-caiu);
+  background-color: #f44336;
 }
 
 /* Rodapé */
