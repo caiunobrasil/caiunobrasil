@@ -1,331 +1,344 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Caiu no Brasil? Status de Serviços</title>
-    <!-- Para aproximar a tipografia do MD3, usamos Roboto como fallback -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Caiu no Brasil? Status de Serviços</title>
 
-    <style>
-      /* Variáveis inspiradas nos tokens do MD3 (simplificados) */
-      :root {
-        --md-background: #FFFBFE;
-        --md-surface: #FFFFFF;
-        --md-primary: #6750A4;
-        --md-secondary: #625B71;
-        --md-on-primary: #FFFFFF;
-        --md-on-surface: #1C1B1F;
+  <!-- Fonte Roboto (MD3) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
 
-        /* Status */
-        --md-status-normal: #4caf50;
-        --md-status-lentidao: #ff9800;
-        --md-status-caiu: #f44336;
+  <style>
+    /*
+      Variáveis inspiradas no Material Design 3.
+      Ajuste as cores conforme desejado, ou use tokens do MD3 mais avançados.
+    */
+    :root {
+      /* Cores principais */
+      --md-background: #FFFBFE;
+      --md-surface: #FFFFFF;
+      --md-primary: #6750A4;
+      --md-secondary: #625B71;
+      --md-on-primary: #FFFFFF;
+      --md-on-surface: #1C1B1F;
 
-        /* Espaçamentos e dimensões */
-        --md-spacing: 20px;
-        --md-border-radius: 16px; /* Aproximando um valor típico (pode variar) */
-        --md-card-min-height: 220px;
+      /* Cores de status */
+      --md-status-normal: #4caf50;
+      --md-status-lentidao: #ff9800;
+      --md-status-caiu: #f44336;
 
-        /* Tipografia MD3 – usamos Roboto como exemplo */
-        --md-headline-size: 2.5rem; /* ~40px */
-        --md-title-size: 1.375rem;  /* ~22px */
-        --md-body-size: 1rem;       /* ~16px */
-      }
+      /* Espaçamentos e dimensões */
+      --md-spacing: 20px;
+      --md-border-radius: 16px; /* Ajuste para mais ou menos arredondado */
+      --md-card-min-height: 220px; /* Altura mínima de todos os cards */
 
-      /* Configurações básicas */
-      body {
-        margin: 0;
-        padding: var(--md-spacing);
-        background-color: var(--md-background);
-        color: var(--md-on-surface);
-        font-family: "Roboto", sans-serif;
-        line-height: 1.5;
-      }
-      header, main, footer {
-        max-width: 1200px;
-        margin: 0 auto;
-      }
+      /* Tipografia básica */
+      --md-headline-size: 2.5rem; /* ~40px */
+      --md-title-size: 1.375rem;  /* ~22px */
+      --md-body-size: 1rem;       /* ~16px */
+    }
 
-      /* Card do Topo – design MD3 com gradiente e dimensões iguais aos demais cards */
-      .top-card {
-        position: relative;
-        background: linear-gradient(135deg, var(--md-primary), var(--md-secondary));
-        border-radius: var(--md-border-radius);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        padding: var(--md-spacing);
-        color: var(--md-on-primary);
-        margin-bottom: var(--md-spacing);
-        min-height: var(--md-card-min-height);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-      }
-      .top-card h1 {
-        margin: 0;
-        font-size: var(--md-headline-size);
-        font-weight: 700;
-        line-height: 1.2;
-      }
-      .top-card h2 {
-        margin: 8px 0 0;
-        font-size: var(--md-title-size);
-        font-weight: 500;
-        opacity: 0.9;
-      }
+    /* Reset básico e configurações do corpo */
+    body {
+      margin: 0;
+      padding: var(--md-spacing);
+      background-color: var(--md-background);
+      color: var(--md-on-surface);
+      font-family: "Roboto", sans-serif;
+      line-height: 1.5;
+    }
 
-      /* Grid de Cards para os serviços */
-      .card-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: var(--md-spacing);
-      }
+    header,
+    main,
+    footer {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-      /* Cards de Serviço – Elevated Card MD3 */
-      .card {
-        position: relative;
-        background: var(--md-surface);
-        border-radius: var(--md-border-radius);
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-        padding: var(--md-spacing);
-        min-height: var(--md-card-min-height);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        overflow: hidden;
-      }
-      .card h2 {
-        margin: 0;
-        font-size: var(--md-title-size);
-        font-weight: 500;
-      }
-      .card .subheading {
-        font-size: var(--md-body-size);
-        color: #555;
-        margin: 5px 0 30px;
-      }
+    /* Card do topo com imagem e design MD3 */
+    .top-card {
+      position: relative;
+      background: linear-gradient(135deg, var(--md-primary), var(--md-secondary));
+      border-radius: var(--md-border-radius);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      color: var(--md-on-primary);
+      margin-bottom: var(--md-spacing);
+      min-height: var(--md-card-min-height);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: var(--md-spacing);
+      overflow: hidden;
+    }
 
-      /* Botão de status (estilo chip) posicionado no canto inferior direito */
-      .status-button {
-        position: absolute;
-        bottom: var(--md-spacing);
-        right: var(--md-spacing);
-        padding: 8px 16px;
-        border: none;
-        border-radius: var(--md-border-radius);
-        color: #fff;
-        font-size: 0.875rem;
-        font-weight: 500;
-        cursor: default;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-      }
-      .btn-normal {
-        background-color: var(--md-status-normal);
-      }
-      .btn-lentidao {
-        background-color: var(--md-status-lentidao);
-      }
-      .btn-caiu {
-        background-color: var(--md-status-caiu);
-      }
+    /* Conteúdo textual do topo (título e subtítulo) */
+    .top-card-content {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 2; /* Fica acima da imagem */
+    }
+    .top-card-content h1 {
+      margin: 0;
+      font-size: var(--md-headline-size);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .top-card-content h2 {
+      margin: 0;
+      font-size: var(--md-title-size);
+      font-weight: 500;
+      opacity: 0.9;
+    }
 
-      /* Rodapé */
-      footer {
-        text-align: center;
-        margin-top: var(--md-spacing);
-        font-size: 0.9rem;
-        color: #777;
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <!-- Card do Topo com design MD3 -->
-      <div class="top-card">
+    /* Imagem no topo (shapes coloridos) */
+    .top-card img {
+      max-height: 140px;  /* Ajuste conforme o design desejado */
+      margin-left: auto; /* empurra a imagem para o lado direito */
+      z-index: 2;
+    }
+
+    /* Grid de cards para serviços */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--md-spacing);
+    }
+
+    /* Card de serviço (Elevated Card MD3) */
+    .card {
+      position: relative;
+      background: var(--md-surface);
+      border-radius: var(--md-border-radius);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      padding: var(--md-spacing);
+      min-height: var(--md-card-min-height);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .card h2 {
+      margin: 0;
+      font-size: var(--md-title-size);
+      font-weight: 500;
+    }
+    .card .subheading {
+      font-size: var(--md-body-size);
+      color: #555;
+      margin: 5px 0 30px;
+    }
+
+    /* Botão de status no canto inferior direito */
+    .status-button {
+      position: absolute;
+      bottom: var(--md-spacing);
+      right: var(--md-spacing);
+      padding: 8px 16px;
+      border: none;
+      border-radius: var(--md-border-radius);
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: default;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+    .btn-normal {
+      background-color: var(--md-status-normal);
+    }
+    .btn-lentidao {
+      background-color: var(--md-status-lentidao);
+    }
+    .btn-caiu {
+      background-color: var(--md-status-caiu);
+    }
+
+    /* Rodapé */
+    footer {
+      text-align: center;
+      margin-top: var(--md-spacing);
+      font-size: 0.9rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <!-- Card do topo com imagem -->
+    <div class="top-card">
+      <!-- Conteúdo textual -->
+      <div class="top-card-content">
         <h1>Caiu no Brasil?</h1>
         <h2>Status de Serviços</h2>
       </div>
-    </header>
+      <!-- Imagem colorida (exemplo shapes) -->
+      <img src="URL_DA_SUA_IMAGEM_AQUI" alt="Shapes coloridos" />
+    </div>
+  </header>
 
-    <main>
-      <!-- Grid de Cards dos Serviços -->
-      <div class="card-grid" id="cardGrid"></div>
-    </main>
+  <main>
+    <!-- Grid de Cards dos Serviços -->
+    <div class="card-grid" id="cardGrid"></div>
+  </main>
 
-    <footer>
-      <p>Copyright 2025 Caiu no Brasil.</p>
-    </footer>
+  <footer>
+    <p>Copyright 2025 Caiu no Brasil.</p>
+  </footer>
 
-    <script>
-      // Função fetch com timeout (máximo de 30 segundos)
-      function fetchWithTimeout(url, options = {}, timeout = 30000) {
-        return Promise.race([
-          fetch(url, options),
-          new Promise((_, reject) =>
-            setTimeout(() => reject(new Error("timeout")), timeout)
-          )
-        ]);
+  <script>
+    // Função fetch com timeout (máximo 30s)
+    function fetchWithTimeout(url, options = {}, timeout = 30000) {
+      return Promise.race([
+        fetch(url, options),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error("timeout")), timeout)
+        )
+      ]);
+    }
+
+    // Ordena o status: "Caiu!" > "Lentidão" > "Normal"
+    function getStatusOrder(site) {
+      if (!site.status) return 5;
+      switch (site.status) {
+        case "Caiu!":
+          return 1;
+        case "Lentidão":
+          return 2;
+        case "Normal":
+          return 3;
+        default:
+          return 5;
       }
+    }
 
-      // Função para determinar a ordem: "Caiu!" > "Lentidão" > "Normal". Se igual, ordem alfabética.
-      function getStatusOrder(site) {
-        if (!site.status) return 5;
+    // Domínios especiais (erro => Lentidão)
+    const specialDomains = ["itau.com.br", "caixa.gov.br", "vivo.com.br"];
+
+    // Lista dos 40 domínios
+    const sites = [
+      { name: "WhatsApp",         url: "https://www.whatsapp.com" },
+      { name: "Instagram",        url: "https://www.instagram.com" },
+      { name: "Facebook",         url: "https://www.facebook.com" },
+      { name: "X/Twitter",        url: "https://twitter.com" },
+      { name: "Telegram",         url: "https://telegram.org" },
+      { name: "TikTok",           url: "https://www.tiktok.com" },
+      { name: "Nubank",           url: "https://nubank.com.br" },
+      { name: "Mercado Pago",     url: "https://www.mercadopago.com.br" },
+      { name: "PicPay",           url: "https://www.picpay.com" },
+      { name: "Banco do Brasil",  url: "https://www.bb.com.br" },
+      { name: "Itaú",             url: "https://www.itau.com.br" },
+      { name: "Bradesco",         url: "https://www.bradesco.com.br" },
+      { name: "Caixa",            url: "https://www.caixa.gov.br" },
+      { name: "Inter",            url: "https://www.bancointer.com.br" },
+      { name: "C6 Bank",          url: "https://www.c6bank.com.br" },
+      { name: "iFood",            url: "https://www.ifood.com.br" },
+      { name: "Mercado Livre",    url: "https://www.mercadolivre.com.br" },
+      { name: "Amazon",           url: "https://www.amazon.com.br" },
+      { name: "Rappi",            url: "https://www.rappi.com.br" },
+      { name: "Uber",             url: "https://www.uber.com/br/en/" },
+      { name: "99",               url: "https://99app.com" },
+      { name: "Netflix",          url: "https://www.netflix.com" },
+      { name: "Spotify",          url: "https://www.spotify.com" },
+      { name: "Globoplay",        url: "https://globoplay.globo.com" },
+      { name: "YouTube",          url: "https://www.youtube.com" },
+      { name: "Claro",            url: "https://www.claro.com.br" },
+      { name: "Vivo",             url: "https://www.vivo.com.br" },
+      { name: "TIM",              url: "https://www.tim.com.br" },
+      { name: "Oi",               url: "https://www.oi.com.br" },
+      { name: "Steam",            url: "https://store.steampowered.com" },
+      { name: "Fortnite",         url: "https://www.epicgames.com/fortnite" },
+      { name: "Roblox",           url: "https://www.roblox.com" },
+      { name: "Discord",          url: "https://discord.com" },
+      { name: "Zoom",             url: "https://zoom.us" },
+      { name: "Teams",            url: "https://teams.microsoft.com" },
+      { name: "Slack",            url: "https://slack.com" },
+      { name: "Google",           url: "https://www.google.com" },
+      { name: "Outlook",          url: "https://outlook.live.com" },
+      { name: "ChatGPT",          url: "https://chat.openai.com" },
+      { name: "LinkedIn",         url: "https://www.linkedin.com" }
+    ];
+
+    // Gera/atualiza os cards
+    function updateCards() {
+      sites.sort((a, b) => {
+        const diff = getStatusOrder(a) - getStatusOrder(b);
+        return diff === 0 ? a.name.localeCompare(b.name) : diff;
+      });
+
+      const grid = document.getElementById("cardGrid");
+      grid.innerHTML = "";
+      sites.forEach(site => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+
+        // Título
+        const titleElem = document.createElement("h2");
+        titleElem.textContent = site.name;
+        card.appendChild(titleElem);
+
+        // Subheading (URL)
+        const subheadingElem = document.createElement("p");
+        subheadingElem.classList.add("subheading");
+        subheadingElem.textContent = site.url;
+        card.appendChild(subheadingElem);
+
+        // Botão de status
+        const statusButton = document.createElement("button");
+        statusButton.classList.add("status-button");
+
         switch (site.status) {
-          case "Caiu!":
-            return 1;
-          case "Lentidão":
-            return 2;
           case "Normal":
-            return 3;
+            statusButton.classList.add("btn-normal");
+            statusButton.textContent = "Normal";
+            break;
+          case "Lentidão":
+            statusButton.classList.add("btn-lentidao");
+            statusButton.textContent = "Lentidão";
+            break;
+          case "Caiu!":
+            statusButton.classList.add("btn-caiu");
+            statusButton.textContent = "Caiu!";
+            break;
           default:
-            return 5;
+            statusButton.style.backgroundColor = "#ccc";
+            statusButton.textContent = "Verificando...";
+            break;
         }
-      }
 
-      // Domínios especiais: se ocorrer erro, assume lentidão
-      const specialDomains = ["itau.com.br", "caixa.gov.br", "vivo.com.br"];
+        card.appendChild(statusButton);
+        grid.appendChild(card);
+      });
+    }
 
-      // Lista dos 40 domínios
-      const sites = [
-        { name: "WhatsApp",         url: "https://www.whatsapp.com" },
-        { name: "Instagram",        url: "https://www.instagram.com" },
-        { name: "Facebook",         url: "https://www.facebook.com" },
-        { name: "X/Twitter",        url: "https://twitter.com" },
-        { name: "Telegram",         url: "https://telegram.org" },
-        { name: "TikTok",           url: "https://www.tiktok.com" },
-        { name: "Nubank",           url: "https://nubank.com.br" },
-        { name: "Mercado Pago",     url: "https://www.mercadopago.com.br" },
-        { name: "PicPay",           url: "https://www.picpay.com" },
-        { name: "Banco do Brasil",  url: "https://www.bb.com.br" },
-        { name: "Itaú",             url: "https://www.itau.com.br" },
-        { name: "Bradesco",         url: "https://www.bradesco.com.br" },
-        { name: "Caixa",            url: "https://www.caixa.gov.br" },
-        { name: "Inter",            url: "https://www.bancointer.com.br" },
-        { name: "C6 Bank",          url: "https://www.c6bank.com.br" },
-        { name: "iFood",            url: "https://www.ifood.com.br" },
-        { name: "Mercado Livre",    url: "https://www.mercadolivre.com.br" },
-        { name: "Amazon",           url: "https://www.amazon.com.br" },
-        { name: "Rappi",            url: "https://www.rappi.com.br" },
-        { name: "Uber",             url: "https://www.uber.com/br/en/" },
-        { name: "99",               url: "https://99app.com" },
-        { name: "Netflix",          url: "https://www.netflix.com" },
-        { name: "Spotify",          url: "https://www.spotify.com" },
-        { name: "Globoplay",        url: "https://globoplay.globo.com" },
-        { name: "YouTube",          url: "https://www.youtube.com" },
-        { name: "Claro",            url: "https://www.claro.com.br" },
-        { name: "Vivo",             url: "https://www.vivo.com.br" },
-        { name: "TIM",              url: "https://www.tim.com.br" },
-        { name: "Oi",               url: "https://www.oi.com.br" },
-        { name: "Steam",            url: "https://store.steampowered.com" },
-        { name: "Fortnite",         url: "https://www.epicgames.com/fortnite" },
-        { name: "Roblox",           url: "https://www.roblox.com" },
-        { name: "Discord",          url: "https://discord.com" },
-        { name: "Zoom",             url: "https://zoom.us" },
-        { name: "Teams",            url: "https://teams.microsoft.com" },
-        { name: "Slack",            url: "https://slack.com" },
-        { name: "Google",           url: "https://www.google.com" },
-        { name: "Outlook",          url: "https://outlook.live.com" },
-        { name: "ChatGPT",          url: "https://chat.openai.com" },
-        { name: "LinkedIn",         url: "https://www.linkedin.com" }
-      ];
-
-      // Função para gerar os cards dos serviços
-      function updateCards() {
-        // Ordena os sites: Caiu! primeiro, depois Lentidão, depois Normal; se igual, ordem alfabética.
-        sites.sort((a, b) => {
-          const diff = getStatusOrder(a) - getStatusOrder(b);
-          return diff === 0 ? a.name.localeCompare(b.name) : diff;
+    // Verifica o status
+    function checkSite(site) {
+      const startTime = Date.now();
+      fetchWithTimeout(site.url, { mode: "no-cors" }, 30000)
+        .then(() => {
+          const elapsed = Date.now() - startTime;
+          site.status = elapsed <= 7000 ? "Normal" : "Lentidão";
+        })
+        .catch(() => {
+          const isSpecial = specialDomains.some(domain => site.url.includes(domain));
+          site.status = isSpecial ? "Lentidão" : "Caiu!";
+        })
+        .finally(() => {
+          updateCards();
         });
+    }
 
-        const grid = document.getElementById("cardGrid");
-        grid.innerHTML = "";
-        sites.forEach(site => {
-          const card = document.createElement("div");
-          card.classList.add("card");
+    // Inicia verificação
+    function checkAllSites() {
+      sites.forEach(site => checkSite(site));
+    }
 
-          // Título (nome do site)
-          const titleElem = document.createElement("h2");
-          titleElem.textContent = site.name;
-          card.appendChild(titleElem);
-
-          // Subheading (URL)
-          const subheadingElem = document.createElement("p");
-          subheadingElem.classList.add("subheading");
-          subheadingElem.textContent = site.url;
-          card.appendChild(subheadingElem);
-
-          // Botão de status (estilo chip)
-          const statusButton = document.createElement("button");
-          statusButton.classList.add("status-button");
-          switch (site.status) {
-            case "Normal":
-              statusButton.classList.add("btn-normal");
-              statusButton.textContent = "Normal";
-              break;
-            case "Lentidão":
-              statusButton.classList.add("btn-lentidao");
-              statusButton.textContent = "Lentidão";
-              break;
-            case "Caiu!":
-              statusButton.classList.add("btn-caiu");
-              statusButton.textContent = "Caiu!";
-              break;
-            default:
-              statusButton.style.backgroundColor = "#ccc";
-              statusButton.textContent = "Verificando...";
-              break;
-          }
-          card.appendChild(statusButton);
-          grid.appendChild(card);
-        });
-      }
-
-      // Função para verificar o status de cada site
-      function checkSite(site) {
-        const startTime = Date.now();
-        fetchWithTimeout(site.url, { mode: "no-cors" }, 30000)
-          .then(() => {
-            const elapsed = Date.now() - startTime;
-            if (elapsed <= 7000) {
-              site.status = "Normal";
-            } else {
-              site.status = "Lentidão";
-            }
-          })
-          .catch(() => {
-            const isSpecial = specialDomains.some(domain => site.url.includes(domain));
-            site.status = isSpecial ? "Lentidão" : "Caiu!";
-          })
-          .finally(() => {
-            updateCards();
-          });
-      }
-
-      // Função fetch com timeout
-      function fetchWithTimeout(url, options = {}, timeout = 30000) {
-        return Promise.race([
-          fetch(url, options),
-          new Promise((_, reject) =>
-            setTimeout(() => reject(new Error("timeout")), timeout)
-          )
-        ]);
-      }
-
-      // Inicia a verificação de todos os sites
-      function checkAllSites() {
-        sites.forEach(site => checkSite(site));
-      }
-
-      updateCards();
-      checkAllSites();
-    </script>
-  </body>
+    updateCards();
+    checkAllSites();
+  </script>
+</body>
 </html>
-
