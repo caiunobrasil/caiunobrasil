@@ -1,64 +1,249 @@
-name: Pull Uptime Robot Status and Update Supabase
-
-permissions:
-  contents: read
+name: Monitorar Status dos Serviços BR
 
 on:
   schedule:
     - cron: '*/5 * * * *'  # Executa a cada 5 minutos
-  workflow_dispatch:
+  workflow_dispatch:       # Permite execução manual
 
 jobs:
   check-status:
     runs-on: ubuntu-latest
     steps:
-      - name: Instalar jq (para parse de JSON)
-        run: |
-          sudo apt-get update && sudo apt-get install -y jq
-
-      - name: Obter status via Uptime Robot e atualizar Supabase
+      - name: "Verificar status dos serviços"
         env:
-          UPTIMEROBOT_API_KEY: ${{ secrets.UPTIMEROBOT_API_KEY }}
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SUPABASE_URL: "https://SEU_ID.supabase.co"
+          SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: |
-          echo "Chamando API do Uptime Robot..."
-          RESPONSE=$(curl -s -X POST "https://api.uptimerobot.com/v2/getMonitors" \
-            -H "Content-Type: application/json" \
-            -d "{
-              \"api_key\": \"${UPTIMEROBOT_API_KEY}\",
-              \"format\": \"json\"
-            }")
+          # Lista de serviços em letras minúsculas
+          declare -a SERVICES=(
+            "whatsapp"
+            "instagram"
+            "facebook"
+            "twitter"
+            "telegram"
+            "tiktok"
+            "nubank"
+            "mercadopago"
+            "picpay"
+            "bancodobrasil"
+            "itau"
+            "bradesco"
+            "caixa"
+            "inter"
+            "c6bank"
+            "ifood"
+            "mercadolivre"
+            "amazon"
+            "rappi"
+            "uber"
+            "99"
+            "netflix"
+            "spotify"
+            "globoplay"
+            "youtube"
+            "claro"
+            "vivo"
+            "tim"
+            "oi"
+            "steam"
+            "fortnite"
+            "roblox"
+            "discord"
+            "zoom"
+            "teams"
+            "slack"
+            "google"
+            "outlook"
+            "chatgpt"
+            "linkedin"
+          )
           
-          echo "Resposta da API: $RESPONSE"
-          # Não usamos jq aqui para evitar erros de parse, mas extraímos os monitores:
-          MONITORS=$(echo "$RESPONSE" | jq -c '.monitors[]')
+          for SERVICE in "${SERVICES[@]}"; do
+            # Defina o endpoint correto para cada serviço
+            case "$SERVICE" in
+              "whatsapp")
+                URL="https://web.whatsapp.com"
+                SERVICE_CAP="WhatsApp"
+                ;;
+              "instagram")
+                URL="https://www.instagram.com"
+                SERVICE_CAP="Instagram"
+                ;;
+              "facebook")
+                URL="https://www.facebook.com"
+                SERVICE_CAP="Facebook"
+                ;;
+              "twitter")
+                URL="https://twitter.com"
+                SERVICE_CAP="Twitter"
+                ;;
+              "telegram")
+                URL="https://web.telegram.org"
+                SERVICE_CAP="Telegram"
+                ;;
+              "tiktok")
+                URL="https://www.tiktok.com"
+                SERVICE_CAP="TikTok"
+                ;;
+              "nubank")
+                URL="https://nubank.com.br"
+                SERVICE_CAP="Nubank"
+                ;;
+              "mercadopago")
+                URL="https://www.mercadopago.com.br"
+                SERVICE_CAP="Mercado Pago"
+                ;;
+              "picpay")
+                URL="https://www.picpay.com"
+                SERVICE_CAP="PicPay"
+                ;;
+              "bancodobrasil")
+                URL="https://www.bb.com.br"
+                SERVICE_CAP="Banco do Brasil"
+                ;;
+              "itau")
+                URL="https://www.itau.com.br"
+                SERVICE_CAP="Itaú"
+                ;;
+              "bradesco")
+                URL="https://www.bradesco.com.br"
+                SERVICE_CAP="Bradesco"
+                ;;
+              "caixa")
+                URL="https://internetbanking.caixa.gov.br"
+                SERVICE_CAP="Caixa"
+                ;;
+              "inter")
+                URL="https://www.bancointer.com.br"
+                SERVICE_CAP="Inter"
+                ;;
+              "c6bank")
+                URL="https://www.c6bank.com.br"
+                SERVICE_CAP="C6 Bank"
+                ;;
+              "ifood")
+                URL="https://www.ifood.com.br"
+                SERVICE_CAP="iFood"
+                ;;
+              "mercadolivre")
+                URL="https://www.mercadolivre.com.br"
+                SERVICE_CAP="Mercado Livre"
+                ;;
+              "amazon")
+                URL="https://www.amazon.com.br"
+                SERVICE_CAP="Amazon"
+                ;;
+              "rappi")
+                URL="https://www.rappi.com.br"
+                SERVICE_CAP="Rappi"
+                ;;
+              "uber")
+                URL="https://www.uber.com"
+                SERVICE_CAP="Uber"
+                ;;
+              "99")
+                URL="https://www.99app.com"
+                SERVICE_CAP="99"
+                ;;
+              "netflix")
+                URL="https://www.netflix.com"
+                SERVICE_CAP="Netflix"
+                ;;
+              "spotify")
+                URL="https://www.spotify.com"
+                SERVICE_CAP="Spotify"
+                ;;
+              "globoplay")
+                URL="https://globoplay.globo.com"
+                SERVICE_CAP="Globoplay"
+                ;;
+              "youtube")
+                URL="https://www.youtube.com"
+                SERVICE_CAP="YouTube"
+                ;;
+              "claro")
+                URL="https://www.claro.com.br"
+                SERVICE_CAP="Claro"
+                ;;
+              "vivo")
+                URL="https://www.vivo.com.br"
+                SERVICE_CAP="Vivo"
+                ;;
+              "tim")
+                URL="https://www.tim.com.br"
+                SERVICE_CAP="TIM"
+                ;;
+              "oi")
+                URL="https://www.oi.com.br"
+                SERVICE_CAP="Oi"
+                ;;
+              "steam")
+                URL="https://store.steampowered.com"
+                SERVICE_CAP="Steam"
+                ;;
+              "fortnite")
+                URL="https://www.epicgames.com/fortnite"
+                SERVICE_CAP="Fortnite"
+                ;;
+              "roblox")
+                URL="https://www.roblox.com"
+                SERVICE_CAP="Roblox"
+                ;;
+              "discord")
+                URL="https://discord.com"
+                SERVICE_CAP="Discord"
+                ;;
+              "zoom")
+                URL="https://zoom.us"
+                SERVICE_CAP="Zoom"
+                ;;
+              "teams")
+                URL="https://teams.microsoft.com"
+                SERVICE_CAP="Teams"
+                ;;
+              "slack")
+                URL="https://slack.com"
+                SERVICE_CAP="Slack"
+                ;;
+              "google")
+                URL="https://www.google.com"
+                SERVICE_CAP="Google"
+                ;;
+              "outlook")
+                URL="https://outlook.live.com"
+                SERVICE_CAP="Outlook"
+                ;;
+              "chatgpt")
+                URL="https://chat.openai.com"
+                SERVICE_CAP="ChatGPT"
+                ;;
+              "linkedin")
+                URL="https://www.linkedin.com"
+                SERVICE_CAP="LinkedIn"
+                ;;
+              *)
+                # Caso não reconheça, tenta padronizar
+                URL="https://www.$SERVICE.com.br"
+                # Capitaliza
+                SERVICE_CAP="$(tr '[:lower:]' '[:upper:]' <<< ${SERVICE:0:1})${SERVICE:1}"
+                ;;
+            esac
 
-          if [ -z "$MONITORS" ]; then
-            echo "Nenhum monitor encontrado. Verifique a API key ou a resposta da API."
-            exit 1
-          fi
-
-          for MONITOR in $MONITORS; do
-            FRIENDLY_NAME=$(echo "$MONITOR" | jq -r '.friendly_name')
-            STATUS_CODE=$(echo "$MONITOR" | jq -r '.status')
-
-            if [ "$STATUS_CODE" -eq 2 ]; then
-              NEW_STATUS=true
+            # Obtenha o código de status HTTP
+            STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$URL")
+            if [ "$STATUS_CODE" -eq 200 ]; then
+              STATUS="true"
             else
-              NEW_STATUS=false
+              STATUS="false"
             fi
 
-            FRIENDLY_NAME_URL=$(echo "$FRIENDLY_NAME" | sed 's/ /%20/g')
-            PATCH_URL="${SUPABASE_URL}/rest/v1/status_apps?nome=eq.${FRIENDLY_NAME_URL}"
-
-            CURRENT_DATE=$(date -u +%FT%TZ)
-            echo "Atualizando $FRIENDLY_NAME com status: $NEW_STATUS (status code: $STATUS_CODE) em $CURRENT_DATE"
-
-            curl -s -X PATCH "$PATCH_URL" \
-              -H "apikey: $SUPABASE_SERVICE_KEY" \
-              -H "Content-Type: application/json" \
-              -d "{\"status\": $NEW_STATUS, \"ultima_verificacao\": \"$CURRENT_DATE\"}"
+            # Atualize o registro no Supabase via PATCH (substituir espaços por %20 no nome)
+            SERVICE_URL=$(echo "$SERVICE_CAP" | sed 's/ /%20/g')
             
-            echo "Atualizado: $FRIENDLY_NAME => $NEW_STATUS"
+            curl -s -X PATCH "$SUPABASE_URL/rest/v1/status_apps?nome=eq.$SERVICE_URL" \
+              -H "apikey: $SUPABASE_KEY" \
+              -H "Content-Type: application/json" \
+              -d "{\"status\": $STATUS, \"ultima_verificacao\": \"$(date -u +%FT%TZ)\"}" > /dev/null
+
+            echo "Atualizado ${SERVICE_CAP}: $STATUS (HTTP code: $STATUS_CODE)"
           done
