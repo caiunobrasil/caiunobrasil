@@ -56,7 +56,7 @@ body {
 /* Top Card (Container do topo) */
 .md3-top-card {
   width: 100%;
-  min-height: 280px; /* Aumentado para aproximar do container hero do MD3 */
+  min-height: 560px; /* Aumentado */
   background: linear-gradient(135deg, var(--md-color-primary), var(--md-color-secondary));
   border-radius: var(--md-border-radius);
   box-shadow: var(--md-elevation-medium);
@@ -79,7 +79,7 @@ body {
 /* Conteúdo do Top Card */
 .md3-top-card-content h1 {
   font-size: var(--md-headline-size);
-  font-weight: 700;
+  font-weight: 900;
   margin-bottom: 8px;
   line-height: 1.2;
 }
