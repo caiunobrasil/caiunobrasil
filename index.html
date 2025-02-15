@@ -19,7 +19,7 @@
 <body>
   <!-- Top Navigation / Header (opcional) -->
   <header class="md3-header">
-    <!-- Você pode inserir um logo ou menu aqui, se desejar -->
+    <!-- (Opcional) Você pode inserir um logo ou menu aqui -->
   </header>
 
   <!-- Card do topo -->
@@ -48,124 +48,44 @@
     // Lógica de verificação
     // =====================
 
-    // Lista de domínios especiais
+    // Lista de domínios especiais (em caso de erro => Lentidão)
     const specialDomains = ["itau.com.br", "caixa.gov.br", "vivo.com.br"];
 
     // Lista dos 40 domínios
     const sites = [
-      { name: "Caixa",            url: "https://www.caixa.gov.br" },
-      { name: "Itaú",             url: "https://www.itau.com.br" },
-      { name: "Vivo",             url: "https://www.vivo.com.br" },
-      { name: "WhatsApp",         url: "https://www.whatsapp.com" },
+      { name: "WhatsApp",         url: "https://web.whatsapp.com" },
       { name: "Instagram",        url: "https://www.instagram.com" },
       { name: "Facebook",         url: "https://www.facebook.com" },
-      // ... acrescente os demais ...
-    ];
-
-    // Função para medir tempo de resposta (até 30s)
-    function fetchWithTimeout(url, options = {}, timeout = 30000) {
-      return Promise.race([
-        fetch(url, options),
-        new Promise((_, reject) =>
-          setTimeout(() => reject(new Error("timeout")), timeout)
-        )
-      ]);
-    }
-
-    // Ordenação: Caiu! > Lentidão > Normal
-    function getStatusOrder(site) {
-      if (!site.status) return 5;
-      switch (site.status) {
-        case "Caiu!":
-          return 1;
-        case "Lentidão":
-          return 2;
-        case "Normal":
-          return 3;
-        default:
-          return 5;
-      }
-    }
-
-    // Renderização dos cards
-    function updateCards() {
-      const grid = document.getElementById("cardGrid");
-      // Ordena primeiro por status, depois alfabeticamente
-      sites.sort((a, b) => {
-        const diff = getStatusOrder(a) - getStatusOrder(b);
-        return diff === 0 ? a.name.localeCompare(b.name) : diff;
-      });
-
-      grid.innerHTML = "";
-      sites.forEach(site => {
-        // Cria o card
-        const card = document.createElement("div");
-        card.classList.add("md3-card");
-
-        // Título
-        const titleElem = document.createElement("h2");
-        titleElem.textContent = site.name;
-        card.appendChild(titleElem);
-
-        // Subheading (URL)
-        const subheadingElem = document.createElement("p");
-        subheadingElem.classList.add("md3-card-subheading");
-        subheadingElem.textContent = site.url;
-        card.appendChild(subheadingElem);
-
-        // Botão de status
-        const statusButton = document.createElement("button");
-        statusButton.classList.add("md3-status-button");
-
-        switch (site.status) {
-          case "Normal":
-            statusButton.classList.add("md3-btn-normal");
-            statusButton.textContent = "Normal";
-            break;
-          case "Lentidão":
-            statusButton.classList.add("md3-btn-lentidao");
-            statusButton.textContent = "Lentidão";
-            break;
-          case "Caiu!":
-            statusButton.classList.add("md3-btn-caiu");
-            statusButton.textContent = "Caiu!";
-            break;
-          default:
-            statusButton.style.backgroundColor = "#ccc";
-            statusButton.textContent = "Verificando...";
-            break;
-        }
-
-        card.appendChild(statusButton);
-        grid.appendChild(card);
-      });
-    }
-
-    // Verifica status
-    function checkSite(site) {
-      const startTime = Date.now();
-      fetchWithTimeout(site.url, { mode: "no-cors" }, 30000)
-        .then(() => {
-          const elapsed = Date.now() - startTime;
-          site.status = elapsed <= 7000 ? "Normal" : "Lentidão";
-        })
-        .catch(() => {
-          const isSpecial = specialDomains.some(domain => site.url.includes(domain));
-          site.status = isSpecial ? "Lentidão" : "Caiu!";
-        })
-        .finally(() => {
-          updateCards();
-        });
-    }
-
-    // Inicia verificação
-    function checkAllSites() {
-      sites.forEach(site => checkSite(site));
-    }
-
-    // Inicializa
-    updateCards();
-    checkAllSites();
-  </script>
-</body>
-</html>
+      { name: "X/Twitter",        url: "https://twitter.com" },
+      { name: "Telegram",         url: "https://telegram.org" },
+      { name: "TikTok",           url: "https://www.tiktok.com" },
+      { name: "Nubank",           url: "https://nubank.com.br" },
+      { name: "Mercado Pago",     url: "https://www.mercadopago.com.br" },
+      { name: "PicPay",           url: "https://www.picpay.com" },
+      { name: "Banco do Brasil",  url: "https://www.bb.com.br" },
+      { name: "Itaú",             url: "https://www.itau.com.br" },
+      { name: "Bradesco",         url: "https://www.bradesco.com.br" },
+      { name: "Caixa",            url: "https://www.caixa.gov.br" },
+      { name: "Inter",            url: "https://www.bancointer.com.br" },
+      { name: "C6 Bank",          url: "https://www.c6bank.com.br" },
+      { name: "iFood",            url: "https://www.ifood.com.br" },
+      { name: "Mercado Livre",    url: "https://www.mercadolivre.com.br" },
+      { name: "Amazon",           url: "https://www.amazon.com.br" },
+      { name: "Rappi",            url: "https://www.rappi.com.br" },
+      { name: "Uber",             url: "https://www.uber.com/br/en/" },
+      { name: "99",               url: "https://99app.com" },
+      { name: "Netflix",          url: "https://www.netflix.com" },
+      { name: "Spotify",          url: "https://www.spotify.com" },
+      { name: "Globoplay",        url: "https://globoplay.globo.com" },
+      { name: "YouTube",          url: "https://www.youtube.com" },
+      { name: "Claro",            url: "https://www.claro.com.br" },
+      { name: "Vivo",             url: "https://www.vivo.com.br" },
+      { name: "TIM",              url: "https://www.tim.com.br" },
+      { name: "Oi",               url: "https://www.oi.com.br" },
+      { name: "Steam",            url: "https://store.steampowered.com" },
+      { name: "Fortnite",         url: "https://www.epicgames.com/fortnite" },
+      { name: "Roblox",           url: "https://www.roblox.com" },
+      { name: "Discord",          url: "https://discord.com" },
+      { name: "Zoom",             url: "https://zoom.us" },
+      { name: "Teams",            url: "https://teams.microsoft.com" },
+      { name: "Slack",            url: "https://slack.com" 
