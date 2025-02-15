@@ -1,5 +1,8 @@
 name: Pull Uptime Robot Status and Update Supabase
 
+permissions:
+  contents: read
+
 on:
   schedule:
     - cron: '*/5 * * * *'  # Executa a cada 5 minutos
@@ -30,30 +33,24 @@ jobs:
           echo "Resposta da API: $RESPONSE"
           echo "$RESPONSE" | jq .
 
-          # Extrair a lista de monitores
           MONITORS=$(echo "$RESPONSE" | jq -c '.monitors[]')
 
-          # Verifica se MONITORS não está vazio
           if [ -z "$MONITORS" ]; then
             echo "Nenhum monitor encontrado. Verifique a API key ou a resposta da API."
             exit 1
           fi
 
-          # Loop para cada monitor
           for MONITOR in $MONITORS; do
             FRIENDLY_NAME=$(echo "$MONITOR" | jq -r '.friendly_name')
             STATUS_CODE=$(echo "$MONITOR" | jq -r '.status')
 
-            # No Uptime Robot: 2 = Up; outros valores = Down
             if [ "$STATUS_CODE" -eq 2 ]; then
               NEW_STATUS=true
             else
               NEW_STATUS=false
             fi
 
-            # Converte espaços no nome para %20 (para URL)
             FRIENDLY_NAME_URL=$(echo "$FRIENDLY_NAME" | sed 's/ /%20/g')
-
             PATCH_URL="${SUPABASE_URL}/rest/v1/status_apps?nome=eq.${FRIENDLY_NAME_URL}"
 
             echo "Atualizando $FRIENDLY_NAME com status: $NEW_STATUS"
@@ -61,6 +58,6 @@ jobs:
               -H "apikey: $SUPABASE_SERVICE_KEY" \
               -H "Content-Type: application/json" \
               -d "{\"status\": $NEW_STATUS, \"ultima_verificacao\": \"$(date -u +%FT%TZ)\"}"
-
+            
             echo "Atualizado: $FRIENDLY_NAME => $NEW_STATUS (Código do status: $STATUS_CODE)"
           done
