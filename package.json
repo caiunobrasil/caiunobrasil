@@ -1,0 +1,13 @@
+{
+  "name": "caiunobrasil-status-updater",
+  "version": "1.0.0",
+  "description": "Script para atualizar status.json com os status dinâmicos dos serviços",
+  "main": "update-status.js",
+  "scripts": {
+    "update": "node update-status.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.0"
+  },
+  "type": "module"
+}
