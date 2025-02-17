@@ -1,64 +1,125 @@
-/* Exemplo de CSS adicional (não crítico) */
+/* styles.css - Inspirado no Material Design 3 */
 
-/* Card de serviços */
-#cardGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+:root {
+  --md-color-background: #FFFBFE;
+  --md-color-surface: #FFFFFF;
+  --md-color-primary: #6750A4;
+  --md-color-secondary: #625B71;
+  --md-color-on-primary: #FFFFFF;
+  --md-color-on-surface: #1C1B1F;
+  --md-status-normal: #4caf50;
+  --md-status-lentidao: #ff9800;
+  --md-status-caiu: #f44336;
+  --md-spacing: 20px;
+  --md-border-radius: 16px;
+  --md-card-min-height: 220px;
+  --md-headline-size: 2.5rem;
+  --md-title-size: 1.375rem;
+  --md-body-size: 1rem;
 }
 
-.service-card {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-  padding: 20px;
-  min-height: 180px;
+body {
+  background-color: var(--md-color-background);
+  color: var(--md-color-on-surface);
+  font-family: "Roboto", sans-serif;
+  line-height: 1.5;
+  padding: var(--md-spacing);
+}
+
+.md3-header {
+  margin-bottom: var(--md-spacing);
+}
+
+/* Card do Topo */
+.md3-top-card {
   position: relative;
+  background: linear-gradient(135deg, var(--md-color-primary), var(--md-color-secondary));
+  border-radius: var(--md-border-radius);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  color: var(--md-color-on-primary);
+  margin-bottom: var(--md-spacing);
+  min-height: var(--md-card-min-height);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: var(--md-spacing);
+  text-align: center;
+}
+.md3-top-card-content {
+  flex: 1;
+}
+.md3-top-card-content h1 {
+  margin: 0;
+  font-size: var(--md-headline-size);
+  font-weight: 700;
+  line-height: 1.2;
+}
+.md3-top-card-content h2 {
+  margin-top: 8px;
+  font-size: var(--md-title-size);
+  font-weight: 500;
+  opacity: 0.9;
 }
 
-.service-card h3 {
+/* Grade de Cards dos Serviços */
+.md3-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--md-spacing);
+}
+
+/* Cards de Serviço */
+.md3-card {
+  position: relative;
+  background: var(--md-color-surface);
+  border-radius: var(--md-border-radius);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  padding: var(--md-spacing);
+  min-height: var(--md-card-min-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+.md3-card h2 {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: var(--md-title-size);
   font-weight: 500;
 }
-
-.service-card p {
-  font-size: 1rem;
+.md3-card-subheading {
+  font-size: var(--md-body-size);
   color: #555;
-  margin: 5px 0;
+  margin: 5px 0 30px;
 }
 
-/* Botão de status */
-.status-button {
+/* Botão de Status (chip) */
+.md3-status-button {
   position: absolute;
-  bottom: 20px;
-  right: 20px;
+  bottom: var(--md-spacing);
+  right: var(--md-spacing);
   padding: 8px 16px;
   border: none;
-  border-radius: 16px;
+  border-radius: var(--md-border-radius);
   color: #fff;
   font-size: 0.875rem;
   font-weight: 500;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  cursor: default;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+.md3-btn-normal { background-color: var(--md-status-normal); }
+.md3-btn-lentidao { background-color: var(--md-status-lentidao); }
+.md3-btn-caiu { background-color: var(--md-status-caiu); }
+
+.md3-footer {
+  text-align: center;
+  margin-top: var(--md-spacing);
+  font-size: 0.9rem;
+  color: #777;
 }
 
-.btn-normal {
-  background-color: #4caf50;
-}
-.btn-lentidao {
-  background-color: #ff9800;
-}
-.btn-caiu {
-  background-color: #f44336;
-}
-
-/* Ajustes responsivos */
+/* Responsividade */
 @media (max-width: 600px) {
-  #cardGrid {
+  .md3-card-grid {
     grid-template-columns: 1fr;
-    padding: 0 10px;
-  }
-  .service-card {
-    margin-bottom: 10px;
   }
 }
