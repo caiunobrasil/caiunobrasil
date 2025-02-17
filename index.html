@@ -16,7 +16,7 @@
     <meta property="og:url" content="https://caiunobrasil.com.br" />
     <meta property="og:image" content="https://caiunobrasil.com.br/imagem-og.jpg" />
 
-    <!-- Schema Markup (JSON-LD) -->
+    <!-- Schema Markup -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -31,10 +31,9 @@
       }
     </script>
 
-    <!-- Preconnect e Fontes do Google com display=swap -->
+    <!-- Preconnect e Fontes do Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Carregando a fonte de forma não-bloqueante -->
     <link
       rel="preload"
       as="style"
@@ -48,27 +47,20 @@
       />
     </noscript>
 
-    <!-- CSS crítico inline (apenas para a parte acima da dobra) -->
+    <!-- CSS crítico inline -->
     <style>
-      /* Reset mínimo */
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
       body {
-        background-color: #FFFBFE; /* md-color-background */
-        color: #1C1B1F;           /* md-color-on-surface */
+        background-color: #FFFBFE;
+        color: #1C1B1F;
         font-family: "Roboto", sans-serif;
         line-height: 1.5;
         margin: 0;
-      }
-      header {
-        margin-bottom: 20px;
+        padding: 20px;
       }
       .md3-top-card {
         position: relative;
-        background: linear-gradient(135deg, #6750A4, #625B71); /* primary -> secondary */
+        background: linear-gradient(135deg, #6750A4, #625B71);
         border-radius: 16px;
         color: #fff;
         margin-bottom: 20px;
@@ -81,7 +73,7 @@
       }
       .md3-top-card-content h1 {
         margin: 0;
-        font-size: 2.5rem; /* ~40px */
+        font-size: 2.5rem;
         font-weight: 700;
       }
       .md3-top-card-content h2 {
@@ -96,33 +88,23 @@
         font-size: 0.9rem;
         color: #777;
       }
-      /* Evitando CLS para alguma imagem acima da dobra, se houver */
-      img {
-        display: block;
-        max-width: 100%;
-        height: auto;
-      }
+      /* Evitar Layout Shift em imagens */
+      img { display: block; max-width: 100%; height: auto; }
     </style>
 
-    <!-- Carregando o resto do CSS de forma assíncrona -->
-    <link
-      rel="preload"
-      as="style"
-      href="styles.css?v=20250217"
-      onload="this.rel='stylesheet'"
-    />
+    <!-- Carrega o CSS externo de forma assíncrona -->
+    <link rel="preload" as="style" href="styles.css?v=20250217" onload="this.rel='stylesheet'" />
     <noscript>
       <link rel="stylesheet" href="styles.css?v=20250217" />
     </noscript>
 
-    <!-- Google Analytics - carregado APÓS onload (para não bloquear) -->
+    <!-- Google Analytics (carregado após onload) -->
     <script>
       window.addEventListener('load', function() {
         var gaScript = document.createElement('script');
         gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-GVMVLWTXQY';
         gaScript.async = true;
         document.head.appendChild(gaScript);
-
         gaScript.onload = function() {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
@@ -144,8 +126,8 @@
     </div>
 
     <main style="padding: 20px;">
-      <!-- Conteúdo da página (cards de serviços, etc.) -->
-      <div id="cardGrid"></div>
+      <!-- Grade de Cards dos serviços -->
+      <div class="md3-card-grid" id="cardGrid"></div>
     </main>
 
     <footer class="md3-footer">
@@ -153,7 +135,7 @@
       <p>&copy; 2025 Caiu no Brasil.</p>
     </footer>
 
-    <!-- Exemplo de script com fetch de status. Adicione defer ou carregue no final. -->
+    <!-- Carrega app.js com defer -->
     <script defer src="app.js"></script>
   </body>
 </html>
