@@ -1,0 +1,380 @@
+<!doctype html>
+<html amp lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <title>Caiu no Brasil? Status de Serviços</title>
+
+    <!-- AMP Boilerplate -->
+    <style amp-boilerplate>
+      body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;
+           -moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;
+           -ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;
+           animation:-amp-start 8s steps(1,end) 0s 1 normal both}
+      @-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
+      @-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
+      @-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
+      @-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
+      @keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
+    </style>
+    <noscript>
+      <style amp-boilerplate>
+        body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}
+      </style>
+    </noscript>
+
+    <!-- AMP runtime -->
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <!-- Etapa 1: Carregar biblioteca de anúncios automáticos AMP -->
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+
+    <!-- Link Canonical para a versão não AMP -->
+    <link rel="canonical" href="https://caiunobrasil.com.br/">
+
+    <!-- Preconnect e Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" onload="this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    </noscript>
+
+    <!-- CSS Inline (amp-custom) -->
+    <style amp-custom>
+      :root {
+        --md-color-background: #FFFBFE;
+        --md-color-surface: #FFFFFF;
+        --md-color-primary: #6750A4;
+        --md-color-secondary: #625B71;
+        --md-color-on-primary: #FFFFFF;
+        --md-color-on-surface: #1C1B1F;
+        --md-status-normal: #4caf50;
+        --md-status-lentidao: #ff9800;
+        --md-status-caiu: #f44336;
+        --md-spacing: 20px;
+        --md-border-radius: 16px;
+        --md-card-min-height: 220px;
+        --md-headline-size: 2.5rem;
+        --md-title-size: 1.375rem;
+        --md-body-size: 1rem;
+      }
+      body {
+        background-color: var(--md-color-background);
+        color: var(--md-color-on-surface);
+        font-family: 'Roboto', sans-serif;
+        padding: var(--md-spacing);
+        margin: 0;
+      }
+      header, main, footer {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      /* Card do Topo */
+      .top-card {
+        background: linear-gradient(135deg, var(--md-color-primary), var(--md-color-secondary));
+        border-radius: var(--md-border-radius);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        color: var(--md-color-on-primary);
+        min-height: var(--md-card-min-height);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: var(--md-spacing);
+        margin-bottom: var(--md-spacing);
+      }
+      .top-card-content h1 {
+        margin: 0;
+        font-size: var(--md-headline-size);
+        font-weight: 700;
+      }
+      .top-card-content h2 {
+        margin-top: 8px;
+        font-size: var(--md-title-size);
+        font-weight: 500;
+        opacity: 0.9;
+      }
+      /* Grade de Cards */
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--md-spacing);
+        margin-top: var(--md-spacing);
+      }
+      /* Cards de Serviço */
+      .service-card {
+        background: var(--md-color-surface);
+        border-radius: var(--md-border-radius);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        padding: var(--md-spacing);
+        min-height: var(--md-card-min-height);
+        position: relative;
+      }
+      .service-card h2 {
+        margin: 0;
+        font-size: var(--md-title-size);
+        font-weight: 500;
+      }
+      .service-card p {
+        font-size: var(--md-body-size);
+        color: #555;
+        margin: 5px 0 30px;
+      }
+      /* Botão de Status */
+      .status-button {
+        position: absolute;
+        bottom: var(--md-spacing);
+        right: var(--md-spacing);
+        padding: 8px 16px;
+        border: none;
+        border-radius: var(--md-border-radius);
+        color: #fff;
+        font-size: 0.875rem;
+        font-weight: 500;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      }
+      .btn-normal { background-color: var(--md-status-normal); }
+      .btn-lentidao { background-color: var(--md-status-lentidao); }
+      .btn-caiu { background-color: var(--md-status-caiu); }
+      /* Rodapé */
+      footer {
+        text-align: center;
+        margin-top: var(--md-spacing);
+        font-size: 0.9rem;
+        color: #777;
+      }
+      /* Responsividade */
+      @media (max-width: 600px) {
+        .card-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Etapa 2: Código de anúncio automático AMP (logo após a tag <body>) -->
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-5086339476890789"></amp-auto-ads>
+
+    <header>
+      <!-- Card do Topo -->
+      <div class="top-card">
+        <div class="top-card-content">
+          <h1>Caiu no Brasil?</h1>
+          <h2>Status de Serviços</h2>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Grade de Cards dos 40 Serviços -->
+      <div class="card-grid">
+        <!-- Replicando manualmente os 40 cards -->
+        <div class="service-card">
+          <h2>WhatsApp</h2>
+          <p>https://www.whatsapp.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Instagram</h2>
+          <p>https://www.instagram.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Facebook</h2>
+          <p>https://www.facebook.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>X/Twitter</h2>
+          <p>https://twitter.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Telegram</h2>
+          <p>https://telegram.org</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>TikTok</h2>
+          <p>https://www.tiktok.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Nubank</h2>
+          <p>https://nubank.com.br</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Mercado Pago</h2>
+          <p>https://www.mercadopago.com.br</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>PicPay</h2>
+          <p>https://www.picpay.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Banco do Brasil</h2>
+          <p>https://www.bb.com.br</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Itaú</h2>
+          <p>https://www.itau.com.br</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Bradesco</h2>
+          <p>https://www.bradesco.com.br</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Caixa</h2>
+          <p>https://www.caixa.gov.br</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Inter</h2>
+          <p>https://www.bancointer.com.br</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>C6 Bank</h2>
+          <p>https://www.c6bank.com.br</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>iFood</h2>
+          <p>https://www.ifood.com.br</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Mercado Livre</h2>
+          <p>https://www.mercadolivre.com.br</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Amazon</h2>
+          <p>https://www.amazon.com.br</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Rappi</h2>
+          <p>https://www.rappi.com.br</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Uber</h2>
+          <p>https://www.uber.com/br/en/</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>99</h2>
+          <p>https://99app.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Netflix</h2>
+          <p>https://www.netflix.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Spotify</h2>
+          <p>https://www.spotify.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Globoplay</h2>
+          <p>https://globoplay.globo.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>YouTube</h2>
+          <p>https://www.youtube.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Claro</h2>
+          <p>https://www.claro.com.br</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Vivo</h2>
+          <p>https://www.vivo.com.br</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>TIM</h2>
+          <p>https://www.tim.com.br</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Oi</h2>
+          <p>https://www.oi.com.br</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Steam</h2>
+          <p>https://store.steampowered.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Fortnite</h2>
+          <p>https://www.epicgames.com/fortnite</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Roblox</h2>
+          <p>https://www.roblox.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Discord</h2>
+          <p>https://discord.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Zoom</h2>
+          <p>https://zoom.us</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Teams</h2>
+          <p>https://teams.microsoft.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Slack</h2>
+          <p>https://slack.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Google</h2>
+          <p>https://www.google.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>Outlook</h2>
+          <p>https://outlook.live.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>ChatGPT</h2>
+          <p>https://chat.openai.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+        <div class="service-card">
+          <h2>LinkedIn</h2>
+          <p>https://www.linkedin.com</p>
+          <button class="status-button">Verificando...</button>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>Estamos sempre atentos para ajudar quem procura saber se algum dos principais serviços da internet no Brasil "caiu" ou não.</p>
+      <p>&copy; 2025 Caiu no Brasil.</p>
+    </footer>
+  </body>
+</html>
