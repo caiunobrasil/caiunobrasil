@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
     <title>Caiu no Brasil? Status de Serviços (AMP)</title>
-
+    
     <!-- AMP Boilerplate -->
     <style amp-boilerplate>
       body {
@@ -29,8 +29,7 @@
         }
       </style>
     </noscript>
-    <!-- Fim do AMP Boilerplate -->
-
+    
     <!-- AMP runtime -->
     <script async src="https://cdn.ampproject.org/v0.js"></script>
     <!-- amp-auto-ads para anúncios automáticos -->
@@ -42,11 +41,11 @@
     
     <!-- Link canônico para a versão não AMP -->
     <link rel="canonical" href="https://caiunobrasil.com.br/" />
-
+    
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" />
-
-    <!-- CSS AMP Inline (amp-custom) -->
+    
+    <!-- CSS Inline AMP (amp-custom) -->
     <style amp-custom>
       :root {
         --bg: #FFFBFE;
@@ -72,7 +71,6 @@
         max-width: 1200px;
         margin: 0 auto;
       }
-      /* Card do Topo */
       .top-card {
         background: linear-gradient(135deg, var(--primary), var(--secondary));
         border-radius: var(--radius);
@@ -97,14 +95,12 @@
         font-weight: 500;
         opacity: 0.9;
       }
-      /* Grade de Cards */
       .card-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: var(--spacing);
         margin-top: var(--spacing);
       }
-      /* Card de Serviço */
       .service-card {
         background: var(--bg);
         border-radius: var(--radius);
@@ -123,7 +119,6 @@
         color: #555;
         margin: 5px 0 30px;
       }
-      /* Botão de Status */
       .status-button {
         position: absolute;
         bottom: var(--spacing);
@@ -166,11 +161,10 @@
     </header>
     
     <main>
-      <!-- amp-list para carregar dinamicamente os 40 cards do arquivo status.json -->
       <amp-list width="auto"
                 height="1000"
                 layout="fixed-height"
-                src="/status.json"
+                src="https://caiunobrasil.com.br/status.json"
                 class="card-grid">
         <template type="amp-mustache">
           <div class="service-card">
