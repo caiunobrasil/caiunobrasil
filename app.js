@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const sites = [
-    { name: "WhatsApp",         url: "https://www.whatsapp.com" },
+    { name: "WhatsApp",         url: "https://web.whatsapp.com" },
     { name: "Instagram",        url: "https://www.instagram.com" },
     { name: "Facebook",         url: "https://www.facebook.com" },
     { name: "X/Twitter",        url: "https://twitter.com" },
