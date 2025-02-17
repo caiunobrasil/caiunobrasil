@@ -1,0 +1,242 @@
+[
+  {
+    "name": "WhatsApp",
+    "url": "https://www.whatsapp.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Instagram",
+    "url": "https://www.instagram.com",
+    "status": "Caiu!",
+    "buttonClass": "btn-caiu"
+  },
+  {
+    "name": "Facebook",
+    "url": "https://www.facebook.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "X/Twitter",
+    "url": "https://twitter.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Telegram",
+    "url": "https://telegram.org",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "TikTok",
+    "url": "https://www.tiktok.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Nubank",
+    "url": "https://nubank.com.br",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Mercado Pago",
+    "url": "https://www.mercadopago.com.br",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "PicPay",
+    "url": "https://www.picpay.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Banco do Brasil",
+    "url": "https://www.bb.com.br",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Itaú",
+    "url": "https://www.itau.com.br",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Bradesco",
+    "url": "https://www.bradesco.com.br",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Caixa",
+    "url": "https://www.caixa.gov.br",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Inter",
+    "url": "https://www.bancointer.com.br",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "C6 Bank",
+    "url": "https://www.c6bank.com.br",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "iFood",
+    "url": "https://www.ifood.com.br",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Mercado Livre",
+    "url": "https://www.mercadolivre.com.br",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Amazon",
+    "url": "https://www.amazon.com.br",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Rappi",
+    "url": "https://www.rappi.com.br",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Uber",
+    "url": "https://www.uber.com/br/en/",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "99",
+    "url": "https://99app.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Netflix",
+    "url": "https://www.netflix.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Spotify",
+    "url": "https://www.spotify.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Globoplay",
+    "url": "https://globoplay.globo.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "YouTube",
+    "url": "https://www.youtube.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Claro",
+    "url": "https://www.claro.com.br",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Vivo",
+    "url": "https://www.vivo.com.br",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "TIM",
+    "url": "https://www.tim.com.br",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Oi",
+    "url": "https://www.oi.com.br",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Steam",
+    "url": "https://store.steampowered.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Fortnite",
+    "url": "https://www.epicgames.com/fortnite",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Roblox",
+    "url": "https://www.roblox.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Discord",
+    "url": "https://discord.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Zoom",
+    "url": "https://zoom.us",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Teams",
+    "url": "https://teams.microsoft.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Slack",
+    "url": "https://slack.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Google",
+    "url": "https://www.google.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "Outlook",
+    "url": "https://outlook.live.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "ChatGPT",
+    "url": "https://chat.openai.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  },
+  {
+    "name": "LinkedIn",
+    "url": "https://www.linkedin.com",
+    "status": "Normal",
+    "buttonClass": "btn-normal"
+  }
+]
