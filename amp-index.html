@@ -1,10 +1,10 @@
 <!doctype html>
 <html amp lang="pt-BR">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
     <title>Caiu no Brasil? Status de Serviços (AMP)</title>
-    
+
     <!-- AMP Boilerplate -->
     <style amp-boilerplate>
       body {
@@ -13,26 +13,11 @@
         -ms-animation: -amp-start 8s steps(1,end) 0s 1 normal both;
         animation: -amp-start 8s steps(1,end) 0s 1 normal both
       }
-      @-webkit-keyframes -amp-start {
-        from { visibility: hidden }
-        to { visibility: visible }
-      }
-      @-moz-keyframes -amp-start {
-        from { visibility: hidden }
-        to { visibility: visible }
-      }
-      @-ms-keyframes -amp-start {
-        from { visibility: hidden }
-        to { visibility: visible }
-      }
-      @-o-keyframes -amp-start {
-        from { visibility: hidden }
-        to { visibility: visible }
-      }
-      @keyframes -amp-start {
-        from { visibility: hidden }
-        to { visibility: visible }
-      }
+      @-webkit-keyframes -amp-start { from { visibility: hidden } to { visibility: visible } }
+      @-moz-keyframes -amp-start { from { visibility: hidden } to { visibility: visible } }
+      @-ms-keyframes -amp-start { from { visibility: hidden } to { visibility: visible } }
+      @-o-keyframes -amp-start { from { visibility: hidden } to { visibility: visible } }
+      @keyframes -amp-start { from { visibility: hidden } to { visibility: visible } }
     </style>
     <noscript>
       <style amp-boilerplate>
@@ -45,23 +30,23 @@
       </style>
     </noscript>
     <!-- Fim do AMP Boilerplate -->
-    
+
     <!-- AMP runtime -->
     <script async src="https://cdn.ampproject.org/v0.js"></script>
-    <!-- Carregamento do amp-auto-ads para anúncios automáticos -->
+    <!-- amp-auto-ads para anúncios automáticos -->
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-    <!-- Carregamento do amp-list para dados dinâmicos -->
+    <!-- amp-list para carregamento dinâmico de dados -->
     <script async custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js"></script>
-    <!-- Carregamento do amp-mustache para templates -->
+    <!-- amp-mustache para templates -->
     <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>
     
     <!-- Link canônico para a versão não AMP -->
-    <link rel="canonical" href="https://caiunobrasil.com.br/">
-    
+    <link rel="canonical" href="https://caiunobrasil.com.br/" />
+
     <!-- Google Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
-    
-    <!-- CSS Inline AMP (amp-custom) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" />
+
+    <!-- CSS AMP Inline (amp-custom) -->
     <style amp-custom>
       :root {
         --bg: #FFFBFE;
@@ -76,7 +61,6 @@
         --radius: 16px;
         --card-min-height: 220px;
       }
-      
       body {
         background-color: var(--bg);
         color: var(--on-bg);
@@ -84,12 +68,10 @@
         margin: 0;
         padding: var(--spacing);
       }
-      
       header, main, footer {
         max-width: 1200px;
         margin: 0 auto;
       }
-      
       /* Card do Topo */
       .top-card {
         background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -115,7 +97,6 @@
         font-weight: 500;
         opacity: 0.9;
       }
-      
       /* Grade de Cards */
       .card-grid {
         display: grid;
@@ -123,8 +104,7 @@
         gap: var(--spacing);
         margin-top: var(--spacing);
       }
-      
-      /* Cards de Serviço */
+      /* Card de Serviço */
       .service-card {
         background: var(--bg);
         border-radius: var(--radius);
@@ -143,7 +123,6 @@
         color: #555;
         margin: 5px 0 30px;
       }
-      
       /* Botão de Status */
       .status-button {
         position: absolute;
@@ -160,14 +139,12 @@
       .btn-normal { background-color: var(--normal); }
       .btn-lentidao { background-color: var(--lentidao); }
       .btn-caiu { background-color: var(--caiu); }
-      
       footer {
         text-align: center;
         margin-top: var(--spacing);
         font-size: 0.9rem;
         color: #777;
       }
-      
       @media (max-width: 600px) {
         .card-grid {
           grid-template-columns: 1fr;
@@ -176,7 +153,7 @@
     </style>
   </head>
   <body>
-    <!-- Etapa 2: Código de anúncio automático AMP (logo após a tag <body>) -->
+    <!-- Etapa 2: Código de anúncio automático AMP -->
     <amp-auto-ads type="adsense" data-ad-client="ca-pub-5086339476890789"></amp-auto-ads>
 
     <header>
@@ -189,11 +166,11 @@
     </header>
     
     <main>
-      <!-- Componente amp-list para carregar os 40 cards dinamicamente -->
+      <!-- amp-list para carregar dinamicamente os 40 cards do arquivo status.json -->
       <amp-list width="auto"
                 height="1000"
                 layout="fixed-height"
-                src="https://caiunobrasil.com.br/status.json"
+                src="/status.json"
                 class="card-grid">
         <template type="amp-mustache">
           <div class="service-card">
@@ -202,6 +179,9 @@
             <button class="status-button {{buttonClass}}">{{status}}</button>
           </div>
         </template>
+        <div fallback>
+          <p>Não foi possível carregar os dados.</p>
+        </div>
       </amp-list>
     </main>
     
