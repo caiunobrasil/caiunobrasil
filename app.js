@@ -107,20 +107,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function checkSite(site) {
-    const startTime = Date.now();
-    fetchWithTimeout(site.url, { mode: "no-cors" }, 30000)
-      .then(() => {
-        const elapsed = Date.now() - startTime;
-        site.status = elapsed <= 7000 ? "Normal" : "Lentidão";
-      })
-      .catch(() => {
-        const isSpecial = specialDomains.some(domain => site.url.includes(domain));
-        site.status = isSpecial ? "Lentidão" : "Caiu!";
-      })
-      .finally(() => {
-        updateCards();
-      });
-  }
+  const startTime = Date.now();
+  fetchWithTimeout(site.url, { mode: "no-cors" }, 30000)
+    .then(() => {
+      const elapsed = Date.now() - startTime;
+      if (elapsed <= 8000) {
+        site.status = "Normal";
+      } else if (elapsed <= 30000) {
+        site.status = "Lentidão";
+      }
+    })
+    .catch(() => {
+      const isSpecial = specialDomains.some(domain => site.url.includes(domain));
+      site.status = isSpecial ? "Lentidão" : "Caiu!";
+    })
+    .finally(() => {
+      updateCards();
+    });
+}
 
   updateCards();
   sites.forEach(site => checkSite(site));
