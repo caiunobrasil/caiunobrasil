@@ -5,23 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{{ page.title }}</title>
     <link rel="stylesheet" href="/styles.css" />
+    <!-- Importa Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <header>
-      <!-- Você pode reutilizar o card do topo ou um cabeçalho simples -->
+      <!-- Você pode reutilizar seu card do topo -->
       <div class="md3-top-card">
         <div class="md3-top-card-content">
-          <h1>Caiu?</h1>
-          <h2>Status de Serviços em Tempo Real</h2>
+          <h1>Caiu no Brasil?</h1>
+          <h2>Status de Serviços</h2>
         </div>
       </div>
     </header>
-    <main>
+
+    <main class="md3-main-content">
       <article>
-        {{ content }}
+        <section class="daily-status">
+          <h2>Status Atual do {{ page.service | capitalize }} em {{ page.date | date: "%Y-%m-%d" }}</h2>
+          <p>Atualize esta seção com os dados do status, por exemplo, <strong>[Inserir Status Aqui]</strong>.</p>
+        </section>
+
+        <section class="daily-history">
+          <h3>Histórico</h3>
+          <canvas id="historyChart" width="400" height="200"></canvas>
+          <script>
+            // Exemplo de gráfico com dados fictícios – substitua pelos dados reais
+            const ctx = document.getElementById('historyChart').getContext('2d');
+            const historyChart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: ["01/02", "02/02", "03/02", "04/02", "05/02", "06/02", "07/02"],
+                datasets: [{
+                  label: 'Status (0 = Caiu!, 1 = Lentidão, 2 = Normal)',
+                  data: [2, 2, 1, 1, 2, 0, 2],
+                  borderColor: 'blue',
+                  tension: 0.1,
+                  fill: false,
+                  pointBackgroundColor: 'blue'
+                }]
+              },
+              options: {
+                scales: {
+                  y: {
+                    min: 0,
+                    max: 2,
+                    ticks: {
+                      stepSize: 1,
+                      callback: function(value) {
+                        return value === 0 ? "Caiu!" : value === 1 ? "Lentidão" : "Normal";
+                      }
+                    }
+                  }
+                },
+                plugins: {
+                  legend: { display: false }
+                }
+              }
+            });
+          </script>
+        </section>
+
+        <section class="daily-analysis">
+          <h3>Análises e Comentários</h3>
+          <p>Aqui você pode inserir análises sobre o desempenho do {{ page.service | capitalize }}, comentários sobre possíveis causas de variações e links para notícias ou comunicados oficiais.</p>
+        </section>
+
+        <section class="daily-extra">
+          <h3>Conteúdo Exclusivo</h3>
+          <p>Inclua aqui informações adicionais, como dicas de uso, FAQs ou dados comparativos com períodos anteriores, para agregar valor e manter o visitante engajado.</p>
+        </section>
       </article>
     </main>
-    <footer>
+
+    <footer class="md3-footer">
       <p>&copy; 2025 Caiu no Brasil.</p>
     </footer>
   </body>
