@@ -2,8 +2,8 @@ name: Atualizar status.json
 
 on:
   schedule:
-    # Executa a cada 2 minutos; ajuste conforme sua necessidade.
-    - cron: '*/2 * * * *'
+    # Executa a cada 1 minuto; ajuste conforme sua necessidade.
+    - cron: '*/1 * * * *'
   workflow_dispatch:
 
 jobs:
