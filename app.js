@@ -1,11 +1,56 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const services = [
-    { name: "WhatsApp", url: "https://www.whatsapp.com" },
-    // ...
+  const sites = [
+    { name: "WhatsApp",         url: "https://www.whatsapp.com" },
+    { name: "Instagram",        url: "https://www.instagram.com" },
+    { name: "Facebook",         url: "https://www.facebook.com" },
+    { name: "X/Twitter",        url: "https://twitter.com" },
+    { name: "Telegram",         url: "https://telegram.org" },
+    { name: "TikTok",           url: "https://www.tiktok.com" },
+    { name: "Nubank",           url: "https://nubank.com.br" },
+    { name: "Mercado Pago",     url: "https://www.mercadopago.com.br" },
+    { name: "PicPay",           url: "https://www.picpay.com" },
+    { name: "Banco do Brasil",  url: "https://www.bb.com.br" },
+    { name: "Itaú",             url: "https://www.itau.com.br" },
+    { name: "Bradesco",         url: "https://www.bradesco.com.br" },
+    { name: "Caixa",            url: "https://www.caixa.gov.br" },
+    { name: "Inter",            url: "https://www.bancointer.com.br" },
+    { name: "C6 Bank",          url: "https://www.c6bank.com.br" },
+    { name: "iFood",            url: "https://www.ifood.com.br" },
+    { name: "Mercado Livre",    url: "https://www.mercadolivre.com.br" },
+    { name: "Amazon",           url: "https://www.amazon.com.br" },
+    { name: "Rappi",            url: "https://www.rappi.com.br" },
+    { name: "Uber",             url: "https://www.uber.com/br/en/" },
+    { name: "99",               url: "https://99app.com" },
+    { name: "Netflix",          url: "https://www.netflix.com" },
+    { name: "Spotify",          url: "https://www.spotify.com" },
+    { name: "Globoplay",        url: "https://globoplay.globo.com" },
+    { name: "YouTube",          url: "https://www.youtube.com" },
+    { name: "Claro",            url: "https://www.claro.com.br" },
+    { name: "Vivo",             url: "https://www.vivo.com.br" },
+    { name: "TIM",              url: "https://www.tim.com.br" },
+    { name: "Oi",               url: "https://www.oi.com.br" },
+    { name: "Steam",            url: "https://store.steampowered.com" },
+    { name: "Fortnite",         url: "https://www.epicgames.com/fortnite" },
+    { name: "Roblox",           url: "https://www.roblox.com" },
+    { name: "Discord",          url: "https://discord.com" },
+    { name: "Zoom",             url: "https://zoom.us" },
+    { name: "Teams",            url: "https://teams.microsoft.com" },
+    { name: "Slack",            url: "https://slack.com" },
+    { name: "Google",           url: "https://www.google.com" },
+    { name: "Outlook",          url: "https://outlook.live.com" },
+    { name: "ChatGPT",          url: "https://chat.openai.com" },
+    { name: "LinkedIn",         url: "https://www.linkedin.com" }
   ];
 
   const specialDomains = ["itau.com.br", "caixa.gov.br", "vivo.com.br"];
   const cardGrid = document.getElementById('cardGrid');
+
+  function fetchWithTimeout(url, options = {}, timeout = 30000) {
+    return Promise.race([
+      fetch(url, options),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), timeout))
+    ]);
+  }
 
   function getStatusOrder(site) {
     if (!site.status) return 5;
@@ -18,53 +63,47 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateCards() {
-    services.sort((a, b) => {
+    // Ordena os sites por status e, se igual, por ordem alfabética
+    sites.sort((a, b) => {
       const diff = getStatusOrder(a) - getStatusOrder(b);
       return diff === 0 ? a.name.localeCompare(b.name) : diff;
     });
-    cardGrid.innerHTML = '';
-    services.forEach(site => {
+    cardGrid.innerHTML = "";
+    sites.forEach(site => {
       const card = document.createElement('div');
-      card.classList.add('service-card');
+      card.classList.add('md3-card');
 
-      const title = document.createElement('h3');
-      title.textContent = site.name;
-      card.appendChild(title);
+      const titleElem = document.createElement('h2');
+      titleElem.textContent = site.name;
+      card.appendChild(titleElem);
 
-      const urlP = document.createElement('p');
-      urlP.textContent = site.url;
-      card.appendChild(urlP);
+      const subheadingElem = document.createElement('p');
+      subheadingElem.classList.add('md3-card-subheading');
+      subheadingElem.textContent = site.url;
+      card.appendChild(subheadingElem);
 
-      const statusBtn = document.createElement('button');
-      statusBtn.classList.add('status-button');
+      const statusButton = document.createElement('button');
+      statusButton.classList.add('md3-status-button');
       switch (site.status) {
-        case 'Normal':
-          statusBtn.classList.add('btn-normal');
-          statusBtn.textContent = 'Normal';
+        case "Normal":
+          statusButton.classList.add('md3-btn-normal');
+          statusButton.textContent = "Normal";
           break;
-        case 'Lentidão':
-          statusBtn.classList.add('btn-lentidao');
-          statusBtn.textContent = 'Lentidão';
+        case "Lentidão":
+          statusButton.classList.add('md3-btn-lentidao');
+          statusButton.textContent = "Lentidão";
           break;
-        case 'Caiu!':
-          statusBtn.classList.add('btn-caiu');
-          statusBtn.textContent = 'Caiu!';
+        case "Caiu!":
+          statusButton.classList.add('md3-btn-caiu');
+          statusButton.textContent = "Caiu!";
           break;
         default:
-          statusBtn.style.backgroundColor = '#ccc';
-          statusBtn.textContent = 'Verificando...';
+          statusButton.style.backgroundColor = "#ccc";
+          statusButton.textContent = "Verificando...";
       }
-      card.appendChild(statusBtn);
-
+      card.appendChild(statusButton);
       cardGrid.appendChild(card);
     });
-  }
-
-  function fetchWithTimeout(url, options = {}, timeout = 30000) {
-    return Promise.race([
-      fetch(url, options),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), timeout))
-    ]);
   }
 
   function checkSite(site) {
@@ -83,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // Inicia
   updateCards();
-  services.forEach(site => checkSite(site));
+  sites.forEach(site => checkSite(site));
 });
