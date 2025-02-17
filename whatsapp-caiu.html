@@ -22,29 +22,35 @@
     
     <!-- CSS externo -->
     <link rel="stylesheet" href="styles.css?v=20250217" />
-    
+
     <!-- Google Analytics (carregado após onload) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GVMVLWTXQY"></script>
     <script>
       window.addEventListener('load', function() {
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag(){ dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-GVMVLWTXQY');
       });
     </script>
-    
-    <!-- Estilos Inline específicos para essa página (alteração do banner para verde) -->
+
+    <!-- CSS Inline específico para essa página: banner verde e status button -->
     <style>
+      /* Altera o banner do topo para gradiente verde */
       .md3-top-card {
-        background: linear-gradient(135deg, #4caf50, #81c784); /* gradiente verde */
+        background: linear-gradient(135deg, #4caf50, #81c784);
+      }
+      /* Garante que o botão "Normal" fique verde */
+      .btn-normal {
+        background-color: #4caf50 !important;
       }
     </style>
   </head>
   <body>
+    <!-- Cabeçalho (mantido vazio, pois o banner é o card do topo) -->
     <header></header>
     
-    <!-- Card do Topo -->
+    <!-- Card do Topo (banner) -->
     <div class="md3-top-card">
       <div class="md3-top-card-content">
         <h1>WhatsApp Caiu?</h1>
@@ -53,11 +59,12 @@
     </div>
     
     <main style="padding: 20px;">
-      <!-- Exibe apenas UM card fixo para o WhatsApp -->
+      <!-- Grade de Cards: aqui exibimos apenas UM card para o WhatsApp -->
       <div class="md3-card-grid" id="cardGrid">
         <div class="md3-card">
           <h2>WhatsApp</h2>
           <p>https://www.whatsapp.com</p>
+          <!-- Botão de status; ajuste "Normal" para o status desejado -->
           <button class="md3-status-button btn-normal">Normal</button>
         </div>
       </div>
@@ -67,5 +74,9 @@
       <p>Estamos sempre atentos para ajudar quem procura saber se algum dos principais serviços da internet no Brasil "caiu" ou não.</p>
       <p>&copy; 2025 Caiu no Brasil.</p>
     </footer>
+    
+    <!-- Se necessário, inclua o app.js para atualizações dinâmicas; 
+         caso contrário, esse exemplo exibe dados fixos -->
+    <script defer src="app.js"></script>
   </body>
 </html>
