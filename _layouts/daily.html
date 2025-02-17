@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{{ page.title }}</title>
     <link rel="stylesheet" href="/styles.css" />
-    <!-- Importa Chart.js para gráficos -->
+    <!-- Importa Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <header>
-      <!-- Você pode reutilizar seu card do topo -->
       <div class="md3-top-card">
         <div class="md3-top-card-content">
           <h1>Caiu no Brasil?</h1>
@@ -18,27 +17,74 @@
         </div>
       </div>
     </header>
-
     <main class="md3-main-content">
       <article>
+        <!-- Seção de Status Atual -->
         <section class="daily-status">
-          <h2>Status Atual do {{ page.service | capitalize }} em {{ page.date | date: "%Y-%m-%d" }}</h2>
-          <p>Atualize esta seção com os dados do status, por exemplo, <strong>[Inserir Status Aqui]</strong>.</p>
+          <h2>Status Atual do {{ page.service | capitalize }} em {{ page.date | date: "%d/%m/%Y" }}</h2>
+          <p id="currentStatus">Carregando status...</p>
         </section>
 
+        <!-- Seção de Histórico -->
         <section class="daily-history">
           <h3>Histórico</h3>
           <canvas id="historyChart" width="400" height="200"></canvas>
-          <script>
-            // Exemplo de gráfico com dados fictícios – substitua pelos dados reais
+        </section>
+
+        <!-- Seção de Análises -->
+        <section class="daily-analysis">
+          <h3>Análises e Comentários</h3>
+          <div id="analysisContent">
+            <p>Carregando análises...</p>
+          </div>
+        </section>
+
+        <!-- Seção de Conteúdo Exclusivo -->
+        <section class="daily-exclusive">
+          <h3>Conteúdo Exclusivo</h3>
+          <div id="exclusiveContent">
+            <p>Carregando conteúdo exclusivo...</p>
+          </div>
+        </section>
+      </article>
+    </main>
+    <footer class="md3-footer">
+      <p>Estamos sempre atentos para ajudar quem procura saber se algum dos principais serviços da internet no Brasil "caiu" ou não.</p>
+      <p>&copy; 2025 Caiu no Brasil.</p>
+    </footer>
+
+    <script>
+      const service = "{{ page.service }}";
+      const date = "{{ page.date | date: '%d/%m/%Y' }}";
+
+      // Função para buscar o status atual via API
+      function fetchCurrentStatus() {
+        fetch(`https://api.seuservidor.com/status?service=${service}&date={{ page.date }}`)
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById('currentStatus').textContent = data.status;
+          })
+          .catch(error => {
+            console.error("Erro ao obter status:", error);
+            document.getElementById('currentStatus').textContent = "Erro ao carregar status.";
+          });
+      }
+
+      // Função para buscar dados históricos e renderizar gráfico com Chart.js
+      function fetchHistoricalData() {
+        fetch(`https://api.seuservidor.com/historico?service=${service}`)
+          .then(response => response.json())
+          .then(data => {
+            const labels = data.map(item => item.date);
+            const statusData = data.map(item => item.value);
             const ctx = document.getElementById('historyChart').getContext('2d');
-            const historyChart = new Chart(ctx, {
+            new Chart(ctx, {
               type: 'line',
               data: {
-                labels: ["01/02", "02/02", "03/02", "04/02", "05/02", "06/02", "07/02"],
+                labels: labels,
                 datasets: [{
-                  label: 'Status (0 = Caiu!, 1 = Lentidão, 2 = Normal)',
-                  data: [2, 2, 1, 1, 2, 0, 2],
+                  label: 'Histórico de Status (0 = Caiu!, 1 = Lentidão, 2 = Normal)',
+                  data: statusData,
                   borderColor: 'blue',
                   tension: 0.1,
                   fill: false,
@@ -63,23 +109,43 @@
                 }
               }
             });
-          </script>
-        </section>
+          })
+          .catch(error => {
+            console.error("Erro ao carregar histórico:", error);
+          });
+      }
 
-        <section class="daily-analysis">
-          <h3>Análises e Comentários</h3>
-          <p>Aqui você pode inserir análises sobre o desempenho do {{ page.service | capitalize }}, comentários sobre possíveis causas de variações e links para notícias ou comunicados oficiais.</p>
-        </section>
+      // Função para buscar análises via API
+      function fetchAnalysis() {
+        fetch(`https://api.seuservidor.com/analises?service=${service}&date={{ page.date }}`)
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById('analysisContent').innerHTML = data.content;
+          })
+          .catch(error => {
+            console.error("Erro ao carregar análises:", error);
+            document.getElementById('analysisContent').textContent = "Erro ao carregar análises.";
+          });
+      }
 
-        <section class="daily-extra">
-          <h3>Conteúdo Exclusivo</h3>
-          <p>Inclua aqui informações adicionais, como dicas de uso, FAQs ou dados comparativos com períodos anteriores, para agregar valor e manter o visitante engajado.</p>
-        </section>
-      </article>
-    </main>
+      // Função para buscar conteúdo exclusivo via API
+      function fetchExclusiveContent() {
+        fetch(`https://api.seuservidor.com/exclusivo?service=${service}&date={{ page.date }}`)
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById('exclusiveContent').innerHTML = data.content;
+          })
+          .catch(error => {
+            console.error("Erro ao carregar conteúdo exclusivo:", error);
+            document.getElementById('exclusiveContent').textContent = "Erro ao carregar conteúdo exclusivo.";
+          });
+      }
 
-    <footer class="md3-footer">
-      <p>&copy; 2025 Caiu no Brasil.</p>
-    </footer>
+      // Inicializa as chamadas às APIs
+      fetchCurrentStatus();
+      fetchHistoricalData();
+      fetchAnalysis();
+      fetchExclusiveContent();
+    </script>
   </body>
 </html>
