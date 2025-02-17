@@ -1,0 +1,33 @@
+name: Atualizar status.json
+
+on:
+  schedule:
+    # Executa a cada 2 minutos; ajuste conforme sua necessidade.
+    - cron: '*/2 * * * *'
+  workflow_dispatch:
+
+jobs:
+  update-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v2
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Atualizar status.json
+        run: npm run update
+
+      - name: Commit e Push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add status.json
+          git commit -m "Atualização automática do status.json" || echo "Nada a commitar"
+          git push
