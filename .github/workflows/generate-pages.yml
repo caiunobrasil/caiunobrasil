@@ -1,0 +1,52 @@
+name: Gerar Páginas Diárias
+
+on:
+  schedule:
+    # Executa diariamente às 00:01 GMT-3 
+    - cron: '30 0 * * *'
+  workflow_dispatch: # Permite executar manualmente
+
+jobs:
+  generate_pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v2
+
+      - name: Configurar Ruby e Jekyll
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7'  # Use a versão recomendada para Jekyll
+
+      - name: Instalar dependências
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Gerar Página Diária para cada serviço
+        run: |
+          TODAY=$(date +'%Y-%m-%d')
+          SERVICES=("whatsapp" "instagram" "facebook" "twitter" "telegram" "tiktok" "nubank" "mercadopago" "picpay" "bb" "itau" "bradesco" "caixa" "inter" "c6bank" "ifood" "mercadolivre" "amazon" "rappi" "uber" "99" "netflix" "spotify" "globoplay" "youtube" "claro" "vivo" "tim" "oi" "steam" "fortnite" "roblox" "discord" "zoom" "teams" "slack" "google" "outlook" "chatgpt" "linkedin")
+          for SERVICE in "${SERVICES[@]}"
+          do
+            FILENAME="_posts/${TODAY}-${SERVICE}.md"
+            if [ ! -f "$FILENAME" ]; then
+              echo "---" > "$FILENAME"
+              echo "layout: daily" >> "$FILENAME"
+              echo "title: \"${SERVICE^} - ${TODAY}\"" >> "$FILENAME"
+              echo "date: ${TODAY}" >> "$FILENAME"
+              echo "service: ${SERVICE}" >> "$FILENAME"
+              echo "permalink: /${SERVICE}-${TODAY}" >> "$FILENAME"
+              echo "---" >> "$FILENAME"
+              echo "# ${SERVICE^}" >> "$FILENAME"
+              echo "Status: [Inserir Status Aqui]" >> "$FILENAME"
+            fi
+          done
+
+      - name: Commit e Push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add _posts/*.md
+          git commit -m "Gerar páginas diárias para ${TODAY}" || echo "Nada a commitar"
+          git push
