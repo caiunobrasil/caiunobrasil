@@ -1,7 +1,7 @@
 [
   {
     "name": "WhatsApp",
-    "url": "https://www.whatsapp.com",
+    "url": "https://web.whatsapp.com",
     "status": "Normal",
     "buttonClass": "btn-normal"
   },
