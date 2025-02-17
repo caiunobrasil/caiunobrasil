@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://caiunobrasil.com.br/sitemap.xml
