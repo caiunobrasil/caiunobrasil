@@ -9,13 +9,14 @@
     <meta name="description" content="Descubra se os principais serviços da internet no Brasil estão funcionando ou se estão fora do ar. Atualize-se em tempo real!" />
     <meta name="keywords" content="status, monitoramento, internet, Brasil, down, serviços" />
     <meta name="author" content="Caiu no Brasil" />
+
     <!-- Open Graph -->
     <meta property="og:title" content="Caiu no Brasil? Status de Serviços" />
     <meta property="og:description" content="Descubra se os principais serviços da internet no Brasil estão funcionando ou se estão fora do ar." />
     <meta property="og:url" content="https://caiunobrasil.com.br" />
     <meta property="og:image" content="https://caiunobrasil.com.br/imagem-og.jpg" />
 
-    <!-- Schema Markup -->
+    <!-- Schema Markup (JSON-LD) -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -30,31 +31,111 @@
       }
     </script>
 
-    <!-- Vincula o CSS externo -->
-    <link rel="stylesheet" href="styles.css" />
-
-    <!-- Fonte Roboto -->
+    <!-- Preconnect e Fontes do Google com display=swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Carregando a fonte de forma não-bloqueante -->
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
-      rel="stylesheet"
+      onload="this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      />
+    </noscript>
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GVMVLWTXQY"></script>
+    <!-- CSS crítico inline (apenas para a parte acima da dobra) -->
+    <style>
+      /* Reset mínimo */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-color: #FFFBFE; /* md-color-background */
+        color: #1C1B1F;           /* md-color-on-surface */
+        font-family: "Roboto", sans-serif;
+        line-height: 1.5;
+        margin: 0;
+      }
+      header {
+        margin-bottom: 20px;
+      }
+      .md3-top-card {
+        position: relative;
+        background: linear-gradient(135deg, #6750A4, #625B71); /* primary -> secondary */
+        border-radius: 16px;
+        color: #fff;
+        margin-bottom: 20px;
+        min-height: 220px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 20px;
+      }
+      .md3-top-card-content h1 {
+        margin: 0;
+        font-size: 2.5rem; /* ~40px */
+        font-weight: 700;
+      }
+      .md3-top-card-content h2 {
+        margin-top: 8px;
+        font-size: 1.375rem;
+        font-weight: 500;
+        opacity: 0.9;
+      }
+      .md3-footer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.9rem;
+        color: #777;
+      }
+      /* Evitando CLS para alguma imagem acima da dobra, se houver */
+      img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+
+    <!-- Carregando o resto do CSS de forma assíncrona -->
+    <link
+      rel="preload"
+      as="style"
+      href="styles.css?v=20250217"
+      onload="this.rel='stylesheet'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="styles.css?v=20250217" />
+    </noscript>
+
+    <!-- Google Analytics - carregado APÓS onload (para não bloquear) -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-GVMVLWTXQY');
+      window.addEventListener('load', function() {
+        var gaScript = document.createElement('script');
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-GVMVLWTXQY';
+        gaScript.async = true;
+        document.head.appendChild(gaScript);
+
+        gaScript.onload = function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-GVMVLWTXQY');
+        };
+      });
     </script>
   </head>
   <body>
-    <!-- Cabeçalho opcional -->
-    <header class="md3-header"></header>
+    <header></header>
 
-    <!-- Card do Topo -->
+    <!-- Card do topo -->
     <div class="md3-top-card">
       <div class="md3-top-card-content">
         <h1>Caiu no Brasil?</h1>
@@ -62,166 +143,17 @@
       </div>
     </div>
 
-    <!-- Área principal -->
-    <main class="md3-main-content">
-      <!-- Aqui serão inseridos os cards dos serviços via JavaScript -->
-      <div class="md3-card-grid" id="cardGrid"></div>
-      <!-- Se desejar, pode inserir aqui também CTAs, botões de compartilhamento, etc. -->
+    <main style="padding: 20px;">
+      <!-- Conteúdo da página (cards de serviços, etc.) -->
+      <div id="cardGrid"></div>
     </main>
 
-    <!-- Rodapé -->
     <footer class="md3-footer">
       <p>Estamos sempre atentos para ajudar quem procura saber se algum dos principais serviços da internet no Brasil "caiu" ou não.</p>
       <p>&copy; 2025 Caiu no Brasil.</p>
     </footer>
 
-    <!-- Script para renderização dos cards dos 40 serviços -->
-    <script>
-      // Lista de domínios especiais: se ocorrer erro, assume Lentidão
-      const specialDomains = ["itau.com.br", "caixa.gov.br", "vivo.com.br"];
-
-      // Lista dos 40 serviços
-      const sites = [
-        { name: "WhatsApp",         url: "https://www.whatsapp.com" },
-        { name: "Instagram",        url: "https://www.instagram.com" },
-        { name: "Facebook",         url: "https://www.facebook.com" },
-        { name: "X/Twitter",        url: "https://twitter.com" },
-        { name: "Telegram",         url: "https://telegram.org" },
-        { name: "TikTok",           url: "https://www.tiktok.com" },
-        { name: "Nubank",           url: "https://nubank.com.br" },
-        { name: "Mercado Pago",     url: "https://www.mercadopago.com.br" },
-        { name: "PicPay",           url: "https://www.picpay.com" },
-        { name: "Banco do Brasil",  url: "https://www.bb.com.br" },
-        { name: "Itaú",             url: "https://www.itau.com.br" },
-        { name: "Bradesco",         url: "https://www.bradesco.com.br" },
-        { name: "Caixa",            url: "https://www.caixa.gov.br" },
-        { name: "Inter",            url: "https://www.bancointer.com.br" },
-        { name: "C6 Bank",          url: "https://www.c6bank.com.br" },
-        { name: "iFood",            url: "https://www.ifood.com.br" },
-        { name: "Mercado Livre",    url: "https://www.mercadolivre.com.br" },
-        { name: "Amazon",           url: "https://www.amazon.com.br" },
-        { name: "Rappi",            url: "https://www.rappi.com.br" },
-        { name: "Uber",             url: "https://www.uber.com/br/en/" },
-        { name: "99",               url: "https://99app.com" },
-        { name: "Netflix",          url: "https://www.netflix.com" },
-        { name: "Spotify",          url: "https://www.spotify.com" },
-        { name: "Globoplay",        url: "https://globoplay.globo.com" },
-        { name: "YouTube",          url: "https://www.youtube.com" },
-        { name: "Claro",            url: "https://www.claro.com.br" },
-        { name: "Vivo",             url: "https://www.vivo.com.br" },
-        { name: "TIM",              url: "https://www.tim.com.br" },
-        { name: "Oi",               url: "https://www.oi.com.br" },
-        { name: "Steam",            url: "https://store.steampowered.com" },
-        { name: "Fortnite",         url: "https://www.epicgames.com/fortnite" },
-        { name: "Roblox",           url: "https://www.roblox.com" },
-        { name: "Discord",          url: "https://discord.com" },
-        { name: "Zoom",             url: "https://zoom.us" },
-        { name: "Teams",            url: "https://teams.microsoft.com" },
-        { name: "Slack",            url: "https://slack.com" },
-        { name: "Google",           url: "https://www.google.com" },
-        { name: "Outlook",          url: "https://outlook.live.com" },
-        { name: "ChatGPT",          url: "https://chat.openai.com" },
-        { name: "LinkedIn",         url: "https://www.linkedin.com" }
-      ];
-
-      // Função para medir tempo de resposta (até 30s)
-      function fetchWithTimeout(url, options = {}, timeout = 30000) {
-        return Promise.race([
-          fetch(url, options),
-          new Promise((_, reject) =>
-            setTimeout(() => reject(new Error("timeout")), timeout)
-          )
-        ]);
-      }
-
-      // Define a prioridade: Caiu! > Lentidão > Normal
-      function getStatusOrder(site) {
-        if (!site.status) return 5;
-        switch (site.status) {
-          case "Caiu!": return 1;
-          case "Lentidão": return 2;
-          case "Normal": return 3;
-          default: return 5;
-        }
-      }
-
-      // Renderiza os cards dos serviços
-      function updateCards() {
-        const grid = document.getElementById("cardGrid");
-        // Ordena os serviços por status e, se igual, alfabeticamente
-        sites.sort((a, b) => {
-          const diff = getStatusOrder(a) - getStatusOrder(b);
-          return diff === 0 ? a.name.localeCompare(b.name) : diff;
-        });
-
-        grid.innerHTML = "";
-        sites.forEach(site => {
-          const card = document.createElement("div");
-          card.classList.add("md3-card");
-
-          // Título
-          const titleElem = document.createElement("h2");
-          titleElem.textContent = site.name;
-          card.appendChild(titleElem);
-
-          // Subheading (URL)
-          const subheadingElem = document.createElement("p");
-          subheadingElem.classList.add("md3-card-subheading");
-          subheadingElem.textContent = site.url;
-          card.appendChild(subheadingElem);
-
-          // Botão de status (estilo chip)
-          const statusButton = document.createElement("button");
-          statusButton.classList.add("md3-status-button");
-          switch (site.status) {
-            case "Normal":
-              statusButton.classList.add("md3-btn-normal");
-              statusButton.textContent = "Normal";
-              break;
-            case "Lentidão":
-              statusButton.classList.add("md3-btn-lentidao");
-              statusButton.textContent = "Lentidão";
-              break;
-            case "Caiu!":
-              statusButton.classList.add("md3-btn-caiu");
-              statusButton.textContent = "Caiu!";
-              break;
-            default:
-              statusButton.style.backgroundColor = "#ccc";
-              statusButton.textContent = "Verificando...";
-              break;
-          }
-
-          card.appendChild(statusButton);
-          grid.appendChild(card);
-        });
-      }
-
-      // Verifica o status de cada serviço
-      function checkSite(site) {
-        const startTime = Date.now();
-        fetchWithTimeout(site.url, { mode: "no-cors" }, 30000)
-          .then(() => {
-            const elapsed = Date.now() - startTime;
-            site.status = elapsed <= 7000 ? "Normal" : "Lentidão";
-          })
-          .catch(() => {
-            const isSpecial = specialDomains.some(domain => site.url.includes(domain));
-            site.status = isSpecial ? "Lentidão" : "Caiu!";
-          })
-          .finally(() => {
-            updateCards();
-          });
-      }
-
-      // Inicia a verificação de todos os serviços
-      function checkAllSites() {
-        sites.forEach(site => checkSite(site));
-      }
-
-      // Inicializa a renderização e a verificação
-      updateCards();
-      checkAllSites();
-    </script>
+    <!-- Exemplo de script com fetch de status. Adicione defer ou carregue no final. -->
+    <script defer src="app.js"></script>
   </body>
 </html>
