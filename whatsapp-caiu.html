@@ -20,10 +20,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
     
-    <!-- CSS Externo: Utilize o mesmo styles.css da index.html -->
+    <!-- CSS Externo: Use o mesmo styles.css da index.html -->
     <link rel="stylesheet" href="styles.css?v=20250217" />
     
-    <!-- Google Analytics (carregado após onload) -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GVMVLWTXQY"></script>
     <script>
       window.addEventListener('load', function() {
@@ -34,7 +34,7 @@
       });
     </script>
     
-    <!-- CSS Inline específico para essa página: sobrescreve o banner e o botão de status -->
+    <!-- CSS Inline para sobrescrever o banner e o botão -->
     <style>
       .md3-top-card {
         background: linear-gradient(135deg, #4caf50, #81c784);
@@ -68,13 +68,13 @@
       <!-- Seção para embutir tweets -->
       <section id="tweets" style="margin-top: 40px;">
         <h3>Últimos Tweets sobre "WhatsApp"</h3>
-        <!-- Widget da timeline do Twitter configurado para mostrar 6 tweets -->
+        <!-- Widget da timeline do Twitter configurado para buscar "whatsapp" e mostrar 6 tweets -->
         <a class="twitter-timeline"
            data-dnt="true"
            data-theme="light"
            data-tweet-limit="6"
            data-chrome="noheader nofooter noborders"
-           href="https://twitter.com/search?q=whatsapp%20caiu">
+           href="https://twitter.com/search?q=whatsapp">
           Tweets sobre WhatsApp
         </a>
       </section>
@@ -85,10 +85,7 @@
       <p>&copy; 2025 Caiu no Brasil.</p>
     </footer>
     
-    <!-- Script do widget do Twitter para carregar os tweets embedados -->
+    <!-- Script do widget do Twitter -->
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    
-    <!-- Se desejar, você pode incluir um script app.js para atualizações dinâmicas, mas neste exemplo o conteúdo é fixo -->
-    <!-- <script defer src="app.js"></script> -->
   </body>
 </html>
