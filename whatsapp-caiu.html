@@ -23,7 +23,7 @@
     <!-- CSS Externo: Use o mesmo styles.css da index.html -->
     <link rel="stylesheet" href="styles.css?v=20250217" />
     
-    <!-- Google Analytics -->
+    <!-- Google Analytics (carregado após onload) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GVMVLWTXQY"></script>
     <script>
       window.addEventListener('load', function() {
@@ -34,7 +34,7 @@
       });
     </script>
     
-    <!-- CSS Inline para sobrescrever o banner e o botão -->
+    <!-- CSS Inline específico para essa página: sobrescreve o banner e o botão de status -->
     <style>
       .md3-top-card {
         background: linear-gradient(135deg, #4caf50, #81c784);
@@ -67,7 +67,7 @@
       
       <!-- Seção para embutir tweets -->
       <section id="tweets" style="margin-top: 40px;">
-        <h3>Últimos Tweets sobre "WhatsApp"</h3>
+        <h3>Últimos Tweets sobre WhatsApp</h3>
         <!-- Widget da timeline do Twitter configurado para buscar "whatsapp" e mostrar 6 tweets -->
         <a class="twitter-timeline"
            data-dnt="true"
@@ -87,5 +87,7 @@
     
     <!-- Script do widget do Twitter -->
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <!-- Caso haja script para atualizações dinâmicas, inclua-o se necessário -->
+    <!-- <script defer src="app.js"></script> -->
   </body>
 </html>
