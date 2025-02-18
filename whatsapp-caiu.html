@@ -4,23 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>WhatsApp Caiu? - Caiu no Brasil</title>
-    
+
     <!-- Meta Tags para SEO -->
     <meta name="description" content="Veja se o WhatsApp está fora do ar ou funcionando. Atualize-se em tempo real!" />
     <meta name="keywords" content="WhatsApp, caiu, status, monitoramento, internet, Brasil" />
     <meta name="author" content="Caiu no Brasil" />
-    
+
     <!-- Link Canonical -->
     <link rel="canonical" href="https://caiunobrasil.com.br/whatsapp-caiu.html" />
     <!-- Link para a versão AMP (opcional) -->
     <link rel="amphtml" href="https://caiunobrasil.com.br/amp-index.html" />
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
-    
-    <!-- CSS externo -->
+
+    <!-- CSS Externo (mesmo arquivo usado na index.html) -->
     <link rel="stylesheet" href="styles.css?v=20250217" />
 
     <!-- Google Analytics (carregado após onload) -->
@@ -34,23 +34,22 @@
       });
     </script>
 
-    <!-- CSS Inline específico para essa página: banner verde e status button -->
+    <!-- CSS Inline específico para essa página (sobrescrevendo banner e botão) -->
     <style>
-      /* Altera o banner do topo para gradiente verde */
+      /* Altera o banner para gradiente verde */
       .md3-top-card {
         background: linear-gradient(135deg, #4caf50, #81c784);
       }
-      /* Garante que o botão "Normal" fique verde */
+      /* Força o botão de status "Normal" a ficar verde */
       .btn-normal {
         background-color: #4caf50 !important;
       }
     </style>
   </head>
   <body>
-    <!-- Cabeçalho (mantido vazio, pois o banner é o card do topo) -->
     <header></header>
     
-    <!-- Card do Topo (banner) -->
+    <!-- Banner do Topo -->
     <div class="md3-top-card">
       <div class="md3-top-card-content">
         <h1>WhatsApp Caiu?</h1>
@@ -59,12 +58,11 @@
     </div>
     
     <main style="padding: 20px;">
-      <!-- Grade de Cards: aqui exibimos apenas UM card para o WhatsApp -->
+      <!-- Exibe apenas um card para o WhatsApp -->
       <div class="md3-card-grid" id="cardGrid">
         <div class="md3-card">
           <h2>WhatsApp</h2>
           <p>https://www.whatsapp.com</p>
-          <!-- Botão de status; ajuste "Normal" para o status desejado -->
           <button class="md3-status-button btn-normal">Normal</button>
         </div>
       </div>
@@ -74,9 +72,5 @@
       <p>Estamos sempre atentos para ajudar quem procura saber se algum dos principais serviços da internet no Brasil "caiu" ou não.</p>
       <p>&copy; 2025 Caiu no Brasil.</p>
     </footer>
-    
-    <!-- Se necessário, inclua o app.js para atualizações dinâmicas; 
-         caso contrário, esse exemplo exibe dados fixos -->
-    <script defer src="app.js"></script>
   </body>
 </html>
