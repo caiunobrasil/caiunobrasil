@@ -5,36 +5,45 @@ import { supabase } from '../services/supabase'
 export const Home = () => {
   const [services, setServices] = useState([])
   const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    console.log('Fetching services...')
+    console.log('Home mounted, fetching services...')
     fetchServices()
 
     const subscription = supabase
       .channel('services-channel')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'services' }, (payload) => {
-        console.log('Realtime update:', payload)
+        console.log('Realtime update received:', payload)
         fetchServices()
       })
-      .subscribe()
+      .subscribe((status) => console.log('Subscription status:', status))
 
-    return () => supabase.removeChannel(subscription)
+    return () => {
+      console.log('Cleaning up subscription...')
+      supabase.removeChannel(subscription)
+    }
   }, [])
 
   const fetchServices = async () => {
     try {
+      setLoading(true)
+      console.log('Fetching services from Supabase...')
       const { data, error } = await supabase.from('services').select('*')
       if (error) throw error
-      console.log('Services loaded:', data)
+      console.log('Services fetched:', data)
       setServices(data || [])
     } catch (err) {
-      console.error('Error loading services:', err.message)
+      console.error('Fetch error:', err.message)
       setError(err.message)
+    } finally {
+      setLoading(false)
     }
   }
 
-  if (error) return <div>Erro: {error}</div>
-  if (services.length === 0) return <div>Carregando serviços...</div>
+  if (error) return <div>Erro ao carregar serviços: {error}</div>
+  if (loading) return <div>Carregando serviços...</div>
+  if (services.length === 0) return <div>Nenhum serviço encontrado.</div>
 
   return (
     <div className="home">
