@@ -7,6 +7,16 @@ export const Home = () => {
 
   useEffect(() => {
     fetchServices()
+
+    // Escuta atualizações em tempo real
+    const subscription = supabase
+      .channel('services-channel')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'services' }, (payload) => {
+        fetchServices()
+      })
+      .subscribe()
+
+    return () => supabase.removeChannel(subscription)
   }, [])
 
   const fetchServices = async () => {
