@@ -4,14 +4,16 @@ import { supabase } from '../services/supabase'
 
 export const Home = () => {
   const [services, setServices] = useState([])
+  const [error, setError] = useState(null)
 
   useEffect(() => {
+    console.log('Fetching services...')
     fetchServices()
 
-    // Escuta atualizações em tempo real
     const subscription = supabase
       .channel('services-channel')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'services' }, (payload) => {
+        console.log('Realtime update:', payload)
         fetchServices()
       })
       .subscribe()
@@ -20,9 +22,19 @@ export const Home = () => {
   }, [])
 
   const fetchServices = async () => {
-    const { data } = await supabase.from('services').select('*')
-    setServices(data || [])
+    try {
+      const { data, error } = await supabase.from('services').select('*')
+      if (error) throw error
+      console.log('Services loaded:', data)
+      setServices(data || [])
+    } catch (err) {
+      console.error('Error loading services:', err.message)
+      setError(err.message)
+    }
   }
+
+  if (error) return <div>Erro: {error}</div>
+  if (services.length === 0) return <div>Carregando serviços...</div>
 
   return (
     <div className="home">
